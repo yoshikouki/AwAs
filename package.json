@@ -4,6 +4,10 @@
     "frontend"
   ],
   "scripts": {
+    "dev": "run-p dev:*",
+    "dev:frontend": "PORT=8888 yarn workspace frontend run dev",
+    "lint": "yarn workspaces run lint",
+    "lint:frontend": "yarn workspace frontend run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
