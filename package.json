@@ -1,5 +1,6 @@
 {
   "name": "fundamental-charts",
+  "private": true,
   "workspaces": [
     "frontend"
   ],
