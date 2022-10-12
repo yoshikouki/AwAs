@@ -1,6 +1,7 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
 import { ReactNode } from 'react';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 interface Props {
   title?: string;
@@ -22,19 +23,11 @@ const DefaultLayout = ({ title, children }: Props) => {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
 
+      <Header />
       <main>
         {children}
       </main>
-
-      <footer>
-        <a
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Fundamental Charts
-        </a>
-      </footer>
+      <Footer />
     </>
   )
 }
