@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { ReactNode } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import MainNavigation from '../components/MainNavigation';
 
 interface Props {
   title?: string;
@@ -24,6 +25,7 @@ const DefaultLayout = ({ title, children }: Props) => {
       </Head>
 
       <Header />
+      <MainNavigation />
       <main>
         {children}
       </main>
