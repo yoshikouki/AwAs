@@ -9,5 +9,16 @@ module.exports = {
   },
   plugins: [
     require("daisyui"),
-],
+  ],
+  darkMode: "class",
+  daisyui: {
+    styled: true,
+    themes: ["cupcake", "halloween"],
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+    prefix: "",
+    darkTheme: "halloween",
+  },
 }
