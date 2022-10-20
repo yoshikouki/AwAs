@@ -8,6 +8,7 @@ interface Props {
 
 const ThemeContextProvider = ({ children }: Props) => {
   const [theme, setTheme] = useState<ThemeContextType["theme"]>("light");
+
   const changeTheme = (theme: ThemeContextType["theme"]) => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -19,6 +20,10 @@ const ThemeContextProvider = ({ children }: Props) => {
       localStorage.theme = "light"
     };
     setTheme(theme)
+  };
+
+  const toggleTheme = () => {
+    changeTheme(theme === "light" ? "dark" : "light");
   };
 
   useEffect(() => {
@@ -34,6 +39,7 @@ const ThemeContextProvider = ({ children }: Props) => {
       value={{
         theme,
         changeTheme,
+        toggleTheme,
       }}
     >
       {children}

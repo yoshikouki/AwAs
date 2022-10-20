@@ -4,9 +4,6 @@ import { FaSun, FaMoon } from "react-icons/fa";
 
 const Header = () => {
   const themeCtx = useTheme();
-  const toggleTheme = () => {
-    themeCtx.changeTheme(themeCtx.theme === "light" ? "dark" : "light");
-  };
 
   return (
     <>
@@ -21,7 +18,7 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex-none">
-          <button className="btn btn-square btn-ghost" onClick={toggleTheme}>
+          <button className="btn btn-square btn-ghost" onClick={themeCtx.toggleTheme}>
             {themeCtx.theme === "light" ? (
               <FaSun className="h-6 w-6" />
             ) : (
