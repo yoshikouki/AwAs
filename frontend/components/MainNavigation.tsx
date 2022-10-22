@@ -38,13 +38,16 @@ const MainNavigation = () => {
         ))}
       </div>
 
-      <div className="hidden sm:block fixed h-full z-20 md:w-80 overflow-y-auto">
-        <ul className="menu p-4 w-80 text-base-content">
+      <div className="hidden sm:block fixed h-full z-20 lg:w-80 overflow-y-auto">
+        <ul className="menu p-4 lg:w-80 text-base-content">
           {navigationItems.map((item, i) => (
             <li key={i}>
               <Link href={item.path}>
                 <a className={`${isCurrentPage(item.path) && "active"}`}>
-                  {item.icon} {item.title}
+                  {item.icon}
+                  <span className="hidden lg:inline">
+                    {item.title}
+                  </span>
                 </a>
               </Link>
             </li>

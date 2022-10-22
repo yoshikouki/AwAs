@@ -43,8 +43,8 @@ const DefaultLayout = ({ title, children }: Props) => {
 
       <HeaderNavigation />
       <MainNavigation />
-      <div className="relative sm:pl-80">
-        <main className="mx-auto w-auto l-80px">{children}</main>
+      <div className="sm:pl-24 lg:pl-80">
+        <main className="mx-auto">{children}</main>
         <Footer />
       </div>
     </>
