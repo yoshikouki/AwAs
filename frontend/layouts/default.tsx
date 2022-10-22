@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { ReactNode } from "react";
 import Footer from "../components/Footer";
-import HeaderNavigation from '../components/HeaderNavigation';
+import HeaderNavigation from "../components/HeaderNavigation";
 import MainNavigation from "../components/MainNavigation";
 
 interface Props {
@@ -43,8 +43,10 @@ const DefaultLayout = ({ title, children }: Props) => {
 
       <HeaderNavigation />
       <MainNavigation />
-      <main>{children}</main>
-      <Footer />
+      <div className="relative sm:pl-80">
+        <main className="mx-auto w-auto l-80px">{children}</main>
+        <Footer />
+      </div>
     </>
   );
 };

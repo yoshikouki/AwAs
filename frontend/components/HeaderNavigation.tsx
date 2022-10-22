@@ -10,27 +10,29 @@ const HeaderNavigation = () => {
 
   return (
     <>
-      <header className="navbar h-10">
-        <div className="flex-1">
-          <Link href="/">
-            <a>
-              <h1 className="text-2xl font-bold text-primary">FunCh</h1>
-            </a>
-          </Link>
-        </div>
-        <div className="flex-none">
-          <button
-            className="btn btn-square btn-ghost"
-            onClick={themeCtx.toggleTheme}
-          >
-            {themeCtx.theme === "light" ? (
-              <FaSun className="h-6 w-6" />
-            ) : (
-              <FaMoon className="h-6 w-6" />
-            )}
-          </button>
-        </div>
-      </header>
+      <div className="sticky top-0 z-50 w-full backdrop-blur">
+        <header className="navbar h-10 p-4">
+          <div className="flex-1">
+            <Link href="/">
+              <a>
+                <h1 className="text-2xl font-bold text-primary">FunCh</h1>
+              </a>
+            </Link>
+          </div>
+          <div className="flex-none">
+            <button
+              className="btn btn-square btn-ghost"
+              onClick={themeCtx.toggleTheme}
+            >
+              {themeCtx.theme === "light" ? (
+                <FaSun className="h-6 w-6" />
+              ) : (
+                <FaMoon className="h-6 w-6" />
+              )}
+            </button>
+          </div>
+        </header>
+      </div>
     </>
   );
 };

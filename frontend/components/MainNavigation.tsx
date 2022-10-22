@@ -28,31 +28,29 @@ const MainNavigation = () => {
 
   return (
     <>
-      {isCurrentBreakpoint("sm") ? (
-        <div className="btm-nav">
+      <div className="btm-nav sm:hidden">
+        {navigationItems.map((item, i) => (
+          <Link href={item.path} key={i}>
+            <a className={`${isCurrentPage(item.path) && "active"}`}>
+              {item.icon}
+            </a>
+          </Link>
+        ))}
+      </div>
+
+      <div className="hidden sm:block fixed h-full z-20 md:w-80 overflow-y-auto">
+        <ul className="menu p-4 w-80 text-base-content">
           {navigationItems.map((item, i) => (
-            <Link href={item.path} key={i}>
-              <a className={`${isCurrentPage(item.path) && "active"}`}>
-                {item.icon}
-              </a>
-            </Link>
+            <li key={i}>
+              <Link href={item.path}>
+                <a className={`${isCurrentPage(item.path) && "active"}`}>
+                  {item.icon} {item.title}
+                </a>
+              </Link>
+            </li>
           ))}
-        </div>
-      ) : (
-        <div className="drawer-side">
-          <ul className="menu p-4 overflow-y-auto w-80 text-base-content">
-            {navigationItems.map((item, i) => (
-              <li key={i}>
-                <Link href={item.path}>
-                  <a className={`${isCurrentPage(item.path) && "active"}`}>
-                    {item.icon} {item.title}
-                  </a>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        </ul>
+      </div>
     </>
   );
 };
