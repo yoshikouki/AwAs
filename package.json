@@ -1,8 +1,8 @@
 {
-  "name": "fundamental-charts",
+  "name": "awas",
   "private": true,
   "workspaces": [
-    "frontend"
+    "packages/*"
   ],
   "scripts": {
     "dev": "run-p dev:*",
