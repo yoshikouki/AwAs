@@ -39,7 +39,7 @@ const MainNavigation = () => {
       </div>
 
       <div className="hidden sm:block fixed h-full z-20 lg:w-80 overflow-y-auto">
-        <ul className="menu p-4 lg:w-80 text-base-content">
+        <ul className="menu p-0 px-4 mt-12 lg:w-80 text-base-content">
           {navigationItems.map((item, i) => (
             <li key={i}>
               <Link href={item.path}>
