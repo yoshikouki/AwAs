@@ -1,6 +1,5 @@
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0";
-import Image from "next/future/image";
 
 const Settings = () => {
   const { user, error, isLoading } = useUser();

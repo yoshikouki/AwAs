@@ -5,9 +5,7 @@ import { useUser } from "@auth0/nextjs-auth0";
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
-  const { user, error, isLoading } = useUser();
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  const { user, isLoading } = useUser();
 
   return (
     <>

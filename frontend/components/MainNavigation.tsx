@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FaHome, FaNewspaper, FaSearch, FaSun, FaMoon } from "react-icons/fa";
-import { useBreakpoint } from "../hooks/breakpoint";
 
 const navigationItems = [
   {
@@ -24,7 +23,6 @@ const navigationItems = [
 const MainNavigation = () => {
   const router = useRouter();
   const isCurrentPage = (path: string) => router.pathname === path;
-  const { isCurrentBreakpoint } = useBreakpoint();
 
   return (
     <>
