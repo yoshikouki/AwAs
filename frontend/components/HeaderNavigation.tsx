@@ -1,12 +1,13 @@
 import Link from "next/link";
 import useTheme from "../hooks/theme";
-import { useRouter } from "next/router";
-import { FaHome, FaNewspaper, FaSearch, FaSun, FaMoon } from "react-icons/fa";
+import { FaUserCircle, FaSun, FaMoon } from "react-icons/fa";
+import { useUser } from "@auth0/nextjs-auth0";
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
-  const router = useRouter();
-  const isCurrentPage = (path: string) => router.pathname === path;
+  const { user, error, isLoading } = useUser();
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
     <>
@@ -20,6 +21,26 @@ const HeaderNavigation = () => {
             </Link>
           </div>
           <div className="flex-none">
+            {isLoading ? (
+              <>Loading</>
+            ) : user ? (
+              <>
+                <Link href="/settings">
+                  <a>
+                    <FaUserCircle className="h-6 w-6" />
+                  </a>
+                </Link>
+                <Link href="/api/auth/logout">
+                  <a>Logout</a>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/api/auth/login">
+                  <a>Login</a>
+                </Link>
+              </>
+            )}
             <button
               className="btn btn-square btn-ghost"
               onClick={themeCtx.toggleTheme}
