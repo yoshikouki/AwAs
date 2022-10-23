@@ -1,12 +1,11 @@
 import React from "react";
-import { useAuth0 } from '@auth0/auth0-react';
+import { User } from '@auth0/auth0-react';
 
-const Settings = () => {
-  const { user, error, isLoading } = useAuth0();
+interface Props {
+  user?: User
+}
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
-
+const Settings = ({user}: Props) => {
   return (
     <div className="prose w-full max-w-4xl">
       <h1>Settings</h1>
