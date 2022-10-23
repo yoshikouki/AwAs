@@ -9,16 +9,15 @@ const Settings = () => {
   if (error) return <div>{error.message}</div>;
 
   return (
-    <>
-      Settings
+    <div className="prose w-full max-w-4xl">
+      <h1>Settings</h1>
       {user && (
-        <div>
-          <Image src={user.picture || ""} alt={user.name || ""} width={100} height={100} />
+        <>
           <h2>{user.name}</h2>
           <p>{user.email}</p>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 }
 

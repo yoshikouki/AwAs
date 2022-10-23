@@ -1,6 +1,6 @@
 import Link from "next/link";
 import useTheme from "../hooks/theme";
-import { FaUserCircle, FaSun, FaMoon } from "react-icons/fa";
+import { FaUserCircle, FaSignOutAlt, FaSun, FaMoon } from "react-icons/fa";
 import { useUser } from "@auth0/nextjs-auth0";
 
 const HeaderNavigation = () => {
@@ -16,28 +16,54 @@ const HeaderNavigation = () => {
           <div className="flex-1">
             <Link href="/">
               <a>
-                <h1 className="text-2xl font-bold text-primary">FunCh</h1>
+                <div className="text-2xl font-bold text-primary">FunCh</div>
               </a>
             </Link>
           </div>
           <div className="flex-none">
             {isLoading ? (
-              <>Loading</>
+              <div className="btn btn-disabled">Loading</div>
             ) : user ? (
               <>
-                <Link href="/settings">
-                  <a>
-                    <FaUserCircle className="h-6 w-6" />
-                  </a>
-                </Link>
-                <Link href="/api/auth/logout">
-                  <a>Logout</a>
-                </Link>
+                <div className="dropdown dropdown-hover dropdown-end">
+                  <label tabIndex={0} className="btn btn-ghost">
+                    <Link href="/settings">
+                      <a>
+                        <div className="avatar">
+                          <div className="w-6">
+                            <FaUserCircle className="h-6 w-6" />
+                          </div>
+                        </div>
+                      </a>
+                    </Link>
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu shadow rounded-box w-40"
+                  >
+                    <Link href="/settings">
+                      <li>
+                        <a>
+                          <FaUserCircle className="h-4 w-4" />
+                          Settings
+                        </a>
+                      </li>
+                    </Link>
+                    <Link href="/api/auth/logout">
+                      <li>
+                        <a>
+                          <FaSignOutAlt className="h-4 w-4" />
+                          Logout
+                        </a>
+                      </li>
+                    </Link>
+                  </ul>
+                </div>
               </>
             ) : (
               <>
                 <Link href="/api/auth/login">
-                  <a>Login</a>
+                  <a className="btn btn-ghost">Login</a>
                 </Link>
               </>
             )}
