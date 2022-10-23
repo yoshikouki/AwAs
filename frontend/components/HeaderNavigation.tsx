@@ -1,11 +1,12 @@
 import Link from "next/link";
 import useTheme from "../hooks/theme";
 import { FaUserCircle, FaSignOutAlt, FaSun, FaMoon } from "react-icons/fa";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useAuth0 } from '@auth0/auth0-react';
+import { auth0 } from '../config/auth0';
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
-  const { user, isLoading } = useUser();
+  const { user, isLoading, loginWithRedirect, logout } = useAuth0();
 
   return (
     <>
@@ -47,22 +48,18 @@ const HeaderNavigation = () => {
                         </a>
                       </li>
                     </Link>
-                    <Link href="/api/auth/logout">
-                      <li>
-                        <a>
-                          <FaSignOutAlt className="h-4 w-4" />
-                          Logout
-                        </a>
-                      </li>
-                    </Link>
+                    <li>
+                      <a onClick={() => logout({returnTo: auth0.baseUrl})}>
+                        <FaSignOutAlt className="h-4 w-4" />
+                        Logout
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </>
             ) : (
               <>
-                <Link href="/api/auth/login">
-                  <a className="btn btn-ghost">Login</a>
-                </Link>
+                <a onClick={loginWithRedirect} className="btn btn-ghost">Login</a>
               </>
             )}
             <button
