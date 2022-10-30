@@ -1,26 +1,14 @@
 {
   "name": "api",
-  "private": true,
   "version": "0.0.0",
-  "type": "module",
-  "files": [
-    "dist",
-    "index.d.ts"
-  ],
-  "main": "./dist/counter.umd.cjs",
-  "module": "./dist/counter.js",
-  "types": "./index.d.ts",
-  "exports": {
-    "types": "./index.d.ts",
-    "import": "./dist/counter.js",
-    "require": "./dist/counter.umd.cjs"
-  },
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build"
+    "start": "node ./bin/www"
   },
-  "devDependencies": {
-    "typescript": "^4.8.3",
-    "vite": "^3.1.3"
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1"
   }
 }
