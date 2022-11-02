@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "etsc",
-    "start": "node ./bin/www",
+    "start": "node ./dist --env=production",
     "dev": "nodemon"
   },
   "dependencies": {
