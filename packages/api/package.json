@@ -15,7 +15,8 @@
     "express": "~4.16.1",
     "express-oauth2-jwt-bearer": "^1.2.0",
     "helmet": "^6.0.0",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "nocache": "^3.0.4"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",

@@ -6,6 +6,7 @@ import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 import cors from "cors";
 import helmet from "helmet";
+import nocache from "nocache";
 import configs from "./configs";
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(
   })
 );
 app.use(helmet());
+app.use(nocache());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
