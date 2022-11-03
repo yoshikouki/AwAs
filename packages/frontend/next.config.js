@@ -3,11 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['s.gravatar.com'],
+    domains: ["s.gravatar.com"],
   },
-  experimental:{
-    appDir: true
+  experimental: {
+    appDir: true,
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -8,10 +8,7 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [
-    require("@tailwindcss/typography"),
-    require("daisyui"),
-  ],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
   darkMode: "class",
   daisyui: {
     styled: true,
@@ -23,4 +20,4 @@ module.exports = {
     prefix: "",
     darkTheme: "halloween",
   },
-}
+};

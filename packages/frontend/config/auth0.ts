@@ -1,9 +1,11 @@
-if (!(
-  process.env.NEXT_PUBLIC_AUTH0_BASE_URL &&
-  process.env.NEXT_PUBLIC_AUTH0_ISSUER_BASE_URL &&
-  process.env.NEXT_PUBLIC_AUTH0_AUDIENCE_BASE_URL &&
-  process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID
-)) {
+if (
+  !(
+    process.env.NEXT_PUBLIC_AUTH0_BASE_URL &&
+    process.env.NEXT_PUBLIC_AUTH0_ISSUER_BASE_URL &&
+    process.env.NEXT_PUBLIC_AUTH0_AUDIENCE_BASE_URL &&
+    process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID
+  )
+) {
   throw new Error("Missing required environment variables.");
 }
 
