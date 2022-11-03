@@ -5,6 +5,7 @@ import express from "express";
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 import cors from "cors";
+import helmet from "helmet";
 import configs from "./configs";
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(
     maxAge: 86400,
   })
 );
+app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
