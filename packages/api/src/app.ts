@@ -7,6 +7,8 @@ import helmet from "helmet";
 import nocache from "nocache";
 import configs from "./configs";
 import rootRouter from './routes/root';
+import { errorHandler } from "./middleware/error.middleware";
+import { notFoundHandler } from "./middleware/not-found.middleware";
 
 const app = express();
 
@@ -28,5 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", rootRouter);
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 export default app;
