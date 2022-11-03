@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import { FaHome, FaNewspaper, FaSearch, FaSun, FaMoon } from "react-icons/fa";
 
 const navigationItems = [
@@ -21,17 +23,19 @@ const navigationItems = [
 ];
 
 const MainNavigation = () => {
-  const router = useRouter();
-  const isCurrentPage = (path: string) => router.pathname === path;
+  const pathname = usePathname();
+  const isCurrentPage = (path: string) => pathname === path;
 
   return (
     <>
       <div className="btm-nav sm:hidden">
         {navigationItems.map((item, i) => (
-          <Link href={item.path} key={i}>
-            <a className={`${isCurrentPage(item.path) && "active"}`}>
-              {item.icon}
-            </a>
+          <Link
+            href={item.path}
+            key={i}
+            className={`${isCurrentPage(item.path) && "active"}`}
+          >
+            {item.icon}
           </Link>
         ))}
       </div>
@@ -40,13 +44,12 @@ const MainNavigation = () => {
         <ul className="menu p-0 px-4 mt-12 lg:w-80 text-base-content">
           {navigationItems.map((item, i) => (
             <li key={i}>
-              <Link href={item.path}>
-                <a className={`${isCurrentPage(item.path) && "active"}`}>
-                  {item.icon}
-                  <span className="hidden lg:inline">
-                    {item.title}
-                  </span>
-                </a>
+              <Link
+                href={item.path}
+                className={`${isCurrentPage(item.path) && "active"}`}
+              >
+                {item.icon}
+                <span className="hidden lg:inline">{item.title}</span>
               </Link>
             </li>
           ))}

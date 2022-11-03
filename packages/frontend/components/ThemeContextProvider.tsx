@@ -1,5 +1,6 @@
-import Link from "next/link";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+"use client"
+
+import { ReactNode, useEffect, useState } from "react";
 import { ThemeContext, ThemeContextType } from "../hooks/theme";
 
 interface Props {

@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const Footer = () => {
   return (
     <footer className="footer items-center px-4 mt-12">

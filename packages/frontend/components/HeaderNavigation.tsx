@@ -1,8 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import useTheme from "../hooks/theme";
 import { FaUserCircle, FaSignOutAlt, FaSun, FaMoon } from "react-icons/fa";
-import { useAuth0 } from '@auth0/auth0-react';
-import { auth0 } from '../config/auth0';
+import { useAuth0 } from "@auth0/auth0-react";
+import { auth0 } from "../config/auth0";
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
@@ -14,9 +16,7 @@ const HeaderNavigation = () => {
         <header className="navbar h-10 p-4">
           <div className="flex-1">
             <Link href="/">
-              <a>
-                <div className="text-2xl font-bold text-primary">FunCh</div>
-              </a>
+              <div className="text-2xl font-bold text-primary">FunCh</div>
             </Link>
           </div>
           <div className="flex-none">
@@ -27,13 +27,11 @@ const HeaderNavigation = () => {
                 <div className="dropdown dropdown-hover dropdown-end">
                   <label tabIndex={0} className="btn btn-ghost">
                     <Link href="/settings">
-                      <a>
-                        <div className="avatar">
-                          <div className="w-6">
-                            <FaUserCircle className="h-6 w-6" />
-                          </div>
+                      <div className="avatar">
+                        <div className="w-6">
+                          <FaUserCircle className="h-6 w-6" />
                         </div>
-                      </a>
+                      </div>
                     </Link>
                   </label>
                   <ul
@@ -42,14 +40,12 @@ const HeaderNavigation = () => {
                   >
                     <Link href="/settings">
                       <li>
-                        <a>
-                          <FaUserCircle className="h-4 w-4" />
-                          Settings
-                        </a>
+                        <FaUserCircle className="h-4 w-4" />
+                        Settings
                       </li>
                     </Link>
                     <li>
-                      <a onClick={() => logout({returnTo: auth0.baseUrl})}>
+                      <a onClick={() => logout({ returnTo: auth0.baseUrl })}>
                         <FaSignOutAlt className="h-4 w-4" />
                         Logout
                       </a>
@@ -59,7 +55,9 @@ const HeaderNavigation = () => {
               </>
             ) : (
               <>
-                <a onClick={loginWithRedirect} className="btn btn-ghost">Login</a>
+                <a onClick={loginWithRedirect} className="btn btn-ghost">
+                  Login
+                </a>
               </>
             )}
             <button
