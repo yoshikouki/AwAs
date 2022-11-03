@@ -8,7 +8,25 @@ const Home = () => {
   const callApi = async () => {
     try {
       const response = await fetch(`http://localhost:8889/`);
-      const responseData = await response.json();
+      const responseData = await response.text();
+      setMessage(responseData);
+    } catch (error) {
+      setMessage(String(error));
+    }
+  };
+
+  const callSecureApi = async () => {
+    try {
+      const token = await getAccessTokenSilently();
+      const response = await fetch(
+        "http://localhost:8889/users",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const responseData = await response.text();
       setMessage(responseData);
     } catch (error) {
       setMessage(String(error));
@@ -18,7 +36,12 @@ const Home = () => {
   return (
     <>
       Home
-      <button onClick={callApi}>call API</button>
+      <div>
+        <button onClick={callApi}>call API</button>
+      </div>
+      <div>
+        <button onClick={callSecureApi}>call Secure API</button>
+      </div>
       {message && (
         <p>Message: {message}</p>
       )}
