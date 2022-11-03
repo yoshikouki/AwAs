@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { ReactNode } from "react";
-import Footer from "../components/Footer";
-import HeaderNavigation from "../components/HeaderNavigation";
-import MainNavigation from "../components/MainNavigation";
+import Footer from "./Footer";
+import HeaderNavigation from "./HeaderNavigation";
+import MainNavigation from "./MainNavigation";
 
 interface Props {
   title?: string;
