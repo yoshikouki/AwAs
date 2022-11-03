@@ -1,9 +1,9 @@
-import express from "express";
+import { Router } from "express";
 import { validateAccessToken } from "../middlewares/auth0.middleware";
 
-const router = express.Router();
+const router = Router();
 
-router.get("/", validateAccessToken, (req, res, next) => {
+router.get("/users", validateAccessToken, (req, res, next) => {
   res.send("users has protected!");
 });
 
