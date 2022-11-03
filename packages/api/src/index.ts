@@ -1,7 +1,6 @@
 import app from "./app";
+import config from "./configs/index"
 
-const port = parseInt(process.env.PORT || "8889", 10);
-
-app.listen(port, () => {
-  console.log("Express server started on port: " + port.toString());
-})
+app.listen(config.port, () => {
+  console.log("Express server started on port: " + config.port.toString());
+});
