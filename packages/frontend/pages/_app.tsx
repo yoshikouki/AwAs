@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           clientId={auth0.clientId}
           redirectUri={auth0.baseUrl}
           onRedirectCallback={onRedirectCallback}
+          audience={auth0.audienceBaseUrl}
         >
           <Component {...pageProps} />
         </Auth0Provider>
