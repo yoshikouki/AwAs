@@ -2,12 +2,19 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
+    "sourceMap": true,
+    "outDir": "dist",
     "strict": true,
+    "lib": [
+      "esnext",
+    ],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
-  "include": ["src"],
+  "include": [
+    "src",
+  ],
   "exclude": [],
   "assets": {
     "baseDir": ".",

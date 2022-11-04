@@ -26,6 +26,10 @@
     "@types/node": "^18.11.9",
     "esbuild": "^0.15.12",
     "esbuild-node-tsc": "^2.0.4",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "prisma": "^4.5.0"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
   }
 }
