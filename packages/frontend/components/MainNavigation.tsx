@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaHome, FaNewspaper, FaSearch, FaSun, FaMoon } from "react-icons/fa";
+import { BiCoinStack } from "react-icons/bi";
+import { FaHome } from "react-icons/fa";
 
 const navigationItems = [
   {
@@ -11,15 +12,10 @@ const navigationItems = [
     icon: <FaHome className="h-6 w-6" />,
   },
   {
-    title: "News",
-    path: "/news",
-    icon: <FaNewspaper className="h-6 w-6" />,
-  },
-  {
-    title: "Search",
-    path: "/search",
-    icon: <FaSearch className="h-6 w-6" />,
-  },
+    title: "Assets",
+    path: "/assets",
+    icon: <BiCoinStack className="h-6 w-6" />,
+  }
 ];
 
 const MainNavigation = () => {
