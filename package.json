@@ -18,11 +18,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yoshikouki/fundamental-charts.git"
+    "url": "git+https://github.com/yoshikouki/AwAs.git"
   },
   "author": "yoshikouki",
   "bugs": {
-    "url": "https://github.com/yoshikouki/fundamental-charts/issues"
+    "url": "https://github.com/yoshikouki/AwAs/issues"
   },
-  "homepage": "https://github.com/yoshikouki/fundamental-charts#readme"
+  "homepage": "https://github.com/yoshikouki/AwAs#readme"
 }

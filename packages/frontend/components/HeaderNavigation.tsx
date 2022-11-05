@@ -16,7 +16,7 @@ const HeaderNavigation = () => {
         <header className="navbar h-10 p-4">
           <div className="flex-1">
             <Link href="/">
-              <div className="text-2xl font-bold text-primary">FunCh</div>
+              <div className="text-2xl font-bold text-primary">AwAs</div>
             </Link>
           </div>
           <div className="flex-none">

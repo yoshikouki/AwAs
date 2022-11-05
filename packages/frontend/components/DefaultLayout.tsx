@@ -13,7 +13,7 @@ const DefaultLayout = ({ title, children }: Props) => {
   return (
     <>
       <Head>
-        <title>{(title ? `${title} |` : "") + "Fundamental Charts"}</title>
+        <title>{(title ? `${title} |` : "") + "AwAs - Awesome Assets"}</title>
       </Head>
 
       <HeaderNavigation />
