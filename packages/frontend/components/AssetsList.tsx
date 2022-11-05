@@ -27,16 +27,15 @@ const assets = [
 
 const AssetsList = withAuthenticationRequired(() => {
   return (
-    <div className="overflow-x-auto">
-      <table className="table w-full">
+    <div className="sm:px-4 overflow-x-auto">
+      <table className="table">
         <thead>
           <tr>
-            <th>シンボル</th>
             <th>銘柄</th>
             <th className="text-end">保有数量</th>
             <th className="text-end">
               <div>現在価格</div>
-              <div className="opacity-50">取得価格</div>
+              <div>取得価格</div>
             </th>
             <th className="text-end">評価額</th>
             <th className="text-end">利益率</th>
@@ -45,10 +44,13 @@ const AssetsList = withAuthenticationRequired(() => {
         <tbody>
           {assets.map((asset, i) => (
             <tr className="hover" key={i}>
-              {/* シンボル */}
-              <th>{asset.symbol}</th>
               {/* 銘柄 */}
-              <td>{asset.name}</td>
+              <th className="pr-0 md:pr-auto">
+                <div>{asset.symbol}</div>
+                <div className="text-ellipsis overflow-hidden w-20 md:w-auto">
+                  {asset.name}
+                </div>
+              </th>
               {/* 保有数量 */}
               <td className="text-end">{asset.balance}</td>
               {/* 価格 */}
