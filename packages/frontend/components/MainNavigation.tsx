@@ -24,7 +24,7 @@ const MainNavigation = () => {
 
   return (
     <>
-      <div className="btm-nav sm:hidden">
+      <div className="btm-nav z-20 sm:hidden">
         {navigationItems.map((item, i) => (
           <Link
             href={item.path}
