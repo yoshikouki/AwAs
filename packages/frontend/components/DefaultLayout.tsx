@@ -19,7 +19,7 @@ const DefaultLayout = ({ title, children }: Props) => {
       <HeaderNavigation />
       <MainNavigation />
       <div className="sm:pl-24 lg:pl-80">
-        <main className="mx-auto mt-12">{children}</main>
+        <main className="mx-auto mt-4 sm:mt-12">{children}</main>
         <Footer />
       </div>
     </>
