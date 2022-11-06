@@ -56,11 +56,11 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           <div
-            className="tooltip form-control col-span-2 sm:col-span-1"
+            className="tooltip tooltip-primary form-control col-span-2 sm:col-span-1"
             data-tip="ティッカーシンボル・証券コード"
           >
             <div className="relative">
-              <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none">
+              <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none text-primary">
                 <FaAt />
               </div>
 
@@ -85,9 +85,9 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
             )}
           </div>
 
-          <div className="flex-1 tooltip" data-tip="保有数">
+          <div className="flex-1 tooltip tooltip-primary" data-tip="保有数">
             <div className="relative">
-              <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none">
+              <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none text-primary">
                 数
               </div>
               <input
@@ -106,10 +106,10 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
             </div>
           </div>
 
-          <div className="flex-1 tooltip" data-tip="平均取得価格">
+          <div className="flex-1 tooltip tooltip-primary" data-tip="平均取得価格">
             <div className="form-control">
               <div className="relative">
-                <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none">
+                <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none text-primary">
                   <FaDollarSign />
                 </div>
                 <input

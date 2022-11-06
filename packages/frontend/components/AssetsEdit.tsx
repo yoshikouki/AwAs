@@ -1,7 +1,7 @@
 "use client"
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Link from 'next/link';
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronLeft, FaCircleNotch } from "react-icons/fa";
 import AssetsEditListItem from './AssetsEditListItem';
 
 
@@ -47,6 +47,7 @@ const AssetsEdit = withAuthenticationRequired(() => {
           キャンセル
         </Link>
         <button onClick={submit} className="btn btn-primary flex-1">
+          <FaCircleNotch className="mr-2" />
           保存
         </button>
       </div>
