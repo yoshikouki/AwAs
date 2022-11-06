@@ -1,18 +1,16 @@
 "use client"
 
-import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
-import { config } from "../config";
+import { useApi } from "../hooks/api";
 
 const Home = () => {
   const [message, setMessage] = useState("");
-  const { getAccessTokenSilently } = useAuth0();
+  const { get, getWithAuth } = useApi()
 
   const callApi = async () => {
     try {
-      const response = await fetch(`${config.api.baseUrl}/v1`);
-      const responseData = await response.text();
-      setMessage(responseData);
+      const res = await get("/health");
+      setMessage(JSON.stringify(res));
     } catch (error) {
       setMessage(String(error));
     }
@@ -20,17 +18,8 @@ const Home = () => {
 
   const callSecureApi = async () => {
     try {
-      const token = await getAccessTokenSilently();
-      const response = await fetch(
-        `${config.api.baseUrl}/v1/assets`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const responseData = await response.text();
-      setMessage(responseData);
+      const res = await getWithAuth("/v1/assets");
+      setMessage(JSON.stringify(res));
     } catch (error) {
       setMessage(String(error));
     }
