@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { KeyboardEventHandler, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
 interface Props {
@@ -8,9 +8,10 @@ interface Props {
     balance: number;
     averageTradedPrice: number;
   };
+  index: number;
 }
 
-const AssetsEditListItem = ({ preAsset }: Props) => {
+const AssetsEditListItem = ({ preAsset, index }: Props) => {
   const [asset, setAsset] = useState({
     symbol: preAsset?.symbol || "",
     balance: preAsset?.balance.toString() || "0",
@@ -21,6 +22,24 @@ const AssetsEditListItem = ({ preAsset }: Props) => {
   )
     .toFixed(2)
     .toLocaleString();
+  const handleEnterKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (!(e.target instanceof HTMLInputElement)) return
+    let nextInput: HTMLInputElement | null;
+    if (e.key === "Enter") {
+      const { id } = e.target;
+      const [prefix, assetIndex, formIndex] = id.split("-")
+      if (formIndex !== "2") {
+        nextInput = document.querySelector(
+          `#${prefix}-${assetIndex}-${parseInt(formIndex, 10) + 1}`
+        );
+      } else {
+        nextInput = document.querySelector(
+          `#${prefix}-${parseInt(assetIndex, 10) + 1}-0`
+        );
+      }
+      if (nextInput) nextInput.focus();
+    }
+  };
 
   return (
     <div className="card w-full bg-base-100 shadow-xl mb-8">
@@ -41,9 +60,11 @@ const AssetsEditListItem = ({ preAsset }: Props) => {
               <input
                 type="text"
                 placeholder="シンボル"
+                id={`asset-${index}-0`}
                 className="input input-bordered w-full pl-10"
                 value={asset.symbol}
                 onChange={(e) => setAsset({ ...asset, symbol: e.target.value })}
+                onKeyDown={handleEnterKeyDown}
               />
             </div>
 
@@ -63,11 +84,13 @@ const AssetsEditListItem = ({ preAsset }: Props) => {
               <input
                 type="text"
                 placeholder="保有数"
+                id={`asset-${index}-1`}
                 className="input input-bordered w-full pl-10"
                 value={asset.balance}
                 onChange={(e) =>
                   setAsset({ ...asset, balance: e.target.value })
                 }
+                onKeyDown={handleEnterKeyDown}
               />
             </div>
           </div>
@@ -81,11 +104,13 @@ const AssetsEditListItem = ({ preAsset }: Props) => {
                 <input
                   type="text"
                   placeholder="平均取得価格"
+                  id={`asset-${index}-2`}
                   className="input input-bordered w-full pl-10"
                   value={asset.averageTradedPrice}
                   onChange={(e) =>
                     setAsset({ ...asset, averageTradedPrice: e.target.value })
                   }
+                  onKeyDown={handleEnterKeyDown}
                 />
               </div>
               {asset.balance && asset.averageTradedPrice && (

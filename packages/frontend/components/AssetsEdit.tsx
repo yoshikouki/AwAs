@@ -34,7 +34,7 @@ const AssetsEdit = withAuthenticationRequired(() => {
   return (
     <div className="prose w-full max-w-4xl sm:px-4">
       {assets.map((asset, i) => (
-        <AssetsEditListItem preAsset={asset} key={i} />
+        <AssetsEditListItem preAsset={asset} index={i} key={i} />
       ))}
 
       <div className="flex gap-4 mt-20 px-4">
