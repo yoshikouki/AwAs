@@ -1,5 +1,7 @@
 if (
   !(
+    process.env.NEXT_PUBLIC_FRONTEND_BASE_URL &&
+    process.env.NEXT_PUBLIC_API_BASE_URL &&
     process.env.NEXT_PUBLIC_AUTH0_BASE_URL &&
     process.env.NEXT_PUBLIC_AUTH0_ISSUER_BASE_URL &&
     process.env.NEXT_PUBLIC_AUTH0_AUDIENCE_BASE_URL &&
@@ -10,6 +12,12 @@ if (
 }
 
 export const config = {
+  frontend: {
+    baseUrl: process.env.NEXT_PUBLIC_FRONTEND_BASE_URL,
+  },
+  api: {
+    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+  },
   auth0: {
     secret: process.env.AUTH0_SECRET,
     baseUrl: process.env.NEXT_PUBLIC_AUTH0_BASE_URL,

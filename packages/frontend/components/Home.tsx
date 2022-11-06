@@ -2,6 +2,7 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
+import { config } from "../config";
 
 const Home = () => {
   const [message, setMessage] = useState("");
@@ -9,7 +10,7 @@ const Home = () => {
 
   const callApi = async () => {
     try {
-      const response = await fetch(`http://localhost:8889/`);
+      const response = await fetch(`${config.api.baseUrl}/v1`);
       const responseData = await response.text();
       setMessage(responseData);
     } catch (error) {
@@ -21,7 +22,7 @@ const Home = () => {
     try {
       const token = await getAccessTokenSilently();
       const response = await fetch(
-        "http://localhost:8889/users",
+        `${config.api.baseUrl}/v1/assets`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

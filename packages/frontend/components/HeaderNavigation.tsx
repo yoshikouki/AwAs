@@ -45,7 +45,7 @@ const HeaderNavigation = () => {
                       </li>
                     </Link>
                     <li>
-                      <a onClick={() => logout({ returnTo: config.auth0.baseUrl })}>
+                      <a onClick={() => logout({ returnTo: config.frontend.baseUrl })}>
                         <FaSignOutAlt className="h-4 w-4" />
                         Logout
                       </a>
