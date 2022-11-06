@@ -2,7 +2,7 @@ import { config } from "../config";
 import { useAuth } from "./auth";
 
 export const useApi = () => {
-  const { accessToken } = useAuth();
+  const { getAccessToken } = useAuth();
 
   const get = async (path: string) => {
     const response = await fetch(`${config.api.baseUrl}${path}`);
@@ -10,6 +10,7 @@ export const useApi = () => {
   };
 
   const getWithAuth = async (path: string) => {
+    const accessToken = await getAccessToken();
     const response = await fetch(`${config.api.baseUrl}${path}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
