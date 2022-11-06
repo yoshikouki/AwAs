@@ -7,7 +7,7 @@ export class AssetsService {
     this.userModel = props?.userModel || new UserModel();
   }
 
-  getAllAssetsByUser({ uid }: { uid: string }) {
+  getAllByUser({ uid }: { uid: string }) {
     const user = this.userModel.findOneUserByUid({ uid });
     return [
       {
@@ -41,5 +41,11 @@ export class AssetsService {
         yieldPercentage: 40.31,
       },
     ];
-  };
+  }
+
+  updateAllByUser({ uid }: { uid: string }) {
+    const user = this.userModel.findOneUserByUid({ uid });
+
+    return;
+  }
 }
