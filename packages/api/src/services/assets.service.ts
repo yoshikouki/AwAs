@@ -30,6 +30,16 @@ export class AssetsService {
         return: 6557.51,
         yieldPercentage: 106.85,
       },
+      {
+        symbol: "SPYD",
+        name: "SPDR ポートフォリオS&P 500 高配当株式ETF",
+        balance: 212,
+        averageTradedPrice: 27.71,
+        marketPrice: 38.88,
+        marketValue: 1208.359,
+        return: 2368.04,
+        yieldPercentage: 40.31,
+      },
     ];
   };
 }

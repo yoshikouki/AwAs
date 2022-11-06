@@ -1,31 +1,20 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useApi } from "../hooks/api";
 import { requiredAuth } from "../hooks/auth";
 import { ProfitOrLossText } from "./ProfitOrLossText";
 
-const assets = [
-  {
-    symbol: "VTI",
-    name: "バンガード・トータル・ストック・マーケットETF",
-    balance: 34,
-    averageTradedPrice: 210.2426,
-    marketPrice: 188.93,
-    marketValue: 6423.62,
-    return: -724.62,
-    yieldPercentage: -10.13,
-  },
-  {
-    symbol: "XOM",
-    name: "エクソンモービル",
-    balance: 113,
-    averageTradedPrice: 54.3089,
-    marketPrice: 112.34,
-    marketValue: 12694.42,
-    return: 6557.51,
-    yieldPercentage: 106.85,
-  },
-];
-
 const AssetsList = requiredAuth(() => {
+  const [assets, setAssets] = useState([]);
+  const { getWithAuth } = useApi();
+
+  useEffect(() => {
+    (async () => {
+      const res = await getWithAuth("/v1/assets");
+      setAssets(res);
+    })();
+  }, []);
+
   return (
     <div className="sm:px-4 overflow-x-auto">
       <table className="table">
