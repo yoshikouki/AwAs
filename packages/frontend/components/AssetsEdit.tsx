@@ -1,29 +1,21 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { FaChevronLeft, FaCircleNotch } from "react-icons/fa";
-import { useApi } from "../hooks/api";
+import { useGet } from "../hooks/api";
 import { requiredAuth } from "../hooks/auth";
+import { Asset } from "../types/asset";
 import AssetsEditListItem from "./AssetsEditListItem";
 
 const AssetsEdit = requiredAuth(() => {
-  const [assets, setAssets] = useState([]);
-  const { getWithAuth } = useApi();
+  const assets = useGet<Asset[]>("/v1/assets", { withAuth: true });
 
   const submit = () => {
     console.log("submit");
   };
 
-  useEffect(() => {
-    (async () => {
-      const res = await getWithAuth("/v1/assets");
-      setAssets(res);
-    })();
-  }, []);
-
   return (
     <div className="prose w-full max-w-4xl sm:px-4">
-      {assets.map((asset, i) => (
+      {assets?.map((asset, i) => (
         <AssetsEditListItem preAsset={asset} index={i} key={i} />
       ))}
 

@@ -1,19 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useApi } from "../hooks/api";
+import { useGet } from "../hooks/api";
 import { requiredAuth } from "../hooks/auth";
+import { Asset } from "../types/asset";
 import { ProfitOrLossText } from "./ProfitOrLossText";
 
 const AssetsList = requiredAuth(() => {
-  const [assets, setAssets] = useState([]);
-  const { getWithAuth } = useApi();
-
-  useEffect(() => {
-    (async () => {
-      const res = await getWithAuth("/v1/assets");
-      setAssets(res);
-    })();
-  }, []);
+  const assets = useGet<Asset[]>("/v1/assets", { withAuth: true });
 
   return (
     <div className="sm:px-4 overflow-x-auto">
@@ -31,7 +23,7 @@ const AssetsList = requiredAuth(() => {
           </tr>
         </thead>
         <tbody>
-          {assets.map((asset, i) => (
+          {assets?.map((asset, i) => (
             <tr className="hover" key={i}>
               {/* 銘柄 */}
               <th className="pr-0 md:pr-auto">
