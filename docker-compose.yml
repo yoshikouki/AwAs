@@ -6,7 +6,6 @@ volumes:
 services:
   db:
     image: postgres:latest
-    container_name: "db"
     ports:
       - 8890:5432
     volumes:
