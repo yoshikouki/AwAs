@@ -1,6 +1,6 @@
 "use client";
-import { KeyboardEventHandler, useState } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FocusEventHandler, KeyboardEventHandler, useState } from "react";
+import { FaAt, FaDollarSign, FaTimes } from "react-icons/fa";
 
 interface Props {
   preAsset?: {
@@ -23,11 +23,9 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
     .toFixed(2)
     .toLocaleString();
   const handleEnterKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (!(e.target instanceof HTMLInputElement)) return
     let nextInput: HTMLInputElement | null;
-    if (e.key === "Enter") {
-      const { id } = e.target;
-      const [prefix, assetIndex, formIndex] = id.split("-")
+    if (e.key === "Enter" && e.target instanceof HTMLInputElement) {
+      const [prefix, assetIndex, formIndex] = e.target.id.split("-");
       if (formIndex !== "2") {
         nextInput = document.querySelector(
           `#${prefix}-${assetIndex}-${parseInt(formIndex, 10) + 1}`
@@ -40,6 +38,12 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
       if (nextInput) nextInput.focus();
     }
   };
+  const handleOnFocusInput: FocusEventHandler<HTMLInputElement> = (e) => {
+    e.target.closest(".tooltip")?.classList.add("tooltip-open");
+  };
+  const handleOnBlurInput: FocusEventHandler<HTMLInputElement> = (e) => {
+    e.target.closest(".tooltip")?.classList.remove("tooltip-open");
+  };
 
   return (
     <div className="card w-full bg-base-100 shadow-xl mb-8">
@@ -51,10 +55,13 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          <div className="form-control col-span-2 sm:col-span-1">
+          <div
+            className="tooltip form-control col-span-2 sm:col-span-1"
+            data-tip="ティッカーシンボル・証券コード"
+          >
             <div className="relative">
               <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none">
-                @
+                <FaAt />
               </div>
 
               <input
@@ -65,6 +72,8 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
                 value={asset.symbol}
                 onChange={(e) => setAsset({ ...asset, symbol: e.target.value })}
                 onKeyDown={handleEnterKeyDown}
+                onFocus={handleOnFocusInput}
+                onBlur={handleOnBlurInput}
               />
             </div>
 
@@ -76,7 +85,7 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
             )}
           </div>
 
-          <div className="flex-1">
+          <div className="flex-1 tooltip" data-tip="保有数">
             <div className="relative">
               <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none">
                 数
@@ -91,15 +100,17 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
                   setAsset({ ...asset, balance: e.target.value })
                 }
                 onKeyDown={handleEnterKeyDown}
+                onFocus={handleOnFocusInput}
+                onBlur={handleOnBlurInput}
               />
             </div>
           </div>
 
-          <div className="flex-1">
+          <div className="flex-1 tooltip" data-tip="平均取得価格">
             <div className="form-control">
               <div className="relative">
                 <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none">
-                  $
+                  <FaDollarSign />
                 </div>
                 <input
                   type="text"
@@ -111,6 +122,8 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
                     setAsset({ ...asset, averageTradedPrice: e.target.value })
                   }
                   onKeyDown={handleEnterKeyDown}
+                  onFocus={handleOnFocusInput}
+                  onBlur={handleOnBlurInput}
                 />
               </div>
               {asset.balance && asset.averageTradedPrice && (
