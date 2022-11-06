@@ -1,6 +1,9 @@
 "use client"
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Link from 'next/link';
+import { FaChevronLeft } from "react-icons/fa";
+import AssetsEditListItem from './AssetsEditListItem';
+
 
 const AssetsEdit = withAuthenticationRequired(() => {
   const submit = () => { console.log("submit") }
@@ -29,38 +32,18 @@ const AssetsEdit = withAuthenticationRequired(() => {
 
 
   return (
-    <div className="prose w-full max-w-4xl">
-      <div className="sm:px-4 overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>銘柄</th>
-              <th>保有数量</th>
-              <th>取得価格</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assets.map((asset, i) => (
-              <tr className="hover" key={i}>
-                <th className="pr-0 md:pr-auto">
-                  <div>{asset.symbol}</div>
-                </th>
-                <td className="text-end">{asset.balance}</td>
-                <td className="text-end">
-                  <div>{asset.averageTradedPrice}</div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="prose w-full max-w-4xl sm:px-4">
+      {assets.map((asset, i) => (
+        <AssetsEditListItem preAsset={asset} key={i} />
+      ))}
 
-      <div className="flex gap-4 mt-4 px-4">
+      <div className="flex gap-4 mt-20 px-4">
         <Link
           href="/assets"
           prefetch={false}
           className="btn btn-outline flex-1"
         >
+          <FaChevronLeft className="mr-2" />
           キャンセル
         </Link>
         <button onClick={submit} className="btn btn-primary flex-1">
