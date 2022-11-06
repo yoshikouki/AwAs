@@ -1,9 +1,9 @@
 "use client";
 
-import { ReactNode } from "react";
 import { AppState, Auth0Provider } from "@auth0/auth0-react";
-import { auth0 } from "../config/auth0";
 import { useRouter } from "next/router";
+import { ReactNode } from "react";
+import { config } from "../config";
 
 interface Props {
   children: ReactNode;
@@ -12,15 +12,15 @@ interface Props {
 const AuthProvider = ({ children }: Props) => {
   const router = useRouter();
   const onRedirectCallback = (appState: AppState | undefined) =>
-    router.push(appState?.returnTo || auth0.baseUrl);
+    router.push(appState?.returnTo || config.auth0.baseUrl);
 
   return (
     <Auth0Provider
-      domain={auth0.issuerBaseUrl}
-      clientId={auth0.clientId}
-      redirectUri={auth0.baseUrl}
+      domain={config.auth0.issuerBaseUrl}
+      clientId={config.auth0.clientId}
+      redirectUri={config.auth0.baseUrl}
       onRedirectCallback={onRedirectCallback}
-      audience={auth0.audienceBaseUrl}
+      audience={config.auth0.audienceBaseUrl}
     >
       {children}
     </Auth0Provider>

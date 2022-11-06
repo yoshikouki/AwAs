@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import useTheme from "../hooks/theme";
-import { FaUserCircle, FaSignOutAlt, FaSun, FaMoon } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
-import { auth0 } from "../config/auth0";
+import Link from "next/link";
+import { FaMoon, FaSignOutAlt, FaSun, FaUserCircle } from "react-icons/fa";
+import { config } from "../config";
+import useTheme from "../hooks/theme";
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
@@ -45,7 +45,7 @@ const HeaderNavigation = () => {
                       </li>
                     </Link>
                     <li>
-                      <a onClick={() => logout({ returnTo: auth0.baseUrl })}>
+                      <a onClick={() => logout({ returnTo: config.auth0.baseUrl })}>
                         <FaSignOutAlt className="h-4 w-4" />
                         Logout
                       </a>
