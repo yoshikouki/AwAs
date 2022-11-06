@@ -1,9 +1,10 @@
 import { Router } from "express";
 import assetsRouter from "./assets";
-import indexRouter from "./index";
+import healthRouter from "./health";
 
 const rootRouter = Router();
 
-rootRouter.use("/v1", indexRouter, assetsRouter);
+rootRouter.use("/v1", assetsRouter);
+rootRouter.use("/", healthRouter);
 
 export default rootRouter;
