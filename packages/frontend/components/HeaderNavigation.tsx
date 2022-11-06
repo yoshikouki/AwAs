@@ -1,14 +1,13 @@
 "use client";
 
-import { useAuth0 } from "@auth0/auth0-react";
 import Link from "next/link";
 import { FaMoon, FaSignOutAlt, FaSun, FaUserCircle } from "react-icons/fa";
-import { config } from "../config";
+import { useAuth } from "../hooks/auth";
 import useTheme from "../hooks/theme";
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
-  const { user, isLoading, loginWithRedirect, logout } = useAuth0();
+  const { user, isLoading, login, logout } = useAuth();
 
   return (
     <>
@@ -45,7 +44,9 @@ const HeaderNavigation = () => {
                       </li>
                     </Link>
                     <li>
-                      <a onClick={() => logout({ returnTo: config.frontend.baseUrl })}>
+                      <a
+                        onClick={logout}
+                      >
                         <FaSignOutAlt className="h-4 w-4" />
                         Logout
                       </a>
@@ -55,7 +56,7 @@ const HeaderNavigation = () => {
               </>
             ) : (
               <>
-                <a onClick={loginWithRedirect} className="btn btn-ghost">
+                <a onClick={login} className="btn btn-ghost">
                   Login
                 </a>
               </>

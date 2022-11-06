@@ -1,5 +1,5 @@
 "use client";
-import { withAuthenticationRequired } from "@auth0/auth0-react";
+import { requiredAuth } from "../hooks/auth";
 import { ProfitOrLossText } from "./ProfitOrLossText";
 
 const assets = [
@@ -25,7 +25,7 @@ const assets = [
   },
 ];
 
-const AssetsList = withAuthenticationRequired(() => {
+const AssetsList = requiredAuth(() => {
   return (
     <div className="sm:px-4 overflow-x-auto">
       <table className="table">

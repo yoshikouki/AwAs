@@ -1,11 +1,11 @@
-import React from "react";
-import { User } from '@auth0/auth0-react';
-
 interface Props {
-  user?: User
+  user?: {
+    name: string;
+    email: string;
+  };
 }
 
-const Settings = ({user}: Props) => {
+const Settings = ({ user }: Props) => {
   return (
     <div className="prose w-full max-w-4xl">
       <h1>Settings</h1>
@@ -17,6 +17,6 @@ const Settings = ({user}: Props) => {
       )}
     </div>
   );
-}
+};
 
 export default Settings;

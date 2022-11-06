@@ -1,10 +1,13 @@
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
+import { config } from "../config";
+
+export const requiredAuth = withAuthenticationRequired;
 
 export const useAuth = () => {
   const [accessToken, setAccessToken] = useState("");
-  const { user, getAccessTokenSilently } = useAuth0();
-  const requiredAuth = withAuthenticationRequired;
+  const { user, getAccessTokenSilently, isLoading, loginWithRedirect, logout } =
+    useAuth0();
 
   useEffect(() => {
     (async () => setAccessToken(await getAccessTokenSilently()))();
@@ -12,7 +15,9 @@ export const useAuth = () => {
 
   return {
     user,
-    requiredAuth,
     accessToken,
+    isLoading,
+    login: loginWithRedirect,
+    logout: () => logout({ returnTo: config.frontend.baseUrl }),
   };
 };

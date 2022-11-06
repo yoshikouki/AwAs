@@ -1,12 +1,14 @@
 "use client"
-import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Link from 'next/link';
 import { FaChevronLeft, FaCircleNotch } from "react-icons/fa";
+import { requiredAuth } from '../hooks/auth';
 import AssetsEditListItem from './AssetsEditListItem';
 
 
-const AssetsEdit = withAuthenticationRequired(() => {
-  const submit = () => { console.log("submit") }
+const AssetsEdit = requiredAuth(() => {
+  const submit = () => {
+    console.log("submit");
+  };
   const assets = [
     {
       symbol: "VTI",
@@ -29,7 +31,6 @@ const AssetsEdit = withAuthenticationRequired(() => {
       yieldPercentage: 106.85,
     },
   ];
-
 
   return (
     <div className="prose w-full max-w-4xl sm:px-4">

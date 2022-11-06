@@ -1,10 +1,10 @@
 "use client";
 import type { NextPage } from "next";
 import Settings from "../../components/Settings";
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { requiredAuth, useAuth } from "../../hooks/auth";
 
-const SettingsPage: NextPage = withAuthenticationRequired(() => {
-  const { user } = useAuth0();
+const SettingsPage: NextPage = requiredAuth(() => {
+  const { user } = useAuth();
 
   return (
     <>
