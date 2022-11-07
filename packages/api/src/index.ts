@@ -1,14 +1,14 @@
 import cookieParser from "cookie-parser";
-import morgan from "morgan";
-import path from "path";
-import express from "express";
 import cors from "cors";
+import express from "express";
 import helmet from "helmet";
+import morgan from "morgan";
 import nocache from "nocache";
+import path from "path";
 import configs from "./configs";
-import rootRouter from "./routes/root";
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/not-found.middleware";
+import rootRouter from "./routes/root";
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(morgan("combined"));
 app.use(
   cors({
     origin: configs.client.url,
-    methods: ["GET"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Authorization", "Content-Type"],
     credentials: true,
     maxAge: 86400,
