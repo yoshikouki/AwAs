@@ -1,16 +1,12 @@
-"use client";
 import type { NextPage } from "next";
 import Settings from "../../components/Settings";
-import { requiredAuth, useAuth } from "../../hooks/auth";
 
-const SettingsPage: NextPage = requiredAuth(() => {
-  const { user } = useAuth();
-
+const SettingsPage: NextPage = () => {
   return (
     <>
-      <Settings user={user} />
+      <Settings />
     </>
   );
-});
+};
 
 export default SettingsPage;
