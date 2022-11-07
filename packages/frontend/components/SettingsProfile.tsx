@@ -17,10 +17,11 @@ const SettingsProfile = requiredAuth(() => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+  };
 
 
   return (
@@ -43,7 +44,7 @@ const SettingsProfile = requiredAuth(() => {
                   <label className="input-group">
                     <span>Name</span>
                     <input
-                      {...register("name")}
+                      {...register("name", { value: settings.name })}
                       className="input input-bordered"
                     />
                   </label>
@@ -53,13 +54,16 @@ const SettingsProfile = requiredAuth(() => {
                   <label className="input-group">
                     <span>Email</span>
                     <input
-                      {...register("email", { required: true })}
+                      {...register("email", {
+                        required: true,
+                        value: settings.email,
+                      })}
                       className="input input-bordered"
                     />
                   </label>
                   {errors.email && (
                     <label className="label">
-                      <span className="label-text">
+                      <span className="label-text text-error">
                         メールアドレスを入力してください
                       </span>
                     </label>
