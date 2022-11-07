@@ -2,39 +2,43 @@ import { useEffect, useState } from "react";
 import { config } from "../config";
 import { useAuth } from "./auth";
 
+type HttpMethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
 export const useApi = () => {
   const { getAccessToken } = useAuth();
 
-  const get = async (path: string) => {
-    const response = await fetch(`${config.api.baseUrl}${path}`);
-    return await response.json();
-  };
-
-  const getWithAuth = async (path: string) => {
-    const accessToken = await getAccessToken();
-    const response = await fetch(`${config.api.baseUrl}${path}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  const fetchApi = async (
+    method: HttpMethodType,
+    path: string,
+    option?: { withAuth: boolean }
+  ) => {
+    const fetchOption = { method };
+    if (option?.withAuth) {
+      const accessToken = await getAccessToken();
+      Object.assign(fetchOption, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    }
+    const response = await fetch(`${config.api.baseUrl}${path}`, fetchOption);
     return await response.json();
   };
 
   return {
-    get,
-    getWithAuth,
+    fetchApi,
   };
 };
 
 export function useGet<T>(path: string, option?: { withAuth: boolean }) {
   const [res, setRes] = useState<T | undefined>(undefined);
-  const { get, getWithAuth } = useApi();
+  const { fetchApi } = useApi();
 
   useEffect(() => {
     (async () => {
-      const response = option?.withAuth
-        ? await getWithAuth(path)
-        : await get(path);
+      const response = await fetchApi("GET", path, {
+        withAuth: Boolean(option?.withAuth),
+      });
       setRes(response);
     })();
   }, []);

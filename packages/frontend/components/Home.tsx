@@ -5,11 +5,11 @@ import { useApi } from "../hooks/api";
 
 const Home = () => {
   const [message, setMessage] = useState("");
-  const { get, getWithAuth } = useApi()
+  const { fetchApi } = useApi();
 
   const callApi = async () => {
     try {
-      const res = await get("/health");
+      const res = await fetchApi("GET", "/health");
       setMessage(JSON.stringify(res));
     } catch (error) {
       setMessage(String(error));
@@ -18,7 +18,7 @@ const Home = () => {
 
   const callSecureApi = async () => {
     try {
-      const res = await getWithAuth("/v1/assets");
+      const res = await fetchApi("GET", "/v1/assets", { withAuth: true });
       setMessage(JSON.stringify(res));
     } catch (error) {
       setMessage(String(error));
