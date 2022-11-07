@@ -13,7 +13,9 @@ type Inputs = {
 
 const SettingsProfile = requiredAuth(() => {
   const [profileEdit, setProfileEdit] = useState(false);
-  const settings = useGet<SettingsResponse>("/v1/settings", { withAuth: true });
+  const { data: settings } = useGet<SettingsResponse>("/v1/settings", {
+    withAuth: true,
+  });
   const {
     register,
     handleSubmit,
@@ -22,7 +24,6 @@ const SettingsProfile = requiredAuth(() => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
   };
-
 
   return (
     <>

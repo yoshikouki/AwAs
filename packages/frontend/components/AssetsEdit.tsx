@@ -7,7 +7,7 @@ import { Asset } from "../types/asset";
 import AssetsEditListItem from "./AssetsEditListItem";
 
 const AssetsEdit = requiredAuth(() => {
-  const assets = useGet<Asset[]>("/v1/assets", { withAuth: true });
+  const { data: assets } = useGet<Asset[]>("/v1/assets", { withAuth: true });
 
   const submit = () => {
     console.log("submit");

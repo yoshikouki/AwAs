@@ -6,6 +6,11 @@ type HttpMethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 interface FetchApiOption {
   withAuth: boolean;
 }
+type FetchApiResponse<T> = {
+  error: Error | null;
+  loading: boolean;
+  data: T | null;
+};
 
 export const useApi = () => {
   const { getAccessToken } = useAuth();
@@ -33,24 +38,56 @@ export const useApi = () => {
   };
 };
 
-function useFetchApi<T>(method: HttpMethodType, path: string, option?: FetchApiOption) {
-  const [res, setRes] = useState<T | undefined>(undefined);
+function useFetchApi<T>(
+  method: HttpMethodType,
+  path: string,
+  option?: FetchApiOption
+) {
+  const [state, setState] = useState<FetchApiResponse<T>>({
+    error: null,
+    loading: true,
+    data: null,
+  });
+  const [refreshIndex, setRefreshIndex] = useState(0);
   const { fetchApi } = useApi();
 
   useEffect(() => {
     (async () => {
-      const response = await fetchApi(method, path, {
-        withAuth: Boolean(option?.withAuth),
-      });
-      setRes(response);
+      try {
+        const response = await fetchApi(method, path, {
+          withAuth: Boolean(option?.withAuth),
+        });
+        setState({
+          ...state,
+          data: response,
+          error: null,
+          loading: false,
+        });
+      } catch (error) {
+        if (error instanceof Error) {
+          setState({
+            ...state,
+            error,
+            loading: false,
+          });
+        }
+      }
     })();
-  }, []);
+  }, [refreshIndex]);
 
-  return res;
+  return {
+    ...state,
+    refresh: () => setRefreshIndex(refreshIndex + 1),
+  };
 }
 
-export const useGet = <T>(path: string, option?: FetchApiOption) => useFetchApi<T>("GET", path, option);
-export const usePost = <T>(path: string, option?: FetchApiOption) => useFetchApi<T>("POST", path, option);
-export const usePut = <T>(path: string, option?: FetchApiOption) => useFetchApi<T>("PUT", path, option);
-export const usePatch = <T>(path: string, option?: FetchApiOption) => useFetchApi<T>("PATCH", path, option);
-export const useDelete = <T>(path: string, option?: FetchApiOption) => useFetchApi<T>("DELETE", path, option);
+export const useGet = <T>(path: string, option?: FetchApiOption) =>
+  useFetchApi<T>("GET", path, option);
+export const usePost = <T>(path: string, option?: FetchApiOption) =>
+  useFetchApi<T>("POST", path, option);
+export const usePut = <T>(path: string, option?: FetchApiOption) =>
+  useFetchApi<T>("PUT", path, option);
+export const usePatch = <T>(path: string, option?: FetchApiOption) =>
+  useFetchApi<T>("PATCH", path, option);
+export const useDelete = <T>(path: string, option?: FetchApiOption) =>
+  useFetchApi<T>("DELETE", path, option);

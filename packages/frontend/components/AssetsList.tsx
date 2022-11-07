@@ -5,7 +5,7 @@ import { Asset } from "../types/asset";
 import { ProfitOrLossText } from "./ProfitOrLossText";
 
 const AssetsList = requiredAuth(() => {
-  const assets = useGet<Asset[]>("/v1/assets", { withAuth: true });
+  const { data: assets } = useGet<Asset[]>("/v1/assets", { withAuth: true });
 
   return (
     <div className="sm:px-4 overflow-x-auto">
