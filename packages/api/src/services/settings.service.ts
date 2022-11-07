@@ -14,4 +14,9 @@ export class SettingsService {
       email: "test@example.com",
     };
   }
+
+  updateOnUser({ uid }: { uid: string }) {
+    const user = this.userModel.findOneUserByUid({ uid });
+    return;
+  }
 }
