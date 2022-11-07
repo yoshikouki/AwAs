@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { FaMoon, FaSignOutAlt, FaSun, FaUserCircle } from "react-icons/fa";
+import { FaCog, FaMoon, FaSignOutAlt, FaSun, FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../hooks/auth";
 import useTheme from "../hooks/theme";
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
-  const { user, isLoading, login, logout } = useAuth();
+  const { isAuthenticated, isLoading, login, logout } = useAuth();
 
   return (
     <>
@@ -21,7 +21,7 @@ const HeaderNavigation = () => {
           <div className="flex-none">
             {isLoading ? (
               <div className="btn btn-disabled">Loading</div>
-            ) : user ? (
+            ) : isAuthenticated ? (
               <>
                 <div className="dropdown dropdown-hover dropdown-end">
                   <label tabIndex={0} className="btn btn-ghost">
@@ -35,18 +35,19 @@ const HeaderNavigation = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content menu shadow rounded-box w-40"
+                    className="dropdown-content menu shadow rounded w-40"
                   >
-                    <Link href="/settings">
-                      <li>
-                        <FaUserCircle className="h-4 w-4" />
-                        Settings
-                      </li>
-                    </Link>
+                    <li className="menu-title py-1">
+                      <span>user.name</span>
+                    </li>
                     <li>
-                      <a
-                        onClick={logout}
-                      >
+                      <Link href="/settings">
+                        <FaCog className="h-4 w-4" />
+                        Settings
+                      </Link>
+                    </li>
+                    <li>
+                      <a onClick={logout}>
                         <FaSignOutAlt className="h-4 w-4" />
                         Logout
                       </a>
