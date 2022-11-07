@@ -15,7 +15,7 @@ type FetchApiResponse<T> = {
 export const useApi = () => {
   const { getAccessToken } = useAuth();
 
-  const fetchApi = async (
+  const fetchApi = async <T>(
     method: HttpMethodType,
     path: string,
     option?: FetchApiOption
@@ -30,7 +30,7 @@ export const useApi = () => {
       });
     }
     const response = await fetch(`${config.api.baseUrl}${path}`, fetchOption);
-    return await response.json();
+    return await response.json() as T;
   };
 
   return {

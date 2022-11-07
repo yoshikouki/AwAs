@@ -16,7 +16,12 @@ export class SettingsService {
   }
 
   updateOnUser({ uid }: { uid: string }) {
+    let error: Error | null = null;
     const user = this.userModel.findOneUserByUid({ uid });
-    return;
+    const profile = {
+      name: "updated test name",
+      email: "updated-test@example.com",
+    };
+    return { profile, error };
   }
 }

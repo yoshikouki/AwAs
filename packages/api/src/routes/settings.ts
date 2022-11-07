@@ -13,16 +13,16 @@ router.get("/settings", validateAccessToken, (req, res, _) => {
   res.status(200).json(settings);
 });
 
-router.patch("/profile", validateAccessToken, (req, res, _) => {
+router.patch("/settings/profile", validateAccessToken, (req, res, _) => {
   const uid = req.auth?.payload.sub;
   if (!uid) return res.status(401).json({ message: "Unauthorized" });
 
   const settingsService = new SettingsService();
-  const errors = settingsService.updateOnUser({ uid });
-  if (errors) {
-    res.status(400).json({ message: "Bad Request", errors });
+  const { profile, error } = settingsService.updateOnUser({ uid });
+  if (error) {
+    res.status(400).json({ message: "Bad Request", error });
   } else {
-    res.status(200).json({ message: "OK" });
+    res.status(200).json(profile);
   }
 })
 
