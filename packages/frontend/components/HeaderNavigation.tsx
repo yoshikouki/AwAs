@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import {
   FaCog,
   FaMoon,
@@ -9,7 +8,7 @@ import {
   FaSun,
   FaUserCircle
 } from "react-icons/fa";
-import { useApi } from "../hooks/api";
+import { useGet } from "../hooks/api";
 import { useAuth } from "../hooks/auth";
 import useTheme from "../hooks/theme";
 import { ProfileResponse } from "../types/api";
@@ -17,15 +16,7 @@ import { ProfileResponse } from "../types/api";
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
   const { isAuthenticated, isLoading, login, logout } = useAuth();
-  const { fetchApi } = useApi();
-  const [profile, setProfile] = useState<ProfileResponse | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      const profile = await fetchApi<ProfileResponse>("/v1/profile", true);
-      setProfile(profile);
-    })();
-  }, []);
+  const { data: profile } = useGet<ProfileResponse>("/v1/profile", true);
 
   return (
     <>
@@ -55,11 +46,9 @@ const HeaderNavigation = () => {
                     tabIndex={0}
                     className="dropdown-content menu shadow rounded w-40"
                   >
-                    {profile && (
-                      <li className="menu-title py-1">
-                        <span>{profile.name || "(no name)"}</span>
-                      </li>
-                    )}
+                    <li className="menu-title py-1">
+                      <span>{profile?.name || "(no name)"}</span>
+                    </li>
                     <li>
                       <Link href="/settings">
                         <FaCog className="h-4 w-4" />

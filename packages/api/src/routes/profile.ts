@@ -9,9 +9,9 @@ router.get("/profile", validateAccessToken, async (req, res, _) => {
   if (!uid) return res.status(401).json({ message: "Unauthorized" });
 
   const profileService = new ProfileService();
-  const result = await profileService.get({ uid });
-  if (result) {
-    res.status(200).json({ message: "OK" });
+  const profile = await profileService.get({ uid });
+  if (profile) {
+    res.status(200).json(profile);
   } else {
     res.status(400).json({ message: "Bad Request" });
   }

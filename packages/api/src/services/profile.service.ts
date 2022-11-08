@@ -8,7 +8,7 @@ export class ProfileService {
   }
 
   async get({ uid }: { uid: string }) {
-    await this.userModel.findOrCreateByUid({ uid });
-    return true;
+    const { name, email } = await this.userModel.findOrCreateByUid({ uid });
+    return { name, email };
   }
 }
