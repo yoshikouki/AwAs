@@ -7,21 +7,26 @@ export class SettingsService {
     this.userModel = props?.userModel || new UserModel();
   }
 
-  getByUser({ uid }: { uid: string }) {
-    const user = this.userModel.findOneUserByUid({ uid });
-    return {
-      name: "test name",
-      email: "test@example.com",
-    };
+  async getByUser({ uid }: { uid: string }) {
+    const { name, email } = await this.userModel.findOrCreateByUid({ uid });
+    return { name, email };
   }
 
-  updateOnUser({ uid }: { uid: string }) {
+  async updateOnUser({
+    uid,
+    name,
+    email,
+  }: {
+    uid: string;
+    name: string;
+    email: string;
+  }) {
     let error: Error | null = null;
-    const user = this.userModel.findOneUserByUid({ uid });
-    const profile = {
-      name: "updated test name",
-      email: "updated-test@example.com",
-    };
-    return { profile, error };
+    const user = await this.userModel.updateByUid({
+      uid,
+      name,
+      email,
+    });
+    return { profile: { name: user.name, email: user.email }, error };
   }
 }

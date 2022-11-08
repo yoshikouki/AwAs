@@ -8,7 +8,19 @@ export class UserModel {
     this.prisma = props?.prisma || prisma;
   }
 
-  findOneUserByUid({ uid }: { uid: string }) {
-    return this.prisma.user.findUnique({ where: { uid } });
+  findOrCreateByUid({ uid }: { uid: string }) {
+    return this.prisma.user.upsert({
+      where: { uid },
+      update: {},
+      create: { uid },
+    });
+  }
+
+  updateByUid({ uid, name, email }: { uid: string;  name: string;  email: string }) {
+    return this.prisma.user.upsert({
+      where: { uid },
+      update: { name, email },
+      create: { uid, name, email },
+    });
   }
 }

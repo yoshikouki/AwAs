@@ -8,7 +8,7 @@ export class AssetsService {
   }
 
   getAllByUser({ uid }: { uid: string }) {
-    const user = this.userModel.findOneUserByUid({ uid });
+    const user = this.userModel.findOrCreateByUid({ uid });
     return [
       {
         symbol: "VTI",
@@ -44,7 +44,7 @@ export class AssetsService {
   }
 
   updateAllByUser({ uid }: { uid: string }) {
-    const user = this.userModel.findOneUserByUid({ uid });
+    const user = this.userModel.findOrCreateByUid({ uid });
 
     return;
   }
