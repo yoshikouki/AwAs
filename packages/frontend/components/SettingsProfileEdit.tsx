@@ -17,6 +17,9 @@ interface Props {
   setProfileEdit: Dispatch<SetStateAction<boolean>>;
 }
 
+const emailPattern =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const SettingsProfileEdit = requiredAuth(
   ({ settings, setProfileEdit, setSettings }: Props) => {
     const {
@@ -31,7 +34,7 @@ const SettingsProfileEdit = requiredAuth(
         true,
         {
           method: "PATCH",
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         }
       );
       setProfileEdit(false);
@@ -53,10 +56,24 @@ const SettingsProfileEdit = requiredAuth(
           <label className="input-group">
             <span>Name</span>
             <input
-              {...register("name", { value: settings.name })}
+              {...register("name", {
+                minLength: { value: 2, message: "2〜15文字で入力してください" },
+                maxLength: {
+                  value: 15,
+                  message: "2〜15文字で入力してください",
+                },
+                value: settings.name,
+              })}
               className="input input-bordered"
             />
           </label>
+          {errors.name && (
+            <label className="label">
+              <span className="label-text text-error">
+                {errors.name.message}
+              </span>
+            </label>
+          )}
         </div>
 
         <div className="form-control mb-8">
@@ -64,7 +81,11 @@ const SettingsProfileEdit = requiredAuth(
             <span>Email</span>
             <input
               {...register("email", {
-                required: true,
+                required: "入力してください",
+                pattern: {
+                  value: emailPattern,
+                  message: "不正な形式です",
+                },
                 value: settings.email,
               })}
               className="input input-bordered"
@@ -73,7 +94,7 @@ const SettingsProfileEdit = requiredAuth(
           {errors.email && (
             <label className="label">
               <span className="label-text text-error">
-                メールアドレスを入力してください
+                {errors.email.message}
               </span>
             </label>
           )}
