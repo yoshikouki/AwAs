@@ -9,9 +9,7 @@ const Settings = () => {
   const [profileEdit, setProfileEdit] = useState<boolean>(false);
   const [settings, setSettings] = useState<SettingsResponse | null>(null);
 
-  const { data: fetchedSettings } = useGet<SettingsResponse>("/v1/settings", {
-    withAuth: true,
-  });
+  const { data: fetchedSettings } = useGet<SettingsResponse>("/v1/settings", true);
 
   useEffect(() => setSettings(fetchedSettings), [fetchedSettings])
 

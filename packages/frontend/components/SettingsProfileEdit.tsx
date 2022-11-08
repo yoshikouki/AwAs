@@ -31,6 +31,7 @@ const SettingsProfileEdit = requiredAuth(
         true,
         {
           method: "PATCH",
+          body: JSON.stringify(data)
         }
       );
       setProfileEdit(false);

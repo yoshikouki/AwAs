@@ -16,16 +16,20 @@ export const useApi = () => {
     withAuth: boolean = false,
     option?: RequestInit
   ) => {
-    const fetchOption = option || { method: "GET" };
+    let headersOption: HeadersInit = {};
     if (withAuth) {
       const accessToken = await getAccessToken();
-      Object.assign(fetchOption, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      headersOption = { Authorization: `Bearer ${accessToken}` };
     }
-    const response = await fetch(`${config.api.baseUrl}${path}`, fetchOption);
+    const response = await fetch(`${config.api.baseUrl}${path}`, {
+      method: "GET",
+      headers: {
+        ...headersOption,
+        "Content-Type": "application/json",
+        ...option?.headers
+      },
+      ...option
+    });
     return (await response.json()) as T;
   };
 
