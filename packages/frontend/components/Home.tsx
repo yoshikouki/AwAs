@@ -9,7 +9,7 @@ const Home = () => {
 
   const callApi = async () => {
     try {
-      const res = await fetchApi("GET", "/health");
+      const res = await fetchApi("/health");
       setMessage(JSON.stringify(res));
     } catch (error) {
       setMessage(String(error));
@@ -18,7 +18,7 @@ const Home = () => {
 
   const callSecureApi = async () => {
     try {
-      const res = await fetchApi("GET", "/v1/assets", { withAuth: true });
+      const res = await fetchApi("/v1/assets", true);
       setMessage(JSON.stringify(res));
     } catch (error) {
       setMessage(String(error));

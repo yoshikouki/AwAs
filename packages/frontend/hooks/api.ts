@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import { config } from "../config";
 import { useAuth } from "./auth";
 
-type HttpMethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-interface FetchApiOption {
-  withAuth: boolean;
-}
 type FetchApiResponse<T> = {
   error: Error | null;
   loading: boolean;
@@ -16,12 +12,12 @@ export const useApi = () => {
   const { getAccessToken } = useAuth();
 
   const fetchApi = async <T>(
-    method: HttpMethodType,
     path: string,
-    option?: FetchApiOption
+    withAuth: boolean = false,
+    option?: RequestInit
   ) => {
-    const fetchOption = { method };
-    if (option?.withAuth) {
+    const fetchOption = option || { method: "GET" };
+    if (withAuth) {
       const accessToken = await getAccessToken();
       Object.assign(fetchOption, {
         headers: {
@@ -30,7 +26,7 @@ export const useApi = () => {
       });
     }
     const response = await fetch(`${config.api.baseUrl}${path}`, fetchOption);
-    return await response.json() as T;
+    return (await response.json()) as T;
   };
 
   return {
@@ -39,9 +35,9 @@ export const useApi = () => {
 };
 
 function useFetchApi<T>(
-  method: HttpMethodType,
   path: string,
-  option?: FetchApiOption
+  withAuth: boolean = false,
+  option?: RequestInit
 ) {
   const [state, setState] = useState<FetchApiResponse<T>>({
     error: null,
@@ -54,9 +50,7 @@ function useFetchApi<T>(
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetchApi(method, path, {
-          withAuth: Boolean(option?.withAuth),
-        });
+        const response = await fetchApi<T>(path, withAuth, option);
         setState({
           ...state,
           data: response,
@@ -81,13 +75,28 @@ function useFetchApi<T>(
   };
 }
 
-export const useGet = <T>(path: string, option?: FetchApiOption) =>
-  useFetchApi<T>("GET", path, option);
-export const usePost = <T>(path: string, option?: FetchApiOption) =>
-  useFetchApi<T>("POST", path, option);
-export const usePut = <T>(path: string, option?: FetchApiOption) =>
-  useFetchApi<T>("PUT", path, option);
-export const usePatch = <T>(path: string, option?: FetchApiOption) =>
-  useFetchApi<T>("PATCH", path, option);
-export const useDelete = <T>(path: string, option?: FetchApiOption) =>
-  useFetchApi<T>("DELETE", path, option);
+export const useGet = <T>(
+  path: string,
+  withAuth: boolean = false,
+  option?: RequestInit
+) => useFetchApi<T>(path, withAuth, { method: "GET", ...option });
+export const usePost = <T>(
+  path: string,
+  withAuth: boolean = false,
+  option?: RequestInit
+) => useFetchApi<T>(path, withAuth, { method: "POST", ...option });
+export const usePut = <T>(
+  path: string,
+  withAuth: boolean = false,
+  option?: RequestInit
+) => useFetchApi<T>(path, withAuth, { method: "PUT", ...option });
+export const usePatch = <T>(
+  path: string,
+  withAuth: boolean = false,
+  option?: RequestInit
+) => useFetchApi<T>(path, withAuth, { method: "PATCH", ...option });
+export const useDelete = <T>(
+  path: string,
+  withAuth: boolean = false,
+  option?: RequestInit
+) => useFetchApi<T>(path, withAuth, { method: "DELETE", ...option });

@@ -27,10 +27,10 @@ const SettingsProfileEdit = requiredAuth(
     const { fetchApi } = useApi();
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
       const updatedSettings = await fetchApi<SettingsResponse>(
-        "PATCH",
         "/v1/settings/profile",
+        true,
         {
-          withAuth: true,
+          method: "PATCH",
         }
       );
       setProfileEdit(false);
