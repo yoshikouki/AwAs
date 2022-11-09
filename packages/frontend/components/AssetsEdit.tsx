@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FaChevronLeft, FaCircleNotch, FaPlus } from "react-icons/fa";
+import { useApi } from "../hooks/api";
 import { Asset } from "../types/asset";
 import AssetsEditListItem, { AssetEditProps } from "./AssetsEditListItem";
 
@@ -21,17 +23,21 @@ const AssetsEdit = ({ assets }: { assets: Asset[] }) => {
       })),
     },
   });
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control,
-      name: "assets",
-    }
-  );
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+    control,
+    name: "assets",
+  });
+  const { fetchApi } = useApi();
+  const router = useRouter();
 
   const appendAsset = () => append(assetDefaultValue);
   const removeAsset = (index: number) => remove(index);
-  const onSubmit = (data: { assets: AssetEditProps[] }) => {
-    console.log(data);
+  const onSubmit = async (data: { assets: AssetEditProps[] }) => {
+    const result = await fetchApi("/v1/assets", true, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    });
+    router.push("/assets");
   };
 
   return (
@@ -55,11 +61,7 @@ const AssetsEdit = ({ assets }: { assets: Asset[] }) => {
         </div>
 
         <div className="flex gap-4 mt-20 px-4">
-          <Link
-            href="/assets"
-            prefetch={false}
-            className="btn btn-outline flex-1"
-          >
+          <Link href="/assets" prefetch={false} className="btn btn-outline flex-1">
             <FaChevronLeft className="mr-2" />
             キャンセル
           </Link>

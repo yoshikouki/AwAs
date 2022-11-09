@@ -1,14 +1,17 @@
+import { AssetModel } from "../models/asset.model";
 import { UserModel } from "../models/user.model";
 
 export class AssetsService {
   readonly userModel: UserModel;
+  readonly assetModel: AssetModel;
 
   constructor(props?: Partial<AssetsService>) {
     this.userModel = props?.userModel || new UserModel();
+    this.assetModel = props?.assetModel || new AssetModel();
   }
 
-  getAllByUser({ uid }: { uid: string }) {
-    const user = this.userModel.findOrCreateByUid({ uid });
+  async getAllByUser({ uid }: { uid: string }) {
+    const user = await this.userModel.findOrCreateByUid({ uid });
     return [
       {
         symbol: "VTI",
@@ -43,9 +46,19 @@ export class AssetsService {
     ];
   }
 
-  updateAllByUser({ uid }: { uid: string }) {
-    const user = this.userModel.findOrCreateByUid({ uid });
+  async updateAllByUser({
+    uid,
+    assets,
+  }: {
+    uid: string;
+    assets: { symbol: string; balance: number; averageTradedPrice: number }[];
+  }) {
+    const user = await this.userModel.findOrCreateByUid({ uid });
+    if (!user) {
+      return { errors: [new Error("Bad User ID")] };
+    }
 
-    return;
+    const result = await this.assetModel.upsertAll({ uid, assets });
+    return { result, errors: null };
   }
 }
