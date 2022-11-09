@@ -49,7 +49,7 @@ const AssetsEditListItem = ({
   };
 
   return (
-    <div className="card w-full bg-base-100 shadow-xl mb-8">
+    <div className="card w-full bg-base-100 shadow-md mb-8">
       <div className="card-body">
         <div className="card-actions justify-end">
           <button

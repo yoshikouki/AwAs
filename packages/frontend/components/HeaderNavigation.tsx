@@ -44,7 +44,7 @@ const HeaderNavigation = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content menu shadow rounded w-40"
+                    className="dropdown-content menu rounded w-40 shadow-md bg-base-100"
                   >
                     <li className="menu-title py-1">
                       <span>{profile?.name || "(no name)"}</span>
