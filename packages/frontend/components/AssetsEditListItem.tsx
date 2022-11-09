@@ -1,25 +1,28 @@
 "use client";
-import { FocusEventHandler, KeyboardEventHandler, useState } from "react";
+import { FocusEventHandler, KeyboardEventHandler } from "react";
+import { UseFormRegister } from "react-hook-form";
 import { FaAt, FaDollarSign, FaTimes } from "react-icons/fa";
 
 interface Props {
-  preAsset?: {
-    symbol: string;
-    balance: number;
-    averageTradedPrice: number;
-  };
+  asset: AssetEditProps;
   index: number;
+  register: UseFormRegister<{ assets: AssetEditProps[] }>;
+  removeAsset: (index: number) => void;
 }
 
-const AssetsEditListItem = ({ preAsset, index }: Props) => {
-  const [asset, setAsset] = useState({
-    symbol: preAsset?.symbol || "",
-    balance: preAsset?.balance.toString() || "0",
-    averageTradedPrice: preAsset?.averageTradedPrice.toString() || "0",
-  });
-  const balanceValue = (
-    parseInt(asset.balance, 10) * parseFloat(asset.averageTradedPrice)
-  )
+export interface AssetEditProps {
+  symbol: string;
+  balance: number;
+  averageTradedPrice: number;
+}
+
+const AssetsEditListItem = ({
+  asset,
+  index,
+  register,
+  removeAsset,
+}: Props) => {
+  const balanceValue = (asset.balance * asset.averageTradedPrice)
     .toFixed(2)
     .toLocaleString();
   const handleEnterKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -49,7 +52,10 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
     <div className="card w-full bg-base-100 shadow-xl mb-8">
       <div className="card-body">
         <div className="card-actions justify-end">
-          <button className="btn btn-ghost btn-sm">
+          <button
+            onClick={() => removeAsset(index)}
+            className="btn btn-ghost btn-sm"
+          >
             <FaTimes />
           </button>
         </div>
@@ -65,24 +71,28 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
               </div>
 
               <input
-                type="text"
-                placeholder="シンボル"
+                {...register(`assets.${index}.symbol`, {
+                  maxLength: {
+                    value: 5,
+                    message: "5文字以下で入力してください",
+                  },
+                  value: asset.symbol,
+                })}
                 id={`asset-${index}-0`}
                 className="input input-bordered w-full pl-10"
-                value={asset.symbol}
-                onChange={(e) => setAsset({ ...asset, symbol: e.target.value })}
                 onKeyDown={handleEnterKeyDown}
                 onFocus={handleOnFocusInput}
                 onBlur={handleOnBlurInput}
               />
             </div>
 
-            {asset.symbol && (
+            {/* TODO: 編集時に銘柄名を表示させたい  */}
+            {/* {asset.symbol && (
               <label className="label">
                 <span className="label-text-alt"></span>
                 <span className="label-text-alt">銘柄</span>
               </label>
-            )}
+            )} */}
           </div>
 
           <div className="flex-1 tooltip tooltip-primary" data-tip="保有数">
@@ -91,14 +101,13 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
                 数
               </div>
               <input
-                type="text"
-                placeholder="保有数"
+                {...register(`assets.${index}.balance`, {
+                  valueAsNumber: true,
+                  min: { value: 0, message: "0以上を入力してください" },
+                  value: asset.balance,
+                })}
                 id={`asset-${index}-1`}
                 className="input input-bordered w-full pl-10"
-                value={asset.balance}
-                onChange={(e) =>
-                  setAsset({ ...asset, balance: e.target.value })
-                }
                 onKeyDown={handleEnterKeyDown}
                 onFocus={handleOnFocusInput}
                 onBlur={handleOnBlurInput}
@@ -106,32 +115,32 @@ const AssetsEditListItem = ({ preAsset, index }: Props) => {
             </div>
           </div>
 
-          <div className="flex-1 tooltip tooltip-primary" data-tip="平均取得価格">
+          <div
+            className="flex-1 tooltip tooltip-primary"
+            data-tip="平均取得価格"
+          >
             <div className="form-control">
               <div className="relative">
                 <div className="flex absolute inset-y-0 left-0 items-center px-4 pointer-events-none text-primary">
                   <FaDollarSign />
                 </div>
                 <input
-                  type="text"
-                  placeholder="平均取得価格"
+                  {...register(`assets.${index}.averageTradedPrice`, {
+                    valueAsNumber: true,
+                    min: { value: 0, message: "0以上を入力してください" },
+                    value: asset.balance,
+                  })}
                   id={`asset-${index}-2`}
                   className="input input-bordered w-full pl-10"
-                  value={asset.averageTradedPrice}
-                  onChange={(e) =>
-                    setAsset({ ...asset, averageTradedPrice: e.target.value })
-                  }
                   onKeyDown={handleEnterKeyDown}
                   onFocus={handleOnFocusInput}
                   onBlur={handleOnBlurInput}
                 />
               </div>
-              {asset.balance && asset.averageTradedPrice && (
-                <label className="label">
-                  <span className="label-text-alt"></span>
-                  <span className="label-text-alt">{balanceValue}</span>
-                </label>
-              )}
+              <label className="label">
+                <span className="label-text-alt"></span>
+                <span className="label-text-alt">{balanceValue}</span>
+              </label>
             </div>
           </div>
         </div>
