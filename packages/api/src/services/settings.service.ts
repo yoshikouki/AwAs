@@ -12,15 +12,7 @@ export class SettingsService {
     return { name, email };
   }
 
-  async updateOnUser({
-    uid,
-    name,
-    email,
-  }: {
-    uid: string;
-    name: string;
-    email: string;
-  }) {
+  async updateOnUser({ uid, name, email }: { uid: string; name: string; email: string }) {
     let error: Error | null = null;
     const user = await this.userModel.updateByUid({
       uid,

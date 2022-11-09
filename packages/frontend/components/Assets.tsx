@@ -1,9 +1,8 @@
-import Link from 'next/link';
+import Link from "next/link";
 import { FaPen } from "react-icons/fa";
-import AssetsList from './AssetsList';
+import AssetsList from "./AssetsList";
 
 const Assets = () => {
-
   return (
     <div className="prose w-full max-w-4xl">
       <h1 className="px-4">Assets</h1>

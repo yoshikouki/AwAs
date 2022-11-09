@@ -15,7 +15,7 @@ const navigationItems = [
     title: "Assets",
     path: "/assets",
     icon: <BiCoinStack className="h-6 w-6" />,
-  }
+  },
 ];
 
 const MainNavigation = () => {
@@ -26,11 +26,7 @@ const MainNavigation = () => {
     <>
       <div className="btm-nav z-20 sm:hidden">
         {navigationItems.map((item, i) => (
-          <Link
-            href={item.path}
-            key={i}
-            className={`${isCurrentPage(item.path) && "active"}`}
-          >
+          <Link href={item.path} key={i} className={`${isCurrentPage(item.path) && "active"}`}>
             {item.icon}
           </Link>
         ))}
@@ -40,10 +36,7 @@ const MainNavigation = () => {
         <ul className="menu p-0 px-4 mt-12 lg:w-80 text-base-content">
           {navigationItems.map((item, i) => (
             <li key={i}>
-              <Link
-                href={item.path}
-                className={`${isCurrentPage(item.path) && "active"}`}
-              >
+              <Link href={item.path} className={`${isCurrentPage(item.path) && "active"}`}>
                 {item.icon}
                 <span className="hidden lg:inline">{item.title}</span>
               </Link>

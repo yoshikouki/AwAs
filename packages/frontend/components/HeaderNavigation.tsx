@@ -1,13 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  FaCog,
-  FaMoon,
-  FaSignOutAlt,
-  FaSun,
-  FaUserCircle
-} from "react-icons/fa";
+import { FaCog, FaMoon, FaSignOutAlt, FaSun, FaUserCircle } from "react-icons/fa";
 import { useGet } from "../hooks/api";
 import { useAuth } from "../hooks/auth";
 import useTheme from "../hooks/theme";
@@ -71,10 +65,7 @@ const HeaderNavigation = () => {
                 </a>
               </>
             )}
-            <button
-              className="btn btn-square btn-ghost"
-              onClick={themeCtx.toggleTheme}
-            >
+            <button className="btn btn-square btn-ghost" onClick={themeCtx.toggleTheme}>
               {themeCtx.theme === "light" ? (
                 <FaSun className="h-6 w-6" />
               ) : (

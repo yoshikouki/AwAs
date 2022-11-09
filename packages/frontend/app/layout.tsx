@@ -1,7 +1,7 @@
-import "../styles/globals.css";
-import ThemeContextProvider from "../components/ThemeContextProvider";
 import AuthProvider from "../components/AuthProvider";
-import DefaultLayout from '../components/DefaultLayout';
+import DefaultLayout from "../components/DefaultLayout";
+import ThemeContextProvider from "../components/ThemeContextProvider";
+import "../styles/globals.css";
 
 interface Props {
   children: React.ReactNode;

@@ -2,13 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-if (
-  !(
-    process.env.CLIENT_URL &&
-    process.env.AUTH0_ISSUER_BASE_URL &&
-    process.env.AUTH0_AUDIENCE
-  )
-) {
+if (!(process.env.CLIENT_URL && process.env.AUTH0_ISSUER_BASE_URL && process.env.AUTH0_AUDIENCE)) {
   throw new Error("Missing required environment variables.");
 }
 

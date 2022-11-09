@@ -11,7 +11,7 @@ const Settings = () => {
 
   const { data: fetchedSettings } = useGet<SettingsResponse>("/v1/settings", true);
 
-  useEffect(() => setSettings(fetchedSettings), [fetchedSettings])
+  useEffect(() => setSettings(fetchedSettings), [fetchedSettings]);
 
   return (
     <div className="prose w-full max-w-4xl">
@@ -28,10 +28,7 @@ const Settings = () => {
             ) : (
               <>
                 <div className="card-actions justify-end">
-                  <button
-                    className="btn btn-ghost btn-sm"
-                    onClick={() => setProfileEdit(true)}
-                  >
+                  <button className="btn btn-ghost btn-sm" onClick={() => setProfileEdit(true)}>
                     <FaPen />
                   </button>
                 </div>

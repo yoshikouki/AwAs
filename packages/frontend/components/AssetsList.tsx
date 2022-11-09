@@ -28,9 +28,7 @@ const AssetsList = requiredAuth(() => {
               {/* 銘柄 */}
               <th className="pr-0 md:pr-auto">
                 <div>{asset.symbol}</div>
-                <div className="text-ellipsis overflow-hidden w-20 md:w-auto">
-                  {asset.name}
-                </div>
+                <div className="text-ellipsis overflow-hidden w-20 md:w-auto">{asset.name}</div>
               </th>
               {/* 保有数量 */}
               <td className="text-end">{asset.balance}</td>

@@ -27,7 +27,6 @@ router.patch(
       return res.status(400).json({ errors: errors.array() });
     }
 
-
     const settingsService = new SettingsService();
     const { profile, error } = await settingsService.updateOnUser({
       uid,

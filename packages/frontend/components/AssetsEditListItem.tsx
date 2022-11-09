@@ -16,15 +16,8 @@ export interface AssetEditProps {
   averageTradedPrice: number;
 }
 
-const AssetsEditListItem = ({
-  asset,
-  index,
-  register,
-  removeAsset,
-}: Props) => {
-  const balanceValue = (asset.balance * asset.averageTradedPrice)
-    .toFixed(2)
-    .toLocaleString();
+const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
+  const balanceValue = (asset.balance * asset.averageTradedPrice).toFixed(2).toLocaleString();
   const handleEnterKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     let nextInput: HTMLInputElement | null;
     if (e.key === "Enter" && e.target instanceof HTMLInputElement) {
@@ -34,9 +27,7 @@ const AssetsEditListItem = ({
           `#${prefix}-${assetIndex}-${parseInt(formIndex, 10) + 1}`
         );
       } else {
-        nextInput = document.querySelector(
-          `#${prefix}-${parseInt(assetIndex, 10) + 1}-0`
-        );
+        nextInput = document.querySelector(`#${prefix}-${parseInt(assetIndex, 10) + 1}-0`);
       }
       if (nextInput) nextInput.focus();
     }

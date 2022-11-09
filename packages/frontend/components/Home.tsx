@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { useApi } from "../hooks/api";
@@ -34,11 +34,9 @@ const Home = () => {
       <div>
         <button onClick={callSecureApi}>call Secure API</button>
       </div>
-      {message && (
-        <p>Message: {message}</p>
-      )}
+      {message && <p>Message: {message}</p>}
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

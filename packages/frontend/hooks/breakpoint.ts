@@ -28,8 +28,7 @@ const getCurrentBreakpoint = (breakpoints = getBreakpoints()): string => {
 };
 
 export const useBreakpoint = () => {
-  const [currentBreakpoint, setCurrentBreakpoint] =
-    useState<BreakpointKey>("sm");
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<BreakpointKey>("sm");
   const isCurrentBreakpoint = (breakpoint: BreakpointKey): boolean => {
     return breakpoint.toLowerCase() === currentBreakpoint;
   };

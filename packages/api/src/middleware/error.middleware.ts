@@ -1,8 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import {
-  InvalidTokenError,
-  UnauthorizedError,
-  InsufficientScopeError,
+  InsufficientScopeError, InvalidTokenError,
+  UnauthorizedError
 } from "express-oauth2-jwt-bearer";
 
 export const errorHandler = (

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ReactNode, useEffect, useState } from "react";
 import { ThemeContext, ThemeContextType } from "../hooks/theme";
@@ -13,14 +13,14 @@ const ThemeContextProvider = ({ children }: Props) => {
   const changeTheme = (theme: ThemeContextType["theme"]) => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
-      document.documentElement.dataset.theme = "halloween"
-      localStorage.theme = "dark"
+      document.documentElement.dataset.theme = "halloween";
+      localStorage.theme = "dark";
     } else {
       document.documentElement.classList.remove("dark");
-      document.documentElement.dataset.theme = "cupcake"
-      localStorage.theme = "light"
-    };
-    setTheme(theme)
+      document.documentElement.dataset.theme = "cupcake";
+      localStorage.theme = "light";
+    }
+    setTheme(theme);
   };
 
   const toggleTheme = () => {
@@ -28,11 +28,12 @@ const ThemeContextProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    const hadPreferenceForDark = (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    const hadPreferenceForDark =
+      !("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches;
     if (localStorage.theme === "dark" || hadPreferenceForDark) {
-      changeTheme("dark")
+      changeTheme("dark");
     } else {
-      changeTheme("light")
+      changeTheme("light");
     }
   }, []);
   return (
