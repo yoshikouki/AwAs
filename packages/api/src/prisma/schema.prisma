@@ -17,5 +17,32 @@ model User {
   name      String?
   createdAt DateTime @default(now()) @map("created_at")
 
+  holdingAssets HoldingAsset[]
+
   @@map("users")
+}
+
+model HoldingAsset {
+  id                 Int      @id @default(autoincrement())
+  userId             Int
+  stockId            Int
+  balance            BigInt
+  averageTradedPrice BigInt?
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  user  User  @relation(fields: [userId], references: [id])
+  stock Stock @relation(fields: [stockId], references: [id])
+
+  @@unique([userId, stockId])
+  @@map("holding_assets")
+}
+
+model Stock {
+  id        Int      @id @default(autoincrement())
+  symbol    String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  holdingAssets HoldingAsset[]
+
+  @@map("stocks")
 }
