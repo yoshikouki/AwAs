@@ -8,7 +8,7 @@
     "dev": "nodemon"
   },
   "dependencies": {
-    "@prisma/client": "^4.5.0",
+    "@prisma/client": "^4.6.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -29,7 +29,7 @@
     "esbuild": "^0.15.12",
     "esbuild-node-tsc": "^2.0.4",
     "nodemon": "^2.0.20",
-    "prisma": "^4.5.0"
+    "prisma": "^4.6.0"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
