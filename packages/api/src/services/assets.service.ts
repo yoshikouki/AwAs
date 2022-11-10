@@ -1,13 +1,13 @@
-import { AssetModel } from "../models/asset.model";
+import { HoldingAssetModel } from "../models/holding_asset.model";
 import { UserModel } from "../models/user.model";
 
 export class AssetsService {
   readonly userModel: UserModel;
-  readonly assetModel: AssetModel;
+  readonly holdingAssetModel: HoldingAssetModel;
 
   constructor(props?: Partial<AssetsService>) {
     this.userModel = props?.userModel || new UserModel();
-    this.assetModel = props?.assetModel || new AssetModel();
+    this.holdingAssetModel = props?.holdingAssetModel || new HoldingAssetModel();
   }
 
   async getAllByUser({ uid }: { uid: string }) {
@@ -58,7 +58,7 @@ export class AssetsService {
       return { errors: [new Error("Bad User ID")] };
     }
 
-    const result = await this.assetModel.upsertAll({ uid, assets });
+    const result = await this.holdingAssetModel.upsertAll({ uid, assets });
     return { result, errors: null };
   }
 }
