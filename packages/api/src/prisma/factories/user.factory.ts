@@ -1,21 +1,21 @@
-import { faker } from '@faker-js/faker';
-import prisma from '../client';
+import { faker } from "@faker-js/faker";
+import { Prisma } from "@prisma/client";
+import prisma from "../client";
 
-interface UserAttributes {
-  uid?: string
-  email?: string
-  name?: string
-  createdAt?: Date
-}
+type CreateInputType = Prisma.UserCreateInput;
+const model = prisma.user;
+const defaultAttributes = {
+  uid: faker.datatype.uuid(),
+  email: faker.internet.email(),
+  name: faker.name.fullName(),
+  createdAt: faker.date.past(),
+};
 
 export const UserFactory = {
-  create: async (attrs?: UserAttributes) => {
-    return await prisma.user.create({
+  create: async (attrs?: Partial<CreateInputType>) => {
+    return await model.create({
       data: {
-        uid: faker.datatype.uuid(),
-        email: faker.internet.email(),
-        name: faker.name.fullName(),
-        createdAt: faker.date.past(),
+        ...defaultAttributes,
         ...attrs,
       },
     });
