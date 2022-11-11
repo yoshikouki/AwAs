@@ -6,7 +6,7 @@
     "build": "etsc",
     "start": "node ./dist --env=production",
     "dev": "nodemon",
-    "test": "jest -i"
+    "test": "DATABASE_URL='postgresql://johndoe:randompassword@localhost:8891/awas_test?schema=public' jest"
   },
   "dependencies": {
     "@prisma/client": "^4.6.0",

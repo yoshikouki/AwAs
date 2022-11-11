@@ -16,3 +16,13 @@ services:
       POSTGRES_DB: awas
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     restart: always
+  test-db:
+    image: postgres:latest
+    ports:
+      - 8891:5432
+    environment:
+      POSTGRES_USER: johndoe
+      POSTGRES_PASSWORD: randompassword
+      POSTGRES_DB: awas_test
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    restart: always
