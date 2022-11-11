@@ -1,6 +1,6 @@
 import child_process from "child_process";
 import util from "util";
-import prisma from "./client";
+import prisma from "../prisma/client";
 
 
 const exec = util.promisify(child_process.exec);

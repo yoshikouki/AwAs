@@ -1,5 +1,5 @@
-import prisma from "./client";
-import { cleanupDatabase, resetDatabase } from "./test-helper";
+import prisma from "../prisma/client";
+import { cleanupDatabase, resetDatabase } from "./helper";
 
 beforeAll(async () => await resetDatabase());
 beforeEach(async () => await cleanupDatabase());
