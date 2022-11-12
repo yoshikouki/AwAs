@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import prisma from "../client";
 
 type CreateInputType = Prisma.UserCreateInput;
-const model = prisma.user;
+const modelName = "user";
 const defaultAttributes = {
   uid: faker.datatype.uuid(),
   email: faker.internet.email(),
@@ -13,7 +13,7 @@ const defaultAttributes = {
 
 export const UserFactory = {
   create: async (attrs?: Partial<CreateInputType>) => {
-    return await model.create({
+    return await prisma[modelName].create({
       data: {
         ...defaultAttributes,
         ...attrs,
