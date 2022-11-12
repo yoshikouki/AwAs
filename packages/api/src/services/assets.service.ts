@@ -1,3 +1,4 @@
+import { AssetCreateInput } from "@awas/types/src/assets";
 import { HoldingAssetModel } from "../models/holding_asset.model";
 import { UserModel } from "../models/user.model";
 
@@ -46,13 +47,7 @@ export class AssetsService {
     ];
   }
 
-  async updateAllByUser({
-    uid,
-    assets,
-  }: {
-    uid: string;
-    assets: { symbol: string; balance: number; averageTradedPrice: number }[];
-  }) {
+  async updateAllByUser({ uid, assets }: { uid: string; assets: AssetCreateInput[] }) {
     const user = await this.userModel.findOrCreateByUid({ uid });
     if (!user) {
       return { errors: [new Error("Bad User ID")] };
