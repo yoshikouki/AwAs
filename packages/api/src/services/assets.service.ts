@@ -1,14 +1,17 @@
 import { AssetCreateInput } from "@awas/types/src/assets";
 import { HoldingAssetModel } from "../models/holding_asset.model";
+import { StockModel } from "../models/stock.model";
 import { UserModel } from "../models/user.model";
 
 export class AssetsService {
   readonly userModel: UserModel;
   readonly holdingAssetModel: HoldingAssetModel;
+  readonly stockModel: StockModel;
 
   constructor(props?: Partial<AssetsService>) {
     this.userModel = props?.userModel || new UserModel();
     this.holdingAssetModel = props?.holdingAssetModel || new HoldingAssetModel();
+    this.stockModel = props?.stockModel || new StockModel();
   }
 
   async getAllByUser({ uid }: { uid: string }) {
@@ -52,6 +55,10 @@ export class AssetsService {
     if (!user) {
       return { errors: [new Error("Bad User ID")] };
     }
+
+    const stocks = await this.stockModel.findOrCreateMany({
+      symbols: assets.map(asset => asset.symbol),
+    });
 
     const result = await this.holdingAssetModel.upsertAll({ uid, assets });
     return { result, errors: null };
