@@ -27,7 +27,7 @@ model HoldingAsset {
   userId             Int
   stockId            Int
   balance            BigInt
-  averageTradedPrice BigInt?
+  averageTradedPrice Float?
   createdAt          DateTime @default(now()) @map("created_at")
 
   user  User  @relation(fields: [userId], references: [id])
