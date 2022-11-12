@@ -1,0 +1,10 @@
+{
+  "name": "types",
+  "version": "1.0.0",
+  "types": "src/index.d.ts",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {}
+}
