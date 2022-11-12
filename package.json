@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "run-p dev:*",
+    "dev": "NODE_ENV=development run-p dev:*",
     "dev:frontend": "PORT=8888 npm -w frontend run dev",
     "dev:api": "PORT=8889 npm -w api run dev",
     "lint": "npm run lint --workspaces --if-present",
