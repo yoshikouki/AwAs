@@ -1,6 +1,7 @@
 import child_process from "child_process";
 import util from "util";
 import prisma from "../prisma/client";
+import { logger } from "../utils/logger";
 
 
 const exec = util.promisify(child_process.exec);
@@ -25,3 +26,14 @@ export const cleanupDatabase = async (): Promise<void> => {
 export const resetDatabase = async (): Promise<void> => {
   await exec("npx prisma migrate reset --force");
 };
+
+export const putLogs = () => {
+  beforeEach(() => {
+    logger.info(`\n[TEST] ${expect.getState().currentTestName}\n`);
+  });
+
+  prisma.$on("query", (e) => {
+    logger.log(`prisma:query [${e.duration}ms] params: ${e.params}`);
+    logger.sql(`\t${e.query}`);
+  });
+}
