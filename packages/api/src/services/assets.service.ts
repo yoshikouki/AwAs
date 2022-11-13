@@ -1,7 +1,8 @@
 import { AssetCreateInput } from "@awas/types/src/assets";
-import { HoldingAssetModel } from "../models/holding_asset.model";
+import { HoldingAssetModel } from "../models/holding-asset.model";
 import { StockModel } from "../models/stock.model";
 import { UserModel } from "../models/user.model";
+import { filterNonNullable } from "../utils";
 
 export class AssetsService {
   readonly userModel: UserModel;
@@ -59,8 +60,21 @@ export class AssetsService {
     const stocks = await this.stockModel.findOrCreateMany({
       symbols: assets.map(asset => asset.symbol),
     });
-
-    const result = await this.holdingAssetModel.upsertAll({ uid, assets });
-    return { result, errors: null };
+    const creatingAssets = filterNonNullable(
+      assets.map((asset) => {
+        const stock = stocks.find((stock) => stock.symbol === asset.symbol);
+        if (!stock) return;
+        return {
+          stock,
+          balance: asset.balance,
+          averageTradedPrice: asset.averageTradedPrice,
+        };
+      })
+    );
+    const upsertAssets = await this.holdingAssetModel.upsertAll({
+      userId: user.id,
+      assets: creatingAssets,
+    });
+    return { result: assets.length === upsertAssets.length, errors: null };
   }
 }
