@@ -24,28 +24,17 @@ export class HoldingAssetModel {
         },
       },
     });
-    await this.prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        holdingAssets: {
-          update: filterNonNullable(
-            storedAssets.map((storedAsset) => {
-              const updatingAsset = assets.find((asset) => asset.stock.id === storedAsset.stockId);
-              return {
-                where: {
-                  id: storedAsset.id,
-                },
-                data: {
-                  balance: updatingAsset?.balance,
-                  averageTradedPrice: updatingAsset?.averageTradedPrice,
-                },
-              };
-            })
-          ),
+    const updatingAssetsQueries = storedAssets.map((storedAsset) => {
+      const updatingAsset = assets.find(asset => asset.stock.id === storedAsset.stockId)
+      return this.prisma.holdingAsset.update({
+        where: {
+          id: storedAsset.id,
         },
-      },
+        data: {
+          balance: updatingAsset?.balance,
+          averageTradedPrice: updatingAsset?.averageTradedPrice,
+        },
+      })
     });
     const creatingStocksAttributes = filterNonNullable(
       assets.map((asset) => {
@@ -64,6 +53,7 @@ export class HoldingAssetModel {
     });
     const createdOrUpdatedAssets = await this.prisma.$transaction([
       creatingAssetsQuery,
+      ...updatingAssetsQueries,
     ]);
     return createdOrUpdatedAssets;
   }
