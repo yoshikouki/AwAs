@@ -71,7 +71,7 @@ export class AssetsService {
         };
       })
     );
-    const upsertAssets = await this.holdingAssetModel.deleteAndCreateAll({
+    const upsertAssets = await this.holdingAssetModel.upsetOrDeleteAll({
       userId: user.id,
       assets: creatingAssets,
     });

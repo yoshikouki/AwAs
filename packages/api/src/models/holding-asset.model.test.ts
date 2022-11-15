@@ -18,7 +18,7 @@ describe("HoldingAssetModel", () => {
         const balance = faker.datatype.number();
         const averageTradedPrice = faker.datatype.float({ min: 1 });
         expect(await prisma.holdingAsset.count()).toEqual(0);
-        await holdingAssetModel.deleteAndCreateAll({
+        await holdingAssetModel.upsetOrDeleteAll({
           userId: user.id,
           assets: [{ stock, balance, averageTradedPrice }],
         });
@@ -34,7 +34,7 @@ describe("HoldingAssetModel", () => {
         const balance2 = faker.datatype.number();
         const averageTradedPrice2 = faker.datatype.float({ min: 1 });
         expect(await prisma.holdingAsset.count()).toEqual(0);
-        await holdingAssetModel.deleteAndCreateAll({
+        await holdingAssetModel.upsetOrDeleteAll({
           userId: user.id,
           assets: [
             { stock, balance, averageTradedPrice },
@@ -42,6 +42,16 @@ describe("HoldingAssetModel", () => {
           ],
         });
         expect(await prisma.holdingAsset.count()).toEqual(2);
+      });
+
+      test("should be end without assets", async () => {
+        const user = await UserFactory.create();
+        expect(await prisma.holdingAsset.count()).toEqual(0);
+        await holdingAssetModel.upsetOrDeleteAll({
+          userId: user.id,
+          assets: [],
+        });
+        expect(await prisma.holdingAsset.count()).toEqual(0);
       });
     });
 
@@ -53,7 +63,7 @@ describe("HoldingAssetModel", () => {
         const balance = faker.datatype.number();
         const averageTradedPrice = faker.datatype.float({ min: 1 });
         expect(await prisma.holdingAsset.count()).toBe(1);
-        await holdingAssetModel.deleteAndCreateAll({
+        await holdingAssetModel.upsetOrDeleteAll({
           userId: user.id,
           assets: [{ stock, balance, averageTradedPrice }],
         });
@@ -78,7 +88,7 @@ describe("HoldingAssetModel", () => {
         const balance2 = faker.datatype.number();
         const averageTradedPrice2 = faker.datatype.float({ min: 1 });
         expect(await prisma.holdingAsset.count()).toBe(2);
-        await holdingAssetModel.deleteAndCreateAll({
+        await holdingAssetModel.upsetOrDeleteAll({
           userId: user.id,
           assets: [
             { stock, balance, averageTradedPrice },
@@ -102,7 +112,7 @@ describe("HoldingAssetModel", () => {
         const stock = await StockFactory.create();
         const asset = await HoldingAssetFactory.create({ userId: user.id, stockId: stock.id });
         expect(await prisma.holdingAsset.count()).toBe(1);
-        await holdingAssetModel.deleteAndCreateAll({
+        await holdingAssetModel.upsetOrDeleteAll({
           userId: user.id,
           assets: [],
         });
@@ -118,7 +128,7 @@ describe("HoldingAssetModel", () => {
         const stock2 = await StockFactory.create();
         await HoldingAssetFactory.create({ userId: user.id, stockId: stock2.id });
         expect(await prisma.holdingAsset.count()).toBe(2);
-        await holdingAssetModel.deleteAndCreateAll({
+        await holdingAssetModel.upsetOrDeleteAll({
           userId: user.id,
           assets: [],
         });
@@ -133,7 +143,7 @@ describe("HoldingAssetModel", () => {
         const stock = await StockFactory.create();
         const asset = await HoldingAssetFactory.create({ userId: user.id, stockId: stock.id });
         expect(await prisma.holdingAsset.count()).toBe(1);
-        expect(holdingAssetModel.deleteAndCreateAll({
+        expect(holdingAssetModel.upsetOrDeleteAll({
           userId: user.id,
           assets: [
             {
