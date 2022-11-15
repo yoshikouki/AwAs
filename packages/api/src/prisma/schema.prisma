@@ -25,10 +25,10 @@ model User {
 
 model HoldingAsset {
   id                 Int      @id @default(autoincrement())
-  userId             Int
-  stockId            Int
+  userId             Int      @map("user_id")
+  stockId            Int      @map("stock_id")
   balance            BigInt
-  averageTradedPrice Float?
+  averageTradedPrice Float?   @map("average_traded_price")
   createdAt          DateTime @default(now()) @map("created_at")
 
   user  User  @relation(fields: [userId], references: [id])
