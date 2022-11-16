@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { ReactNode } from "react";
 import Footer from "./Footer";
 import HeaderNavigation from "./HeaderNavigation";
@@ -12,10 +11,6 @@ interface Props {
 const DefaultLayout = ({ title, children }: Props) => {
   return (
     <>
-      <Head>
-        <title>{(title ? `${title} |` : "") + "AwAs - Awesome Assets"}</title>
-      </Head>
-
       <HeaderNavigation />
       <MainNavigation />
       <div className="sm:pl-24 lg:pl-80">
