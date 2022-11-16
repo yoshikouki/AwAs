@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.6.1",
+    "@types/json-bigint": "^1.0.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -18,6 +19,7 @@
     "express-oauth2-jwt-bearer": "^1.2.0",
     "express-validator": "^6.14.2",
     "helmet": "^6.0.0",
+    "json-bigint": "^1.0.0",
     "morgan": "~1.9.1",
     "nocache": "^3.0.4"
   },
