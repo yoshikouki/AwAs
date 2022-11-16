@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
+import JSONbig from "json-bigint";
 import { validateAccessToken } from "../middleware/auth0.middleware";
 import { AssetsService } from "../services/assets.service";
 
@@ -11,7 +12,7 @@ router.get("/assets", validateAccessToken, async (req, res, _) => {
 
   const assetsService = new AssetsService();
   const assets = await assetsService.getAllByUser({ uid });
-  res.status(200).json(assets);
+  res.status(200).send(JSONbig.stringify(assets));
 });
 
 router.patch(

@@ -15,6 +15,10 @@ export class HoldingAssetModel {
     this.prisma = props?.prisma || prisma;
   }
 
+  async findAllByUserId({ userId }: { userId: number }) {
+    return await this.prisma.holdingAsset.findMany({ where: { userId } });
+  }
+
   async upsetOrDeleteAll({ userId, assets }: { userId: number; assets: AssetUpsertAllInput[] }) {
     let transactionQueries: PrismaPromise<unknown>[] = [];
     const storedAssets = await this.prisma.holdingAsset.findMany({ where: { userId } });
@@ -42,11 +46,13 @@ export class HoldingAssetModel {
       transactionQueries.push(upsertAllAssetsQuery);
     }
 
-    const creatingOrUpdatingStockIds = assets.map((asset) => asset.stock.id)
-    const deletingAssetIds = filterNonNullable(storedAssets.map((storedAsset) => {
-      if (creatingOrUpdatingStockIds.includes(storedAsset.stockId)) return;
-      return storedAsset.id
-    }));
+    const creatingOrUpdatingStockIds = assets.map((asset) => asset.stock.id);
+    const deletingAssetIds = filterNonNullable(
+      storedAssets.map((storedAsset) => {
+        if (creatingOrUpdatingStockIds.includes(storedAsset.stockId)) return;
+        return storedAsset.id;
+      })
+    );
     if (deletingAssetIds.length > 0) {
       const deletingAssetsQuery = this.prisma.holdingAsset.deleteMany({
         where: { id: { in: deletingAssetIds } },
