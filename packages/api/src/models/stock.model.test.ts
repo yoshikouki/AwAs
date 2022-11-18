@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import prisma from "../prisma/client";
 import { StockFactory } from "../prisma/factories/stock.factory";
 import { StockModel } from "./stock.model";

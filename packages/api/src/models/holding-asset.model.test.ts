@@ -1,13 +1,15 @@
 import { faker } from "@faker-js/faker";
+import { beforeEach, describe, expect, test } from "vitest";
 import prisma from "../prisma/client";
 import { HoldingAssetFactory } from "../prisma/factories/holding-asset.factory";
 import { StockFactory } from "../prisma/factories/stock.factory";
 import { UserFactory } from "../prisma/factories/user.factory";
-import { putLogs } from "../tests/helper";
+import { putQueryLogs, putTestNames } from "../tests/helper";
 import { HoldingAssetModel } from "./holding-asset.model";
 
 const holdingAssetModel = new HoldingAssetModel();
-putLogs();
+putQueryLogs();
+beforeEach(putTestNames);
 
 describe("HoldingAssetModel", () => {
   describe("#deleteAndCreateAll", () => {

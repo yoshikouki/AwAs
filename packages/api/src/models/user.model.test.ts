@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import prisma from "../prisma/client";
 import { UserFactory } from "../prisma/factories/user.factory";
 import { UserModel } from "./user.model";
@@ -25,4 +26,4 @@ describe("UserModel", () => {
       expect(await prisma.user.count()).toBe(1);
     });
   });
-})
+});
