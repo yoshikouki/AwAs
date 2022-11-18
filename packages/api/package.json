@@ -6,7 +6,7 @@
     "build": "etsc",
     "start": "node ./dist --env=production",
     "dev": "nodemon",
-    "test": "DATABASE_URL='postgresql://johndoe:randompassword@localhost:8891/awas_test?schema=public' jest -i"
+    "test": "DATABASE_URL='postgresql://johndoe:randompassword@localhost:8891/awas_test?schema=public' vitest --run --threads=false"
   },
   "dependencies": {
     "@prisma/client": "^4.6.1",
@@ -38,7 +38,8 @@
     "nodemon": "^2.0.20",
     "prisma": "^4.6.1",
     "ts-jest": "^29.0.3",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "vitest": "^0.25.2"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
