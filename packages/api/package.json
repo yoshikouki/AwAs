@@ -6,7 +6,7 @@
     "build": "etsc",
     "start": "node ./dist --env=production",
     "dev": "nodemon",
-    "test": "DATABASE_URL='postgresql://johndoe:randompassword@localhost:8891/awas_test?schema=public' vitest --run --threads=false"
+    "test": "DATABASE_URL='postgresql://johndoe:randompassword@localhost:8891/awas_test?schema=public' vitest --run --no-threads"
   },
   "dependencies": {
     "@prisma/client": "^4.6.1",
