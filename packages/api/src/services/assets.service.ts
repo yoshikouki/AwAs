@@ -18,7 +18,7 @@ export class AssetsService {
   async getAllByUser({ uid }: { uid: string }) {
     const user = await this.userModel.findOrCreateByUid({ uid });
     const assets = await this.holdingAssetModel.findAllByUserId({ userId: user.id });
-    const stocks = await this.stockModel.findMany({
+    const stocks = await this.stockModel.findAll({
       stockIds: assets.map((asset) => asset.stockId),
     });
     return assets.map((asset) => ({
@@ -34,7 +34,7 @@ export class AssetsService {
       return { errors: [new Error("Bad User ID")] };
     }
 
-    const stocks = await this.stockModel.findOrCreateMany({
+    const stocks = await this.stockModel.findOrCreateAll({
       symbols: assets.map((asset) => asset.symbol),
     });
     const creatingAssets = filterNonNullable(

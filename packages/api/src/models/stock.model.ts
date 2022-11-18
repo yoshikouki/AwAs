@@ -9,7 +9,7 @@ export class StockModel {
     this.prisma = props?.prisma || prisma;
   }
 
-  async findMany({ stockIds }: { stockIds: number[] }): Promise<Stock[]> {
+  async findAll({ stockIds }: { stockIds: number[] }): Promise<Stock[]> {
     return await this.prisma.stock.findMany({
       where: {
         id: {
@@ -19,7 +19,7 @@ export class StockModel {
     });
   }
 
-  async findOrCreateMany({ symbols }: { symbols: string[] }): Promise<Stock[]> {
+  async findOrCreateAll({ symbols }: { symbols: string[] }): Promise<Stock[]> {
     await this.prisma.stock.createMany({
       data: symbols.map((symbol) => ({ symbol })),
       skipDuplicates: true,

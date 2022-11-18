@@ -6,10 +6,10 @@ import { StockModel } from "./stock.model";
 const stockModel = new StockModel();
 
 describe("StockModel", () => {
-  describe("#findOrCreateMany", () => {
+  describe("#findOrCreateAll", () => {
     test("should create new stock when the stock doesn't exist", async () => {
       expect(await prisma.stock.count()).toBe(0);
-      const stocks = await stockModel.findOrCreateMany({
+      const stocks = await stockModel.findOrCreateAll({
         symbols: ["APPL"],
       });
       expect(stocks).toHaveLength(1);
@@ -19,7 +19,7 @@ describe("StockModel", () => {
     test("should return existed stock", async () => {
       const stock = await StockFactory.create();
       expect(await prisma.stock.count()).toBe(1);
-      const stocks = await stockModel.findOrCreateMany({
+      const stocks = await stockModel.findOrCreateAll({
         symbols: [stock.symbol],
       });
       expect(stocks).toHaveLength(1);
