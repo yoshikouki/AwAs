@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["interactiveTransactions"]
 }
 
@@ -43,7 +43,30 @@ model Stock {
   symbol    String   @unique
   createdAt DateTime @default(now()) @map("created_at")
 
-  holdingAssets HoldingAsset[]
+  holdingAssets   HoldingAsset[]
+  stockdailyPrice DailyStockPrice[]
 
   @@map("stocks")
+}
+
+model DailyStockPrice {
+  id               Int      @id @default(autoincrement())
+  stockId          Int      @map("stock_id")
+  date             DateTime @map("date") @db.Date
+  open             Int?     @map("open")
+  close            Int      @map("close")
+  high             Int?     @map("high")
+  low              Int?     @map("low")
+  adjClose         Int?     @map("adj_close")
+  volume           BigInt?  @map("volume")
+  unadjustedVolume BigInt?  @map("unadjusted_volume")
+  change           Int?     @map("change")
+  changePercent    Int?     @map("change_percent")
+  vwap             Int?     @map("vwap")
+  changeOverTime   Int?     @map("change_overTime")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  stock Stock @relation(fields: [stockId], references: [id])
+
+  @@map("daily_stock_prices")
 }
