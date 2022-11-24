@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { FmpApi } from "../lib/fmp-api";
 import prisma from "../prisma/client";
+import { DailyStockPriceFactory } from "../prisma/factories/daily-stock-price.factory";
 import { StockFactory } from "../prisma/factories/stock.factory";
 import { DailyStockPriceModel } from "./daily-stock-price.model";
 
@@ -19,6 +20,18 @@ describe("DailyStockPriceModel", () => {
         });
         expect(await prisma.dailyStockPrice.count()).toEqual(1);
       });
-    });;
+    });
+
+    describe("when the daily stock prices exist", () => {
+      test("should return daily stock prices without creating and fetching", async () => {
+        const stock = await StockFactory.create({ symbol: "AAPL" });
+        await DailyStockPriceFactory.create({ stockId: stock.id })
+        expect(await prisma.dailyStockPrice.count()).toEqual(1);
+        await dailyStockPriceModel.findOrCreateAll({
+          stocks: [stock],
+        });
+        expect(await prisma.dailyStockPrice.count()).toEqual(1);
+      });
+    });
   });
 });
