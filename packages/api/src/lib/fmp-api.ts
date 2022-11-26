@@ -25,7 +25,7 @@ export class FmpApi {
     const url = `${this.apiUrl + path}?apikey=${this.apiKey}`;
     const response = await this.fetch(url);
     if (!response.ok) {
-      throw new Error(`[status: ${response.status}] ${response.body}`);
+      throw new Error(`[status: ${response.status}] ${await response.text()}`);
     }
     return (await response.json()) as T;
   }
