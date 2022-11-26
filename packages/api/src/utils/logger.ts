@@ -1,8 +1,8 @@
-const resetColor = "\x1b[39m";
-const blue = "\x1b[34m";
-const yellow = "\x1b[33m";
-const red = "\x1b[31m";
-const green = "\x1b[32m";
+export const resetColor = "\x1b[39m";
+export const blue = "\x1b[34m";
+export const yellow = "\x1b[33m";
+export const red = "\x1b[31m";
+export const green = "\x1b[32m";
 
 export const logger = {
   log: (message: string) => console.log(resetColor + message),
