@@ -8,6 +8,13 @@ const replServer: REPLServer = repl.start({
   prompt: `${green}api> ${resetColor}`,
 });
 
+replServer.setupHistory(".node_repl_history", (err) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+});
+
 Object.entries({
   fmpApi: new FmpApi(),
   alpacaApi: new AlpacaApi(),
