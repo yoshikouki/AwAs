@@ -7,7 +7,9 @@ if (
     process.env.CLIENT_URL &&
     process.env.AUTH0_ISSUER_BASE_URL &&
     process.env.AUTH0_AUDIENCE &&
-    process.env.FMP_API_KEY
+    process.env.FMP_API_KEY &&
+    process.env.ALPACA_API_KEY &&
+    process.env.ALPACA_SECRET_KEY
   )
 ) {
   throw new Error("Missing required environment variables.");
@@ -24,5 +26,9 @@ export default {
   },
   fmp: {
     apiKey: process.env.FMP_API_KEY,
+  },
+  alpaca: {
+    apiKey: process.env.ALPACA_API_KEY,
+    SecretKey: process.env.ALPACA_SECRET_KEY,
   },
 };

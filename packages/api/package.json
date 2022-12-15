@@ -10,6 +10,7 @@
     "repl": "ts-node --project=tsconfig.repl.json src/repl"
   },
   "dependencies": {
+    "@alpacahq/alpaca-trade-api": "^2.16.1",
     "@prisma/client": "^4.6.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
