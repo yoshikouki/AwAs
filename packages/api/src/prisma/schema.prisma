@@ -66,6 +66,7 @@ model DailyStockPrice {
   changeOverTime   Float?     @map("change_overTime")
   createdAt        DateTime @default(now()) @map("created_at")
 
+  // TODO: Set composite unique constraints on stockId and date.
   stock Stock @relation(fields: [stockId], references: [id])
 
   @@map("daily_stock_prices")
