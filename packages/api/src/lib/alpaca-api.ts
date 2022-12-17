@@ -3,33 +3,35 @@ import { AlpacaBar } from "@alpacahq/alpaca-trade-api/dist/resources/datav2/enti
 import { subBusinessDays } from "date-fns";
 import configs from "../configs";
 
-export class AlpacaApi {
-  readonly client: Alpaca;
-
-  constructor(props?: Partial<AlpacaApi>) {
-    this.client =
-      props?.client ||
-      new Alpaca({
-        keyId: configs.alpaca.apiKey,
-        secretKey: configs.alpaca.SecretKey,
-        paper: true,
-      });
-  }
-
-  async getMultiBars(
-    symbols: string[],
-    startDate = subBusinessDays(new Date(), 4)
-  ): Promise<Record<string, AlpacaBar[]>> {
-    const response = this.client.getMultiBarsAsyncV2(symbols, {
-      timeframe: "1Day",
-      start: startDate.toISOString(),
-    });
-    let got: Record<string, AlpacaBar[]> = Object.fromEntries(
-      symbols.map((symbol) => [symbol.toUpperCase(), []])
-    );
-    for await (const bar of response) {
-        got[bar.Symbol]?.push(bar);
-    }
-    return got;
-  }
+export interface AlpacaApi {
+  client: Alpaca;
+  getMultiBars: (symbols: string[], startDate?: Date) => Promise<Record<string, AlpacaBar[]>>;
 }
+
+const client = new Alpaca({
+  keyId: configs.alpaca.apiKey,
+  secretKey: configs.alpaca.SecretKey,
+  paper: true,
+});
+
+const getMultiBars = async (
+  symbols: string[],
+  startDate = subBusinessDays(new Date(), 4)
+): Promise<Record<string, AlpacaBar[]>> => {
+  const response = client.getMultiBarsAsyncV2(symbols, {
+    timeframe: "1Day",
+    start: startDate.toISOString(),
+  });
+  let got: Record<string, AlpacaBar[]> = Object.fromEntries(
+    symbols.map((symbol) => [symbol.toUpperCase(), []])
+  );
+  for await (const bar of response) {
+    got[bar.Symbol]?.push(bar);
+  }
+  return got;
+};
+
+export const alpacaApi: AlpacaApi = {
+  client,
+  getMultiBars,
+};

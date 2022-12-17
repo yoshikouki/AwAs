@@ -1,5 +1,5 @@
 import repl, { REPLServer } from "node:repl";
-import { AlpacaApi } from "./lib/alpaca-api";
+import { alpacaApi } from "./lib/alpaca-api";
 import { FmpApi } from "./lib/fmp-api";
 import prisma from "./prisma/client";
 import { green, resetColor } from "./utils/logger";
@@ -17,6 +17,6 @@ replServer.setupHistory(".node_repl_history", (err) => {
 
 Object.entries({
   fmpApi: new FmpApi(),
-  alpacaApi: new AlpacaApi(),
-  prisma: prisma,
+  alpacaApi,
+  prisma,
 }).forEach(([k, v]) => (replServer.context[k] = v));
