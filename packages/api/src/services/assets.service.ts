@@ -1,4 +1,6 @@
 import { AssetCreateInput } from "@awas/types/src/assets";
+import { DailyStockPrice, HoldingAsset } from "@prisma/client";
+import BigNumber from "bignumber.js";
 import { DailyStockPriceModel } from "../models/daily-stock-price.model";
 import { HoldingAssetModel } from "../models/holding-asset.model";
 import { StockModel } from "../models/stock.model";
@@ -30,22 +32,11 @@ export class AssetsService {
       const currentDailyStockPrice = dailyStockPrices.find(
         (dailyStockPrice) => dailyStockPrice.stockId === stock?.id
       );
-      const marketPrice = currentDailyStockPrice?.close || 0;
-      const marketValue = Number(asset.balance) * marketPrice;
-      const profitLoss = asset.averageTradedPrice
-        ? Number(asset.balance) * (marketPrice - asset.averageTradedPrice)
-        : 0;
-      const profitLossPercentage = asset.averageTradedPrice
-        ? (profitLoss / asset.averageTradedPrice) * 100
-        : 0;
       return {
         symbol: stock?.symbol,
         balance: asset.balance,
         averageTradedPrice: asset.averageTradedPrice,
-        marketPrice,
-        marketValue,
-        profitLoss,
-        profitLossPercentage,
+        ...this.calculateAssetPrices(asset, currentDailyStockPrice),
       };
     });
     return all;
@@ -76,5 +67,31 @@ export class AssetsService {
       assets: creatingAssets,
     });
     return { result: assets.length === upsertAssets.length, errors: null };
+  }
+
+  private calculateAssetPrices(asset: HoldingAsset, dailyStockPrice: DailyStockPrice | undefined) {
+    if (!dailyStockPrice) {
+      return {};
+    }
+    const marketPrice = dailyStockPrice.close || 0;
+    const marketValue = BigNumber(asset.balance.toString()).multipliedBy(marketPrice).toNumber();
+    if (!asset.averageTradedPrice) {
+      return { marketPrice, marketValue };
+    }
+    const profitLossPerBalance = BigNumber(marketPrice).minus(asset.averageTradedPrice);
+    const profitLoss = BigNumber(asset.balance.toString())
+      .multipliedBy(profitLossPerBalance)
+      .toNumber();
+    const profitLossPercentage = BigNumber(profitLossPerBalance)
+      .div(asset.averageTradedPrice)
+      .multipliedBy(100)
+      .toFormat(2);
+
+    return {
+      marketPrice,
+      marketValue,
+      profitLoss,
+      profitLossPercentage,
+    };
   }
 }
