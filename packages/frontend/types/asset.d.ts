@@ -5,6 +5,6 @@ export interface Asset {
   averageTradedPrice: number;
   marketPrice: number;
   marketValue: number;
-  return: number;
-  yieldPercentage: number;
+  profitLoss: number;
+  profitLossPercentage: number;
 }

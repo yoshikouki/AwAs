@@ -5,7 +5,7 @@ import { Asset } from "../types/asset";
 import { ProfitOrLossText } from "./ProfitOrLossText";
 
 const AssetsList = requiredAuth(() => {
-  const { data: assets } = useGet<Asset[]>("/v1/assets", { withAuth: true });
+  const { data: assets } = useGet<Asset[]>("/v1/assets", true);
 
   return (
     <div className="sm:px-4 overflow-x-auto">
@@ -46,13 +46,13 @@ const AssetsList = requiredAuth(() => {
               <td className="text-end">
                 <div className="font-bold">{asset.marketValue}</div>
                 <div>
-                  <ProfitOrLossText text={asset.return} referenceValue={0} />
+                  <ProfitOrLossText text={asset.profitLoss} referenceValue={0} />
                 </div>
               </td>
               <td className="text-end">
                 <ProfitOrLossText
-                  text={`${asset.yieldPercentage} %`}
-                  value={asset.yieldPercentage}
+                  text={`${asset.profitLossPercentage} %`}
+                  value={asset.profitLossPercentage}
                   referenceValue={0}
                 />
               </td>
