@@ -1,18 +1,19 @@
 import { PrismaClient, Stock } from "@prisma/client";
-import { FmpApi } from "../lib/fmp-api";
+import { compareDesc } from "date-fns";
+import { alpacaApi, AlpacaApi } from "../lib/alpaca-api";
 import prisma from "../prisma/client";
-import { filterNonNullable } from "../utils";
 
 export class DailyStockPriceModel {
   readonly prisma: PrismaClient;
-  readonly fmpApi: FmpApi;
+  readonly alpacaApi: AlpacaApi;
 
   constructor(props?: Partial<DailyStockPriceModel>) {
     this.prisma = props?.prisma || prisma;
-    this.fmpApi = props?.fmpApi || new FmpApi();
+    this.alpacaApi = props?.alpacaApi || alpacaApi;
   }
 
   async findOrCreateLatestPrices({ stocks }: { stocks: Stock[] }) {
+    // TODO: 前営業日の日付指定
     const storedPrices = await this.prisma.dailyStockPrice.findMany({
       where: {
         stockId: {
@@ -21,14 +22,40 @@ export class DailyStockPriceModel {
       },
     });
     const storedStockIds = storedPrices.map((price) => price.stockId);
-    const nonExistingStocks = filterNonNullable(stocks.filter((stock) => !storedStockIds.includes(stock.id)));
+    const nonExistingStocks = stocks.filter((stock) => !storedStockIds.includes(stock.id));
+    if (nonExistingStocks.length === 0) {
+      return storedPrices;
+    } else {
+      await this.fetchAndCreateLatestClosePrices({ stocks: nonExistingStocks });
+      return await this.prisma.dailyStockPrice.findMany({
+        where: {
+          stockId: {
+            in: stocks.map((stock) => stock.id),
+          },
+        },
+      });
+    }
+  }
+
+  async fetchAndCreateLatestClosePrices({ stocks }: { stocks: Stock[] }) {
+    const barsOfStocks = await this.alpacaApi.getMultiBars(stocks.map((stock) => stock.symbol));
+    // TODO: 市場が開いているときに ClosePrice がどのような値となるかを検証する。
     await this.prisma.dailyStockPrice.createMany({
-      data: nonExistingStocks.map((stock) => ({
-        stockId: stock.id,
-        date: new Date(2022, 11, 23),
-        close: 11.23,
-      })),
+      data: stocks.map((stock) => {
+        const latestBar = barsOfStocks[stock.symbol.toUpperCase()].sort((a, b) =>
+          compareDesc(new Date(a.Timestamp), new Date(b.Timestamp))
+        )[0];
+        return {
+          stockId: stock.id,
+          date: new Date(latestBar.Timestamp),
+          open: latestBar.OpenPrice,
+          close: latestBar.ClosePrice,
+          high: latestBar.HighPrice,
+          low: latestBar.LowPrice,
+          volume: latestBar.Volume,
+          vwap: latestBar.VWAP,
+        };
+      }),
     });
-    return [];
   }
 }
