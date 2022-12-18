@@ -6,7 +6,7 @@ import { StockFactory } from "../prisma/factories/stock.factory";
 import { DailyStockPriceModel } from "./daily-stock-price.model";
 
 describe("DailyStockPriceModel", () => {
-  describe("#findOrCreateAll", () => {
+  describe("#findOrCreateLatestPrices", () => {
     describe("when the daily stock prices doesn't exist", () => {
       test("should fetch stock bars from Alpaca API and create a new daily stock price", async () => {
         const dailyStockPriceModel = new DailyStockPriceModel({ alpacaApi });
@@ -50,7 +50,7 @@ describe("DailyStockPriceModel", () => {
             },
           ],
         });
-        await dailyStockPriceModel.findOrCreateLatestClosePrices({
+        await dailyStockPriceModel.findOrCreateLatestPrices({
           stocks: [stock],
         });
         expect(await prisma.dailyStockPrice.count()).toEqual(1);
@@ -62,10 +62,10 @@ describe("DailyStockPriceModel", () => {
       test("should return daily stock prices without creating and fetching", async () => {
         const dailyStockPriceModel = new DailyStockPriceModel({ alpacaApi });
         const stock = await StockFactory.create({ symbol: "AAPL" });
-        await DailyStockPriceFactory.create({ stockId: stock.id })
+        await DailyStockPriceFactory.create({ stockId: stock.id });
         expect(await prisma.dailyStockPrice.count()).toEqual(1);
         const getMultiBarsSpy = vi.spyOn(alpacaApi, "getMultiBars");
-        await dailyStockPriceModel.findOrCreateLatestClosePrices({
+        await dailyStockPriceModel.findOrCreateLatestPrices({
           stocks: [stock],
         });
         expect(await prisma.dailyStockPrice.count()).toEqual(1);

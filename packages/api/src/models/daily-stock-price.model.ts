@@ -12,7 +12,7 @@ export class DailyStockPriceModel {
     this.fmpApi = props?.fmpApi || new FmpApi();
   }
 
-  async findOrCreateAll({ stocks }: { stocks: Stock[] }) {
+  async findOrCreateLatestPrices({ stocks }: { stocks: Stock[] }) {
     const storedPrices = await this.prisma.dailyStockPrice.findMany({
       where: {
         stockId: {
