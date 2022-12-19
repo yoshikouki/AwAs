@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { validateAccessToken } from "../middleware/auth0.middleware";
-import { ProfileService } from "../services/profile.service";
+import { validateAccessToken } from "../../middleware/auth0.middleware";
+import { ProfileService } from "../../services/profile.service";
 
 const router = Router();
 

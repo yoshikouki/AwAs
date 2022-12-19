@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import JSONbig from "json-bigint";
-import { validateAccessToken } from "../middleware/auth0.middleware";
-import { AssetsService } from "../services/assets.service";
+import { validateAccessToken } from "../../middleware/auth0.middleware";
+import { AssetsService } from "../../services/assets.service";
 
 const router = Router();
 

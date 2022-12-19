@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
-import { validateAccessToken } from "../middleware/auth0.middleware";
-import { SettingsService } from "../services/settings.service";
+import { validateAccessToken } from "../../middleware/auth0.middleware";
+import { SettingsService } from "../../services/settings.service";
 
 const router = Router();
 

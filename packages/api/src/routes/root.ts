@@ -1,8 +1,8 @@
 import { Router } from "express";
-import assetsRouter from "./assets";
 import healthRouter from "./health";
-import profileRouter from "./profile";
-import settingsRouter from "./settings";
+import assetsRouter from "./v1/assets";
+import profileRouter from "./v1/profile";
+import settingsRouter from "./v1/settings";
 
 const rootRouter = Router();
 
