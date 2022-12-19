@@ -44,7 +44,7 @@ model Stock {
   createdAt DateTime @default(now()) @map("created_at")
 
   holdingAssets   HoldingAsset[]
-  stockdailyPrice DailyStockPrice[]
+  dailyStockPrices DailyStockPrice[]
 
   @@map("stocks")
 }
