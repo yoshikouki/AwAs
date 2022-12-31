@@ -6,7 +6,7 @@
     "build": "etsc",
     "start": "node ./dist --env=production",
     "dev": "nodemon",
-    "test": "DATABASE_URL='postgresql://johndoe:randompassword@localhost:8891/awas_test?schema=public' vitest --run --no-threads",
+    "test": "DATABASE_URL='mysql://johndoe:randompassword@localhost:8891/awas_test?schema=public' vitest --run --no-threads",
     "repl": "ts-node --project=tsconfig.repl.json src/repl"
   },
   "dependencies": {
