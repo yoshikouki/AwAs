@@ -7,7 +7,7 @@ services:
   test-db:
     image: mysql:latest
     ports:
-      - 8891:8080
+      - 8891:3306
     environment:
       MYSQL_ROOT_PASSWORD: my-secret-pw
       MYSQL_USER: johndoe
