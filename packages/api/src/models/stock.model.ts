@@ -2,6 +2,15 @@ import { Stock } from "@awas/types/src/stock";
 import { PrismaClient } from "@prisma/client";
 import prisma from "../prisma/client";
 
+interface StockWithDailyStockPrice {
+  id: number;
+  symbol: string;
+  dailyStockPrices: {
+    date: Date;
+    close: number;
+  }[];
+}
+
 export class StockModel {
   readonly prisma: PrismaClient;
 
@@ -14,6 +23,28 @@ export class StockModel {
       where: {
         id: {
           in: stockIds,
+        },
+      },
+    });
+  }
+
+  async findAllBySymbolsWithLatestDailyPrice(symbols: string[]): Promise<StockWithDailyStockPrice[]> {
+    return await this.prisma.stock.findMany({
+      where: {
+        symbol: {
+          in: symbols,
+        },
+      },
+      select: {
+        id: true,
+        symbol: true,
+        dailyStockPrices: {
+          select: {
+            date: true,
+            close: true,
+          },
+          orderBy: { date: "desc" },
+          take: 1,
         },
       },
     });

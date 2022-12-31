@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import prisma from "../prisma/client";
+import { DailyStockPriceFactory } from "../prisma/factories/daily-stock-price.factory";
 import { StockFactory } from "../prisma/factories/stock.factory";
 import { StockModel } from "./stock.model";
 
@@ -24,6 +25,26 @@ describe("StockModel", () => {
       });
       expect(stocks).toHaveLength(1);
       expect(await prisma.stock.count()).toBe(1);
+    });
+  });
+
+  describe("#findAllBySymbolsWithLatestDailyPrice", () => {
+    test("should return existed stock with latest daily close price", async () => {
+      const stock = await StockFactory.create();
+      const latestDailyStockPrice = await DailyStockPriceFactory.create({
+        stockId: stock.id,
+        date: new Date("2022-01-02"),
+      });
+      await DailyStockPriceFactory.create({
+        stockId: stock.id,
+        date: new Date("2022-01-01"),
+      });
+      const stocks = await stockModel.findAllBySymbolsWithLatestDailyPrice([stock.symbol]);
+      expect(stocks).toHaveLength(1);
+      expect(stocks[0].symbol).toEqual(stock.symbol);
+      expect(stocks[0].dailyStockPrices).toHaveLength(1);
+      expect(stocks[0].dailyStockPrices[0].date).toEqual(latestDailyStockPrice.date);
+      expect(stocks[0].dailyStockPrices[0].close).toEqual(latestDailyStockPrice.close);
     });
   });
 });
