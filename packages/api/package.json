@@ -19,7 +19,7 @@
     "debug": "~4.3.4",
     "dotenv": "^16.0.3",
     "express": "~4.18.2",
-    "express-oauth2-jwt-bearer": "^1.2.0",
+    "express-oauth2-jwt-bearer": "^1.3.0",
     "express-validator": "^6.14.2",
     "helmet": "^6.0.1",
     "json-bigint": "^1.0.0",
