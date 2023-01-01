@@ -32,15 +32,15 @@ export class HoldingAssetModel {
               asset.stock.id,
               BigInt(asset.balance),
               parseFloat(String(asset.averageTradedPrice)) || 0,
-            ].join(", ")})`
+            ].join(",")})`
         )
         .join(",");
       const upsertAllAssetsQuery = this.prisma.$executeRawUnsafe(`
         INSERT INTO holding_assets (user_id, stock_id, balance, average_traded_price)
-        VALUES ${valuesQueryString} AS new
+        VALUES ${valuesQueryString}
         ON DUPLICATE KEY UPDATE
-          balance = new.balance,
-          average_traded_price = new.average_traded_price
+          balance = VALUES(balance),
+          average_traded_price = VALUES(average_traded_price)
         ;
       `);
       transactionQueries.push(upsertAllAssetsQuery);
