@@ -9,18 +9,9 @@ export const cleanupDatabase = async (): Promise<void> => {
   const tableNames = await prisma.$queryRaw<
     Array<{ TABLE_NAME: string }>
   >`SELECT table_name FROM information_schema.tables WHERE table_schema = 'awas_test' AND table_name != '_prisma_migrations'`;
-  const tables = tableNames
-    .map(({ TABLE_NAME }) => TABLE_NAME)
-    .join(", ");
-
-  try {
-    await prisma.$executeRawUnsafe(`SET FOREIGN_KEY_CHECKS = 0;`);
-    await prisma.$executeRawUnsafe(`DROP TABLE ${tables};`);
-    await prisma.$executeRawUnsafe(`SET FOREIGN_KEY_CHECKS = 1;`);
-    await exec("npx prisma db push");
-  } catch (error) {
-    console.log({ error });
-  }
+  await prisma.$transaction(
+    tableNames.map(({ TABLE_NAME }) => prisma.$executeRawUnsafe(`DELETE FROM ${TABLE_NAME}`))
+  );
 };
 
 export const resetDatabase = async (): Promise<void> => {
