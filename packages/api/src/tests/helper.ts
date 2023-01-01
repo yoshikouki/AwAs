@@ -6,17 +6,18 @@ import { logger } from "../utils/logger";
 const exec = util.promisify(child_process.exec);
 
 export const cleanupDatabase = async (): Promise<void> => {
-  const tablenames = await prisma.$queryRaw<
-    Array<{ tablename: string }>
-  >`SELECT tablename FROM pg_tables WHERE schemaname='public'`;
-  const tables = tablenames
-    .map(({ tablename }) => tablename)
-    .filter((name) => name !== "_prisma_migrations")
-    .map((name) => `"public"."${name}"`)
+  const tableNames = await prisma.$queryRaw<
+    Array<{ TABLE_NAME: string }>
+  >`SELECT table_name FROM information_schema.tables WHERE table_schema = 'awas_test' AND table_name != '_prisma_migrations'`;
+  const tables = tableNames
+    .map(({ TABLE_NAME }) => TABLE_NAME)
     .join(", ");
 
   try {
-    await prisma.$executeRawUnsafe(`TRUNCATE TABLE ${tables} CASCADE;`);
+    await prisma.$executeRawUnsafe(`SET FOREIGN_KEY_CHECKS = 0;`);
+    await prisma.$executeRawUnsafe(`DROP TABLE ${tables};`);
+    await prisma.$executeRawUnsafe(`SET FOREIGN_KEY_CHECKS = 1;`);
+    await exec("npx prisma db push");
   } catch (error) {
     console.log({ error });
   }
