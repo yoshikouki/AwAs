@@ -9,6 +9,7 @@ import configs from "./configs";
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/not-found.middleware";
 import rootRouter from "./routes/root";
+import { trpcExpressMiddleware } from "./routes/trpc";
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", rootRouter);
+app.use("/trpc", trpcExpressMiddleware);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
