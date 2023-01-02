@@ -8,8 +8,8 @@ import path from "path";
 import configs from "./configs";
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/not-found.middleware";
+import { trpcExpressMiddleware } from "./middleware/trpc.middleware";
 import rootRouter from "./routes/root";
-import { trpcExpressMiddleware } from "./routes/trpc";
 
 const app = express();
 
