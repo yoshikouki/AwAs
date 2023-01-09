@@ -4,7 +4,7 @@ import { config } from "../config";
 export const requiredAuth = withAuthenticationRequired;
 
 export const useAuth = () => {
-  const { isAuthenticated, getAccessTokenSilently, isLoading, loginWithRedirect, logout } =
+  const { isAuthenticated, isLoading, getAccessTokenSilently, loginWithRedirect, logout } =
     useAuth0();
 
   return {
