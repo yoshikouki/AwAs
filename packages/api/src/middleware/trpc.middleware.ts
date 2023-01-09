@@ -1,11 +1,12 @@
-import { inferAsyncReturnType } from "@trpc/server";
 import * as trpcExpress from "@trpc/server/adapters/express";
-import { trpcRouter } from "../routes/trpc.route";
+import { createContext } from "../lib/trpc";
+import { authedTrpcRouter, publicTrpcRouter } from "../routes/trpc.route";
 
-const createContext = ({ req, res }: trpcExpress.CreateExpressContextOptions) => ({});
-export type Context = inferAsyncReturnType<typeof createContext>;
-
-export const trpcExpressMiddleware = trpcExpress.createExpressMiddleware({
-  router: trpcRouter,
+export const publicTrpcExpressMiddleware = trpcExpress.createExpressMiddleware({
+  router: publicTrpcRouter,
+  createContext,
+});
+export const authedTrpcExpressMiddleware = trpcExpress.createExpressMiddleware({
+  router: authedTrpcRouter,
   createContext,
 });

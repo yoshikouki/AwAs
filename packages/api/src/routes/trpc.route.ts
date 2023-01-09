@@ -1,7 +1,12 @@
-import { publicProcedure, router } from "../lib/trpc";
+import { authedProcedure, publicProcedure, router } from "../lib/trpc";
 
-export const trpcRouter = router({
-  health: publicProcedure.query((_req) => "ok")
+export const publicTrpcRouter = router({
+  health: publicProcedure.query((_req) => "ok"),
+});;
+export const authedTrpcRouter = router({
+  profile: authedProcedure.query(({ ctx }) => `ok, ${ctx.uid}`)
 });
 
-export type TRPCRouter = typeof trpcRouter;
+
+export type PublicTRPCRouter = typeof publicTrpcRouter;
+export type AuthedTRPCRouter = typeof authedTrpcRouter;

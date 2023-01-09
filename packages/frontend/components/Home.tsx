@@ -7,7 +7,7 @@ import { useRestApi } from "../hooks/rest-api";
 const Home = () => {
   const [message, setMessage] = useState("");
   const { fetchApi } = useRestApi();
-  const { client } = useApi({ withAuth: true });
+  const { publicClient, authedClient } = useApi({ withAuth: true });
 
   const callApi = async () => {
     try {
@@ -29,7 +29,7 @@ const Home = () => {
 
   const callTrpc = async () => {
     try {
-      const res = await client.health.query();
+      const res = await publicClient.health.query();
       console.log(res);
       setMessage(res);
     } catch (error) {
@@ -38,7 +38,7 @@ const Home = () => {
   };
   const callSecureTrpc = async () => {
     try {
-      const res = await client.authed.profile.query();
+      const res = await authedClient.profile.query();
       console.log(res);
       setMessage(res);
     } catch (error) {
