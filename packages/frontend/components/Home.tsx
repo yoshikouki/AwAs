@@ -1,13 +1,13 @@
 "use client";
 
-import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import { useState } from "react";
-import type { TRPCRouter } from "../../api/src/routes/trpc.route";
+import { useApi } from "../hooks/api";
 import { useRestApi } from "../hooks/rest-api";
 
 const Home = () => {
   const [message, setMessage] = useState("");
   const { fetchApi } = useRestApi();
+  const { client } = useApi({ withAuth: true });
 
   const callApi = async () => {
     try {
@@ -26,14 +26,6 @@ const Home = () => {
       setMessage(String(error));
     }
   };
-  const client = createTRPCProxyClient<TRPCRouter>({
-    links: [
-      httpBatchLink({
-        url: "http://localhost:8889/trpc",
-      }),
-    ],
-  });
-
 
   const callTrpc = async () => {
     try {
