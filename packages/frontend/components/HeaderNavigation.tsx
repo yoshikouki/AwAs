@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { FaCog, FaMoon, FaSignOutAlt, FaSun, FaUserCircle } from "react-icons/fa";
-import { useGet } from "../hooks/api";
 import { useAuth } from "../hooks/auth";
+import { useRestGet } from "../hooks/rest-api";
 import useTheme from "../hooks/theme";
 import { ProfileResponse } from "../types/api";
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();
   const { isAuthenticated, isLoading, login, logout } = useAuth();
-  const { data: profile } = useGet<ProfileResponse>("/v1/profile", true);
+  const { data: profile } = useRestGet<ProfileResponse>("/v1/profile", true);
 
   return (
     <>

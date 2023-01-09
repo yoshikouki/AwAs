@@ -8,7 +8,7 @@ type FetchApiResponse<T> = {
   data: T | null;
 };
 
-export const useApi = () => {
+export const useRestApi = () => {
   const { getAccessToken } = useAuth();
 
   const fetchApi = async <T>(path: string, withAuth: boolean = false, option?: RequestInit) => {
@@ -41,7 +41,7 @@ function useFetchApi<T>(path: string, withAuth: boolean = false, option?: Reques
     data: null,
   });
   const [refreshIndex, setRefreshIndex] = useState(0);
-  const { fetchApi } = useApi();
+  const { fetchApi } = useRestApi();
 
   useEffect(() => {
     (async () => {
@@ -71,13 +71,5 @@ function useFetchApi<T>(path: string, withAuth: boolean = false, option?: Reques
   };
 }
 
-export const useGet = <T>(path: string, withAuth: boolean = false, option?: RequestInit) =>
+export const useRestGet = <T>(path: string, withAuth: boolean = false, option?: RequestInit) =>
   useFetchApi<T>(path, withAuth, { method: "GET", ...option });
-export const usePost = <T>(path: string, withAuth: boolean = false, option?: RequestInit) =>
-  useFetchApi<T>(path, withAuth, { method: "POST", ...option });
-export const usePut = <T>(path: string, withAuth: boolean = false, option?: RequestInit) =>
-  useFetchApi<T>(path, withAuth, { method: "PUT", ...option });
-export const usePatch = <T>(path: string, withAuth: boolean = false, option?: RequestInit) =>
-  useFetchApi<T>(path, withAuth, { method: "PATCH", ...option });
-export const useDelete = <T>(path: string, withAuth: boolean = false, option?: RequestInit) =>
-  useFetchApi<T>(path, withAuth, { method: "DELETE", ...option });

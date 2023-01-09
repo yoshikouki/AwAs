@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FaChevronLeft, FaCircleNotch, FaPlus } from "react-icons/fa";
-import { useApi } from "../hooks/api";
+import { useRestApi } from "../hooks/rest-api";
 import { Asset } from "../types/asset";
 import AssetsEditListItem, { AssetEditProps } from "./AssetsEditListItem";
 
@@ -27,7 +27,7 @@ const AssetsEdit = ({ assets }: { assets: Asset[] }) => {
     control,
     name: "assets",
   });
-  const { fetchApi } = useApi();
+  const { fetchApi } = useRestApi();
   const router = useRouter();
 
   const appendAsset = () => append(assetDefaultValue);

@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaTimes } from "react-icons/fa";
-import { useApi } from "../hooks/api";
+import { useRestApi } from "../hooks/rest-api";
 import { requiredAuth } from "../hooks/auth";
 import { SettingsResponse } from "../types/api";
 
@@ -26,7 +26,7 @@ const SettingsProfileEdit = requiredAuth(({ settings, setProfileEdit, setSetting
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const { fetchApi } = useApi();
+  const { fetchApi } = useRestApi();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const updatedSettings = await fetchApi<SettingsResponse>("/v1/settings/profile", true, {
       method: "PATCH",

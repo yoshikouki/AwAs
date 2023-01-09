@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa";
-import { useGet } from "../hooks/api";
+import { useRestGet } from "../hooks/rest-api";
 import { SettingsResponse } from "../types/api";
 import SettingsProfileEdit from "./SettingsProfileEdit";
 
@@ -9,7 +9,7 @@ const Settings = () => {
   const [profileEdit, setProfileEdit] = useState<boolean>(false);
   const [settings, setSettings] = useState<SettingsResponse | null>(null);
 
-  const { data: fetchedSettings } = useGet<SettingsResponse>("/v1/settings", true);
+  const { data: fetchedSettings } = useRestGet<SettingsResponse>("/v1/settings", true);
 
   useEffect(() => setSettings(fetchedSettings), [fetchedSettings]);
 

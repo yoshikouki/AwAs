@@ -1,11 +1,11 @@
 "use client";
-import { useGet } from "../hooks/api";
 import { requiredAuth } from "../hooks/auth";
+import { useRestGet } from "../hooks/rest-api";
 import { Asset } from "../types/asset";
 import { ProfitOrLossText } from "./ProfitOrLossText";
 
 const AssetsList = requiredAuth(() => {
-  const { data: assets } = useGet<Asset[]>("/v1/assets", true);
+  const { data: assets } = useRestGet<Asset[]>("/v1/assets", true);
 
   return (
     <div className="sm:px-4 overflow-x-auto">
