@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { FaCog, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
-import { useRestGet } from "../hooks/rest-api";
-import { ProfileResponse } from "../types/api";
+import { useProfile } from "../hooks/profile";
 
 interface Props {
   logout: () => void;
 }
 
 const HeaderProfile = ({ logout }: Props) => {
-  const { data: profile } = useRestGet<ProfileResponse>("/v1/profile", true);
+  const { profile, error, isLoading } = useProfile();
+  const displayName = error ? "Error" : isLoading ? "Loading" : profile.name;
 
   return (
     <>
@@ -26,7 +26,7 @@ const HeaderProfile = ({ logout }: Props) => {
         </label>
         <ul tabIndex={0} className="dropdown-content menu rounded w-40 shadow-md bg-base-100">
           <li className="menu-title py-1">
-            <span>{profile?.name || "(no name)"}</span>
+            <span>{displayName}</span>
           </li>
           <li>
             <Link href="/settings">
