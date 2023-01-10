@@ -40,7 +40,7 @@ const Home = () => {
     try {
       const res = await authedClient.profile.query();
       console.log(res);
-      setMessage(res);
+      setMessage(JSON.stringify(res));
     } catch (error) {
       setMessage(String(error));
     }
