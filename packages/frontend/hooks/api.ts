@@ -18,7 +18,7 @@ export const useApi = (options?: ApiOptions) => {
   const authedClient = createTRPCProxyClient<AuthedTRPCRouter>({
     links: [
       httpBatchLink({
-        url: `${config.api.baseUrl}/trpc/authed/`,
+        url: `${config.api.baseUrl}/trpc/authed`,
         async headers() {
           const accessToken = await getAccessToken();
           return accessToken

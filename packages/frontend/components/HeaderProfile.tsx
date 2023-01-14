@@ -10,7 +10,7 @@ interface Props {
 
 const HeaderProfile = ({ logout }: Props) => {
   const { profile, error, isLoading } = useProfile();
-  const displayName = error ? "Error" : isLoading ? "Loading" : profile.name;
+  const displayName = error ? "Error" : (isLoading || !profile) ? "Loading" : profile.name;
 
   return (
     <>
