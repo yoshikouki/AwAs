@@ -37,7 +37,7 @@
     "@types/morgan": "^1.9.4",
     "@types/node": "^18.11.9",
     "@types/node-fetch": "^2.6.2",
-    "esbuild": "^0.16.15",
+    "esbuild": "^0.17.4",
     "esbuild-node-tsc": "^2.0.4",
     "nodemon": "^2.0.20",
     "prisma": "^4.8.0",
