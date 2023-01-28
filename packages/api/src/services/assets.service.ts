@@ -41,7 +41,7 @@ export class AssetsService {
       );
       return {
         symbol: stock?.symbol,
-        balance: asset.balance,
+        balance: Number(asset.balance),
         averageTradedPrice: asset.averageTradedPrice,
         ...this.calculateAssetPrices(asset, currentDailyStockPrice),
       };
@@ -92,10 +92,9 @@ export class AssetsService {
     const profitLoss = BigNumber(asset.balance.toString())
       .multipliedBy(profitLossPerBalance)
       .toNumber();
-    const profitLossPercentage = BigNumber(profitLossPerBalance)
-      .div(asset.averageTradedPrice)
-      .multipliedBy(100)
-      .toFormat(2);
+    const profitLossPercentage = Number(
+      BigNumber(profitLossPerBalance).div(asset.averageTradedPrice).multipliedBy(100).toFormat(2)
+    );
 
     return {
       marketPrice,
