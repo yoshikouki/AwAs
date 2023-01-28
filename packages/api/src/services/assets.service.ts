@@ -7,6 +7,13 @@ import { StockModel } from "../models/stock.model";
 import { UserModel } from "../models/user.model";
 import { filterNonNullable } from "../utils";
 
+interface AssetPrices {
+  marketPrice?: number;
+  marketValue?: number;
+  profitLoss?: number;
+  profitLossPercentage?: number;
+}
+
 export class AssetsService {
   readonly userModel: UserModel;
   readonly holdingAssetModel: HoldingAssetModel;
@@ -69,7 +76,10 @@ export class AssetsService {
     return { result: assets.length === upsertAssets.length, errors: null };
   }
 
-  private calculateAssetPrices(asset: HoldingAsset, dailyStockPrice: DailyStockPrice | undefined) {
+  private calculateAssetPrices(
+    asset: HoldingAsset,
+    dailyStockPrice: DailyStockPrice | undefined
+  ): AssetPrices {
     if (!dailyStockPrice) {
       return {};
     }
