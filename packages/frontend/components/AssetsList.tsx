@@ -1,11 +1,12 @@
 "use client";
+import useSWR from "swr";
+import { useApi } from "../hooks/api";
 import { requiredAuth } from "../hooks/auth";
-import { useRestGet } from "../hooks/rest-api";
-import { Asset } from "../types/asset";
 import { ProfitOrLossText } from "./ProfitOrLossText";
 
 const AssetsList = requiredAuth(() => {
-  const { data: assets } = useRestGet<Asset[]>("/v1/assets", true);
+  const { authedClient } = useApi();
+  const { data: assets } = useSWR("/assets", () => authedClient.assets.query());
 
   return (
     <div className="sm:px-4 overflow-x-auto">
@@ -36,8 +37,8 @@ const AssetsList = requiredAuth(() => {
               <td className="text-end">
                 <div className="font-bold">
                   <ProfitOrLossText
-                    text={asset.marketPrice}
-                    referenceValue={asset.averageTradedPrice}
+                    text={asset.marketPrice || 0}
+                    referenceValue={asset.averageTradedPrice || 0}
                   />
                 </div>
                 <div>{asset.averageTradedPrice}</div>
@@ -46,12 +47,12 @@ const AssetsList = requiredAuth(() => {
               <td className="text-end">
                 <div className="font-bold">{asset.marketValue}</div>
                 <div>
-                  <ProfitOrLossText text={asset.profitLoss} referenceValue={0} />
+                  <ProfitOrLossText text={asset.profitLoss || 0} referenceValue={0} />
                 </div>
               </td>
               <td className="text-end">
                 <ProfitOrLossText
-                  text={`${asset.profitLossPercentage} %`}
+                  text={`${asset.profitLossPercentage || 0} %`}
                   value={asset.profitLossPercentage}
                   referenceValue={0}
                 />
