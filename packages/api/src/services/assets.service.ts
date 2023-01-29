@@ -41,6 +41,7 @@ export class AssetsService {
       );
       return {
         symbol: stock?.symbol,
+        name: null,
         balance: Number(asset.balance),
         averageTradedPrice: asset.averageTradedPrice,
         ...this.calculateAssetPrices(asset, currentDailyStockPrice),
