@@ -50,16 +50,16 @@ const Home = () => {
     <>
       Home
       <div>
-        <button onClick={callApi}>call API</button>
+        <button onClick={callApi} type="button">call API</button>
       </div>
       <div>
-        <button onClick={callSecureApi}>call Secure API</button>
+        <button onClick={callSecureApi} type="button">call Secure API</button>
       </div>
       <div>
-        <button onClick={callTrpc}>call tRPC API</button>
+        <button onClick={callTrpc} type="button">call tRPC API</button>
       </div>
       <div>
-        <button onClick={callSecureTrpc}>call Secure tRPC API</button>
+        <button onClick={callSecureTrpc} type="button">call Secure tRPC API</button>
       </div>
       {message && <p>Message: {message}</p>}
     </>

@@ -28,7 +28,11 @@ const Settings = () => {
             ) : (
               <>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-ghost btn-sm" onClick={() => setProfileEdit(true)}>
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => setProfileEdit(true)}
+                    type="button"
+                  >
                     <FaPen />
                   </button>
                 </div>

@@ -54,7 +54,7 @@ const AssetsEdit = ({ assets }: { assets: Asset[] }) => {
         ))}
 
         <div className="my-20 px-4">
-          <button onClick={appendAsset} className="btn btn-ghost btn-block">
+          <button onClick={appendAsset} className="btn btn-ghost btn-block" type="button">
             <FaPlus className="mr-2" />
             追加
           </button>

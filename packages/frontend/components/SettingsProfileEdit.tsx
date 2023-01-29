@@ -2,8 +2,8 @@
 import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaTimes } from "react-icons/fa";
-import { useRestApi } from "../hooks/rest-api";
 import { requiredAuth } from "../hooks/auth";
+import { useRestApi } from "../hooks/rest-api";
 import { SettingsResponse } from "../types/api";
 
 type Inputs = {
@@ -39,7 +39,11 @@ const SettingsProfileEdit = requiredAuth(({ settings, setProfileEdit, setSetting
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="card-actions justify-end">
-        <button className="btn btn-ghost btn-sm" onClick={() => setProfileEdit(false)}>
+        <button
+          className="btn btn-ghost btn-sm"
+          onClick={() => setProfileEdit(false)}
+          type="button"
+        >
           <FaTimes />
         </button>
       </div>

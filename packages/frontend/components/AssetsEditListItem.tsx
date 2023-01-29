@@ -43,7 +43,7 @@ const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
     <div className="card w-full bg-base-100 shadow-md mb-8">
       <div className="card-body">
         <div className="card-actions justify-end">
-          <button onClick={() => removeAsset(index)} className="btn btn-ghost btn-sm">
+          <button onClick={() => removeAsset(index)} className="btn btn-ghost btn-sm" type="button">
             <FaTimes />
           </button>
         </div>

@@ -31,7 +31,11 @@ const HeaderNavigation = () => {
                 </button>
               </>
             )}
-            <button className="btn btn-square btn-ghost" onClick={themeCtx.toggleTheme}>
+            <button
+              onClick={themeCtx.toggleTheme}
+              className="btn btn-square btn-ghost"
+              type="button"
+            >
               {themeCtx.theme === "light" ? (
                 <FaSun className="h-6 w-6" />
               ) : (
