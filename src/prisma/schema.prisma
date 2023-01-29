@@ -2,65 +2,72 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
-}
-
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
-// Necessary for Next auth
-model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
-}
-
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+  id        Int      @id @default(autoincrement())
+  uid       String   @unique
+  email     String?  @unique
+  name      String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  holdingAssets HoldingAsset[]
+
+  @@map("users")
 }
 
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+model HoldingAsset {
+  id                 Int      @id @default(autoincrement())
+  userId             Int      @map("user_id")
+  stockId            Int      @map("stock_id")
+  balance            BigInt
+  averageTradedPrice Float?   @map("average_traded_price")
+  createdAt          DateTime @default(now()) @map("created_at")
 
-    @@unique([identifier, token])
+  user  User  @relation(fields: [userId], references: [id])
+  stock Stock @relation(fields: [stockId], references: [id])
+
+  @@unique([userId, stockId])
+  @@map("holding_assets")
+}
+
+model Stock {
+  id        Int      @id @default(autoincrement())
+  symbol    String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  holdingAssets   HoldingAsset[]
+  dailyStockPrices DailyStockPrice[]
+
+  @@map("stocks")
+}
+
+model DailyStockPrice {
+  id               Int      @id @default(autoincrement())
+  stockId          Int      @map("stock_id")
+  date             DateTime @map("date") @db.Date
+  open             Float?     @map("open")
+  close            Float      @map("close")
+  high             Float?     @map("high")
+  low              Float?     @map("low")
+  adjClose         Float?     @map("adj_close")
+  volume           BigInt?  @map("volume")
+  unadjustedVolume BigInt?  @map("unadjusted_volume")
+  change           Float?     @map("change")
+  changePercent    Float?     @map("change_percent")
+  vwap             Float?     @map("vwap")
+  changeOverTime   Float?     @map("change_overTime")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  // TODO: Set composite unique constraints on stockId and date.
+  stock Stock @relation(fields: [stockId], references: [id])
+
+  @@map("daily_stock_prices")
 }

@@ -5,7 +5,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate --schema=./src/prisma/schema.prisma",
+    "db:migrate": " prisma db push --schema ./src/prisma/schema.prisma",
     "lint": "next lint",
     "start": "next start"
   },
