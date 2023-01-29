@@ -1,10 +1,12 @@
 "use client";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaTimes } from "react-icons/fa";
 import { KeyedMutator } from "swr";
+import { z } from "zod";
+import { useApi } from "../hooks/api";
 import { requiredAuth } from "../hooks/auth";
-import { useRestApi } from "../hooks/rest-api";
 import { SettingsResponse } from "../types/api";
 
 type Inputs = {
@@ -26,15 +28,19 @@ const SettingsProfileEdit = requiredAuth(({ settings, setProfileEdit, mutateSett
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
-  const { fetchApi } = useRestApi();
+  } = useForm<Inputs>({
+    resolver: zodResolver(
+      z.object({
+        name: z.string().min(2).max(15).nullable(),
+        email: z.string().email().nullable(),
+      })
+    ),
+  });
+  const { authedClient } = useApi();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const updatedSettings = await fetchApi<SettingsResponse>("/v1/settings/profile", true, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    });
-    setProfileEdit(false);
+    await authedClient.updateProfile.mutate(data);
     mutateSettings();
+    setProfileEdit(false);
   };
 
   return (
