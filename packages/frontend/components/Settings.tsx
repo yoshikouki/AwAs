@@ -1,17 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaPen } from "react-icons/fa";
-import { useRestGet } from "../hooks/rest-api";
-import { SettingsResponse } from "../types/api";
+import useSWR from "swr";
+import { useApi } from "../hooks/api";
 import SettingsProfileEdit from "./SettingsProfileEdit";
 
 const Settings = () => {
   const [profileEdit, setProfileEdit] = useState<boolean>(false);
-  const [settings, setSettings] = useState<SettingsResponse | null>(null);
-
-  const { data: fetchedSettings } = useRestGet<SettingsResponse>("/v1/settings", true);
-
-  useEffect(() => setSettings(fetchedSettings), [fetchedSettings]);
+  const { authedClient } = useApi();
+  const { data: settings, mutate } = useSWR("/settings", () => authedClient.settings.query());
 
   return (
     <div className="prose w-full max-w-4xl">
@@ -22,7 +19,7 @@ const Settings = () => {
             {profileEdit ? (
               <SettingsProfileEdit
                 settings={settings}
-                setSettings={setSettings}
+                mutateSettings={mutate}
                 setProfileEdit={setProfileEdit}
               />
             ) : (

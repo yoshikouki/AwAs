@@ -2,6 +2,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaTimes } from "react-icons/fa";
+import { KeyedMutator } from "swr";
 import { requiredAuth } from "../hooks/auth";
 import { useRestApi } from "../hooks/rest-api";
 import { SettingsResponse } from "../types/api";
@@ -13,14 +14,14 @@ type Inputs = {
 
 interface Props {
   settings: SettingsResponse;
-  setSettings: Dispatch<SetStateAction<SettingsResponse | null>>;
+  mutateSettings: KeyedMutator<SettingsResponse>;
   setProfileEdit: Dispatch<SetStateAction<boolean>>;
 }
 
 const emailPattern =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const SettingsProfileEdit = requiredAuth(({ settings, setProfileEdit, setSettings }: Props) => {
+const SettingsProfileEdit = requiredAuth(({ settings, setProfileEdit, mutateSettings }: Props) => {
   const {
     register,
     handleSubmit,
@@ -33,7 +34,7 @@ const SettingsProfileEdit = requiredAuth(({ settings, setProfileEdit, setSetting
       body: JSON.stringify(data),
     });
     setProfileEdit(false);
-    setSettings(updatedSettings);
+    mutateSettings();
   };
 
   return (

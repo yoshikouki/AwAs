@@ -1,6 +1,6 @@
 export interface SettingsResponse {
-  name: string;
-  email: string;
+  name: string | null;
+  email: string | null;
 }
 
 export interface ProfileResponse {
