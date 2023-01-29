@@ -18,9 +18,11 @@ const AuthProvider = ({ children }: Props) => {
     <Auth0Provider
       domain={config.auth0.issuerBaseUrl}
       clientId={config.auth0.clientId}
-      redirectUri={config.auth0.baseUrl}
       onRedirectCallback={onRedirectCallback}
-      audience={config.auth0.audienceBaseUrl}
+      authorizationParams={{
+        audience: config.auth0.audienceBaseUrl,
+        redirect_uri: config.auth0.baseUrl,
+      }}
     >
       {children}
     </Auth0Provider>

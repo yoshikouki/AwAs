@@ -26,9 +26,9 @@ const HeaderNavigation = () => {
               <HeaderProfile logout={logout} />
             ) : (
               <>
-                <a onClick={login} className="btn btn-ghost">
+                <button onClick={() => login()} className="btn btn-ghost" type="button">
                   Login
-                </a>
+                </button>
               </>
             )}
             <button className="btn btn-square btn-ghost" onClick={themeCtx.toggleTheme}>
