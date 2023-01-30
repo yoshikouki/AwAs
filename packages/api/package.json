@@ -12,7 +12,7 @@
   "dependencies": {
     "@alpacahq/alpaca-trade-api": "^2.16.1",
     "@prisma/client": "^4.8.0",
-    "@trpc/server": "^10.7.0",
+    "@trpc/server": "^10.9.0",
     "bignumber.js": "^9.1.1",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
