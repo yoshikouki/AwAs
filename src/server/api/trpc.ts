@@ -86,6 +86,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  * @see https://trpc.io/docs/router
  */
 export const createTRPCRouter = t.router;
+export const mergeTRPCRouters = t.mergeRouters;
 
 /**
  * Public (unauthed) procedure
@@ -121,4 +122,4 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const authedProcedure = t.procedure.use(enforceUserIsAuthed);
