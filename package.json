@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "PORT=8888 next dev",
     "postinstall": "prisma generate --schema=./src/prisma/schema.prisma",
     "db:migrate": " prisma db push --schema ./src/prisma/schema.prisma",
     "lint": "next lint",
