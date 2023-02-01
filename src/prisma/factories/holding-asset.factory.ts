@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { Prisma } from "@prisma/client";
-import prisma from "../client";
+import type { Prisma } from "@prisma/client";
+import { prisma } from "../../server/db";
 import { StockFactory } from "./stock.factory";
 import { UserFactory } from "./user.factory";
 
