@@ -1,4 +1,4 @@
-import { createTRPCRouter, publicProcedure, authedProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const healthRouter = createTRPCRouter({
   health: publicProcedure.query((_req) => "ok"),

@@ -1,8 +1,8 @@
-import { faker } from "@faker-js/faker";
 import type { Prisma } from "@prisma/client";
-import { prisma } from "../../server/db";
 import { StockFactory } from "./stock.factory";
 import { UserFactory } from "./user.factory";
+import { faker } from "@faker-js/faker";
+import { prisma } from "../../server/db";
 
 type CreateInputType = Prisma.HoldingAssetUncheckedCreateInput;
 const modelName = "holdingAsset";

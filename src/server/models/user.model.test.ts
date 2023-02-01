@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
+
 import { UserFactory } from "../../prisma/factories/user.factory";
-import { prisma } from "../db";
 import { UserModel } from "./user.model";
+import { prisma } from "../db";
 
 const userModel = new UserModel();
 
