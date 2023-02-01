@@ -1,7 +1,10 @@
 import { createTRPCRouter, mergeTRPCRouters } from "./trpc";
+
+import { assetsRouter } from './routers/assets.route';
 import { exampleRouter } from "./routers/example.route";
 import { healthRouter } from "./routers/health.route";
-import { profileTrpcRouter } from "./routers/profile.route";
+import { profileRouter } from "./routers/profile.route";
+import { settingsRouter } from './routers/settings.route';
 
 /**
  * This is the primary router for your server.
@@ -10,7 +13,9 @@ import { profileTrpcRouter } from "./routers/profile.route";
  */
 export const appRouter = mergeTRPCRouters(
   healthRouter,
-  profileTrpcRouter,
+  profileRouter,
+  assetsRouter,
+  settingsRouter,
   createTRPCRouter({
     example: exampleRouter,
   })
