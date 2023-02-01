@@ -21,6 +21,9 @@ export const serverSchema = z.object({
   ),
   LINE_CLIENT_ID: z.string(),
   LINE_CLIENT_SECRET: z.string(),
+  FMP_API_KEY: z.string(),
+  ALPACA_API_KEY: z.string(),
+  ALPACA_SECRET_KEY: z.string(),
 });
 
 /**
@@ -35,6 +38,9 @@ export const serverEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   LINE_CLIENT_ID: process.env.LINE_CLIENT_ID,
   LINE_CLIENT_SECRET: process.env.LINE_CLIENT_SECRET,
+  FMP_API_KEY: process.env.FMP_API_KEY,
+  ALPACA_API_KEY: process.env.ALPACA_API_KEY,
+  ALPACA_SECRET_KEY: process.env.ALPACA_SECRET_KEY,
 };
 
 /**
