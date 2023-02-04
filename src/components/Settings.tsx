@@ -1,32 +1,30 @@
 "use client";
-import { useState } from "react";
+
 import { FaPen } from "react-icons/fa";
-import useSWR from "swr";
-import { useApi } from "../hooks/api";
 import SettingsProfileEdit from "./SettingsProfileEdit";
+import { api } from "../utils/api";
+import { useState } from "react";
 
 const Settings = () => {
   const [profileEdit, setProfileEdit] = useState<boolean>(false);
-  const { authedClient } = useApi();
-  const { data: settings, mutate } = useSWR("/settings", () => authedClient.settings.query());
+  const { data: settings } = api.settings.useQuery();
 
   return (
     <div className="prose w-full max-w-4xl">
       <h1>Settings</h1>
       {settings && (
-        <div className="card w-full sm:w-auto glass">
+        <div className="card glass w-full sm:w-auto">
           <div className="card-body">
             {profileEdit ? (
               <SettingsProfileEdit
                 settings={settings}
-                mutateSettings={mutate}
                 setProfileEdit={setProfileEdit}
               />
             ) : (
               <>
                 <div className="card-actions justify-end">
                   <button
-                    className="btn btn-ghost btn-sm"
+                    className="btn-ghost btn-sm btn"
                     onClick={() => setProfileEdit(true)}
                     type="button"
                   >
@@ -34,14 +32,14 @@ const Settings = () => {
                   </button>
                 </div>
 
-                <ul className="list-none my-0 pl-0">
+                <ul className="my-0 list-none pl-0">
                   <li className="mt-0 mb-8 pl-0">
                     <span>Name</span>
-                    <div className="font-bold text-lg">{settings.name}</div>
+                    <div className="text-lg font-bold">{settings.name}</div>
                   </li>
                   <li className="mt-0 mb-8 pl-0">
                     <span>Email</span>
-                    <div className="font-bold text-lg">{settings.email}</div>
+                    <div className="text-lg font-bold">{settings.email}</div>
                   </li>
                 </ul>
               </>

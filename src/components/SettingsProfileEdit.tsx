@@ -1,35 +1,27 @@
 "use client";
 
 import { Dispatch, SetStateAction } from "react";
+import { RouterInputs, RouterOutputs, api } from "../utils/api";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { FaTimes } from "react-icons/fa";
-import { KeyedMutator } from "swr";
-import { SettingsResponse } from "../types/api";
-import { useApi } from "../hooks/api";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-type Inputs = {
-  name: string;
-  email: string;
-};
-
 interface Props {
-  settings: SettingsResponse;
-  mutateSettings: KeyedMutator<SettingsResponse>;
+  settings: RouterOutputs["settings"];
   setProfileEdit: Dispatch<SetStateAction<boolean>>;
 }
 
 const emailPattern =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const SettingsProfileEdit = ({ settings, setProfileEdit, mutateSettings }: Props) => {
+const SettingsProfileEdit = ({ settings, setProfileEdit }: Props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm<RouterInputs["updateProfile"]>({
     resolver: zodResolver(
       z.object({
         name: z.string().min(2).max(15).nullable(),
@@ -37,10 +29,11 @@ const SettingsProfileEdit = ({ settings, setProfileEdit, mutateSettings }: Props
       })
     ),
   });
-  const { authedClient } = useApi();
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await authedClient.updateProfile.mutate(data);
-    mutateSettings();
+  const mutation = api.updateProfile.useMutation()
+  const onSubmit: SubmitHandler<RouterInputs["updateProfile"]> = async (
+    data
+  ) => {
+    mutation.mutate(data);
     setProfileEdit(false);
   };
 

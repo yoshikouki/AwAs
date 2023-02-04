@@ -1,12 +1,10 @@
 "use client";
 
 import { ProfitOrLossText } from "./ProfitOrLossText";
-import { useApi } from "../hooks/api";
-import useSWR from "swr";
+import { api } from "../utils/api";
 
 const AssetsList = () => {
-  const { authedClient } = useApi();
-  const { data: assets } = useSWR("/assets", () => authedClient.assets.query());
+  const { data: assets } = api.assets.useQuery();
 
   return (
     <div className="sm:px-4 overflow-x-auto">
