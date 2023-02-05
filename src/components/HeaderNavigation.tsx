@@ -1,10 +1,9 @@
-"use client";
-
-import Link from "next/link";
 import { FaMoon, FaSun } from "react-icons/fa";
+
+import HeaderProfile from "./HeaderProfile";
+import Link from "next/link";
 import { useAuth } from "../hooks/auth";
 import useTheme from "../hooks/theme";
-import HeaderProfile from "./HeaderProfile";
 
 const HeaderNavigation = () => {
   const themeCtx = useTheme();

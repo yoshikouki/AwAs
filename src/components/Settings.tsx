@@ -1,5 +1,3 @@
-"use client";
-
 import { FaPen } from "react-icons/fa";
 import SettingsProfileEdit from "./SettingsProfileEdit";
 import { api } from "../utils/api";

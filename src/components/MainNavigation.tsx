@@ -1,9 +1,7 @@
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { BiCoinStack } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navigationItems = [
   {

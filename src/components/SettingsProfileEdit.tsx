@@ -1,5 +1,3 @@
-"use client";
-
 import { Dispatch, SetStateAction } from "react";
 import { RouterInputs, RouterOutputs, api } from "../utils/api";
 import { SubmitHandler, useForm } from "react-hook-form";

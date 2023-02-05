@@ -1,5 +1,3 @@
-"use client";
-
 import { ProfitOrLossText } from "./ProfitOrLossText";
 import { api } from "../utils/api";
 

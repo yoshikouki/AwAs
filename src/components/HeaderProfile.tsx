@@ -1,7 +1,6 @@
-"use client";
+import { FaCog, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 
 import Link from "next/link";
-import { FaCog, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { useProfile } from "../hooks/profile";
 
 interface Props {
