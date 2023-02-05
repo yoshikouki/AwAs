@@ -28,7 +28,7 @@ const AssetsEdit = () => {
       })),
     },
   });
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "assets",
   });
