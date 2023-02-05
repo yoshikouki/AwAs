@@ -1,10 +1,4 @@
-import type {
-  DailyStockPrice,
-  HoldingAsset
-} from "@prisma/client";
-
-import BigNumber from "bignumber.js";
-import { DailyStockPriceModel } from "../models/daily-stock-price.model";
+// import { DailyStockPriceModel } from "../models/daily-stock-price.model";
 import { HoldingAssetModel } from "../models/holding-asset.model";
 import { StockModel } from "../models/stock.model";
 import { UserModel } from "../models/user.model";
@@ -12,26 +6,26 @@ import { filterNonNullable } from './../../utils/index';
 import { upsertAssetsSchema } from "../api/routers/assets.route";
 import { z } from "zod";
 
-interface AssetPrices {
-  marketPrice?: number;
-  marketValue?: number;
-  profitLoss?: number;
-  profitLossPercentage?: number;
-}
+// interface AssetPrices {
+//   marketPrice?: number;
+//   marketValue?: number;
+//   profitLoss?: number;
+//   profitLossPercentage?: number;
+// }
 
 export class AssetsService {
   readonly userModel: UserModel;
   readonly holdingAssetModel: HoldingAssetModel;
   readonly stockModel: StockModel;
-  readonly dailyStockPriceModel: DailyStockPriceModel;
+  // readonly dailyStockPriceModel: DailyStockPriceModel;
 
   constructor(props?: Partial<AssetsService>) {
     this.userModel = props?.userModel || new UserModel();
     this.holdingAssetModel =
       props?.holdingAssetModel || new HoldingAssetModel();
     this.stockModel = props?.stockModel || new StockModel();
-    this.dailyStockPriceModel =
-      props?.dailyStockPriceModel || new DailyStockPriceModel();
+    // this.dailyStockPriceModel =
+      // props?.dailyStockPriceModel || new DailyStockPriceModel();
   }
 
   async getAllByUser({ uid }: { uid: string }) {
@@ -42,19 +36,13 @@ export class AssetsService {
     const stocks = await this.stockModel.findAll({
       stockIds: assets.map((asset) => asset.stockId),
     });
-    const dailyStockPrices =
-      await this.dailyStockPriceModel.findOrCreateLatestPrices({ stocks });
     const all = assets.map((asset) => {
       const stock = stocks.find((stock) => stock.id === asset.stockId);
-      const currentDailyStockPrice = dailyStockPrices.find(
-        (dailyStockPrice) => dailyStockPrice.stockId === stock?.id
-      );
       return {
         symbol: stock?.symbol || "",
         name: null,
         balance: Number(asset.balance),
         averageTradedPrice: asset.averageTradedPrice,
-        ...this.calculateAssetPrices(asset, currentDailyStockPrice),
       };
     });
     return all;
@@ -93,38 +81,38 @@ export class AssetsService {
     return { result: assets.length === upsertAssets.length, errors: null };
   }
 
-  private calculateAssetPrices(
-    asset: HoldingAsset,
-    dailyStockPrice: DailyStockPrice | undefined
-  ): AssetPrices {
-    if (!dailyStockPrice) {
-      return {};
-    }
-    const marketPrice = dailyStockPrice.close || 0;
-    const marketValue = BigNumber(asset.balance.toString())
-      .multipliedBy(marketPrice)
-      .toNumber();
-    if (!asset.averageTradedPrice) {
-      return { marketPrice, marketValue };
-    }
-    const profitLossPerBalance = BigNumber(marketPrice).minus(
-      asset.averageTradedPrice
-    );
-    const profitLoss = BigNumber(asset.balance.toString())
-      .multipliedBy(profitLossPerBalance)
-      .toNumber();
-    const profitLossPercentage = Number(
-      BigNumber(profitLossPerBalance)
-        .div(asset.averageTradedPrice)
-        .multipliedBy(100)
-        .toFormat(2)
-    );
+  // private calculateAssetPrices(
+  //   asset: HoldingAsset,
+  //   dailyStockPrice: DailyStockPrice | undefined
+  // ): AssetPrices {
+  //   if (!dailyStockPrice) {
+  //     return {};
+  //   }
+  //   const marketPrice = dailyStockPrice.close || 0;
+  //   const marketValue = BigNumber(asset.balance.toString())
+  //     .multipliedBy(marketPrice)
+  //     .toNumber();
+  //   if (!asset.averageTradedPrice) {
+  //     return { marketPrice, marketValue };
+  //   }
+  //   const profitLossPerBalance = BigNumber(marketPrice).minus(
+  //     asset.averageTradedPrice
+  //   );
+  //   const profitLoss = BigNumber(asset.balance.toString())
+  //     .multipliedBy(profitLossPerBalance)
+  //     .toNumber();
+  //   const profitLossPercentage = Number(
+  //     BigNumber(profitLossPerBalance)
+  //       .div(asset.averageTradedPrice)
+  //       .multipliedBy(100)
+  //       .toFormat(2)
+  //   );
 
-    return {
-      marketPrice,
-      marketValue,
-      profitLoss,
-      profitLossPercentage,
-    };
-  }
+  //   return {
+  //     marketPrice,
+  //     marketValue,
+  //     profitLoss,
+  //     profitLossPercentage,
+  //   };
+  // }
 }

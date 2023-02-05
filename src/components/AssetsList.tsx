@@ -1,4 +1,3 @@
-import { ProfitOrLossText } from "./ProfitOrLossText";
 import { api } from "../utils/api";
 
 const AssetsList = () => {
@@ -33,16 +32,17 @@ const AssetsList = () => {
               <td className="text-end">{asset.balance}</td>
               {/* 価格 */}
               <td className="text-end">
-                <div className="font-bold">
+                {/* TODO: 価格を取得して表示する */}
+                {/* <div className="font-bold">
                   <ProfitOrLossText
                     text={asset.marketPrice || 0}
                     referenceValue={asset.averageTradedPrice || 0}
                   />
-                </div>
+                </div> */}
                 <div>{asset.averageTradedPrice}</div>
               </td>
               {/* 評価額 */}
-              <td className="text-end">
+              {/* <td className="text-end">
                 <div className="font-bold">{asset.marketValue}</div>
                 <div>
                   <ProfitOrLossText text={asset.profitLoss || 0} referenceValue={0} />
@@ -54,7 +54,7 @@ const AssetsList = () => {
                   value={asset.profitLossPercentage}
                   referenceValue={0}
                 />
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>
