@@ -1,11 +1,12 @@
-"use client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useFieldArray, useForm } from "react-hook-form";
 import { FaChevronLeft, FaCircleNotch, FaPlus } from "react-icons/fa";
-import { useRestApi } from "../hooks/rest-api";
-import { Asset } from "../types/asset";
-import AssetsEditListItem, { AssetEditProps } from "./AssetsEditListItem";
+import { RouterInputs, api } from "../utils/api";
+import { useFieldArray, useForm } from "react-hook-form";
+
+import AssetsEditListItem from "./AssetsEditListItem";
+import Link from "next/link";
+import { upsertAssetsSchema } from "../server/api/routers/assets.route";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const assetDefaultValue = {
   symbol: "",
@@ -13,10 +14,14 @@ const assetDefaultValue = {
   averageTradedPrice: 0.0,
 };
 
-const AssetsEdit = ({ assets }: { assets: Asset[] }) => {
+const AssetsEdit = () => {
+  const { data: assets } = api.assets.useQuery();
+  const mutation = api.upsertAssets.useMutation();
+
   const { handleSubmit, control, register } = useForm({
+    resolver: zodResolver(upsertAssetsSchema),
     defaultValues: {
-      assets: assets.map((asset) => ({
+      assets: assets?.map((asset) => ({
         symbol: asset.symbol,
         balance: asset.balance,
         averageTradedPrice: asset.averageTradedPrice,
@@ -27,16 +32,16 @@ const AssetsEdit = ({ assets }: { assets: Asset[] }) => {
     control,
     name: "assets",
   });
-  const { fetchApi } = useRestApi();
-  const router = useRouter();
-
   const appendAsset = () => append(assetDefaultValue);
   const removeAsset = (index: number) => remove(index);
-  const onSubmit = async (data: { assets: AssetEditProps[] }) => {
-    const result = await fetchApi("/v1/assets", true, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    });
+
+  const router = useRouter();
+  const onSubmit = ({
+    assets,
+  }: {
+    assets: RouterInputs["upsertAssets"] | undefined;
+  }) => {
+    mutation.mutate(assets || []);
     router.push("/assets");
   };
 
