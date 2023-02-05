@@ -59,18 +59,26 @@ const AssetsEdit = () => {
         ))}
 
         <div className="my-20 px-4">
-          <button onClick={appendAsset} className="btn btn-ghost btn-block" type="button">
+          <button
+            onClick={appendAsset}
+            className="btn-ghost btn-block btn"
+            type="button"
+          >
             <FaPlus className="mr-2" />
             追加
           </button>
         </div>
 
-        <div className="flex gap-4 mt-20 px-4">
-          <Link href="/assets" prefetch={false} className="btn btn-outline flex-1">
+        <div className="mt-20 flex gap-4 px-4">
+          <Link
+            href="/assets"
+            prefetch={false}
+            className="btn-outline btn flex-1"
+          >
             <FaChevronLeft className="mr-2" />
             キャンセル
           </Link>
-          <button type="submit" className="btn btn-primary flex-1">
+          <button type="submit" className="btn-primary btn flex-1">
             <FaCircleNotch className="mr-2" />
             保存
           </button>
