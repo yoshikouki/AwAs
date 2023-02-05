@@ -3,7 +3,7 @@ import { HoldingAssetModel } from "../models/holding-asset.model";
 import { StockModel } from "../models/stock.model";
 import { UserModel } from "../models/user.model";
 import { filterNonNullable } from './../../utils/index';
-import { upsertAssetsSchema } from "../api/routers/assets.route";
+import { upsertAssetsSchema } from "../../schemas/assets";
 import { z } from "zod";
 
 // interface AssetPrices {

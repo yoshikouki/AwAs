@@ -1,15 +1,7 @@
 import { authedProcedure, createTRPCRouter } from "../trpc";
 
 import { AssetsService } from "../../services/assets.service";
-import { z } from "zod";
-
-export const upsertAssetsSchema = z.array(
-  z.object({
-    symbol: z.string().min(1).max(5),
-    balance: z.number().nonnegative(),
-    averageTradedPrice: z.number().nonnegative().nullable(),
-  })
-);
+import { upsertAssetsSchema } from "../../../schemas/assets";
 
 export const assetsRouter = createTRPCRouter({
   assets: authedProcedure.query(async ({ ctx }) => {

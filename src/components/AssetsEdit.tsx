@@ -4,7 +4,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 import AssetsEditListItem from "./AssetsEditListItem";
 import Link from "next/link";
-import { upsertAssetsSchema } from "../server/api/routers/assets.route";
+import { upsertAssetsSchema } from "../schemas/assets";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
