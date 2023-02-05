@@ -8,7 +8,7 @@ type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
 interface Props {
-  asset: ArrayElement<RouterInputs["upsertAssets"]>;
+  asset: ArrayElement<RouterInputs["upsertAssets"]["assets"]>;
   index: number;
   register: UseFormRegister<{
     assets: RouterInputs["upsertAssets"] | undefined;

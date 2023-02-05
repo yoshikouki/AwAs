@@ -53,7 +53,7 @@ export class AssetsService {
     assets,
   }: {
     uid: string;
-    assets: z.infer<typeof upsertAssetsSchema>;
+    assets: z.infer<typeof upsertAssetsSchema>["assets"];
   }) {
     const user = await this.userModel.findOrCreateByUid({ uid });
     if (!user) {

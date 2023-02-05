@@ -15,13 +15,13 @@ const assetDefaultValue = {
 };
 
 const AssetsEdit = () => {
-  const { data: assets } = api.assets.useQuery();
+  const { data: storedAssets } = api.assets.useQuery();
   const mutation = api.upsertAssets.useMutation();
 
   const { handleSubmit, control, register } = useForm({
     resolver: zodResolver(upsertAssetsSchema),
     defaultValues: {
-      assets: assets?.map((asset) => ({
+      assets: storedAssets?.map((asset) => ({
         symbol: asset.symbol,
         balance: asset.balance,
         averageTradedPrice: asset.averageTradedPrice,
@@ -41,7 +41,7 @@ const AssetsEdit = () => {
   }: {
     assets: RouterInputs["upsertAssets"] | undefined;
   }) => {
-    mutation.mutate(assets || []);
+    mutation.mutate({ assets: assets || [] });
     router.push("/assets");
   };
 

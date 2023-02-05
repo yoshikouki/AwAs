@@ -18,7 +18,7 @@ export const assetsRouter = createTRPCRouter({
       const assetsService = new AssetsService();
       const { result } = await assetsService.updateAllByUser({
         uid: ctx.session.user.id,
-        assets: input,
+        assets: input.assets,
       });
 
       return result;
