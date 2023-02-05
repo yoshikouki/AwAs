@@ -1,12 +1,7 @@
 import { PrismaClient, PrismaPromise, Stock } from "@prisma/client";
 
-import { AssetCreateInput } from "../services/assets.service";
 import { filterNonNullable } from "../../utils";
 import { prisma } from "../db";
-
-interface AssetUpsertAllInput extends Omit<AssetCreateInput, "symbol"> {
-  stock: Stock;
-}
 
 export class HoldingAssetModel {
   readonly prisma: PrismaClient;
@@ -19,9 +14,21 @@ export class HoldingAssetModel {
     return await this.prisma.holdingAsset.findMany({ where: { userId } });
   }
 
-  async upsetOrDeleteAll({ userId, assets }: { userId: number; assets: AssetUpsertAllInput[] }) {
+  async upsetOrDeleteAll({
+    userId,
+    assets,
+  }: {
+    userId: number;
+    assets: {
+      stock: Stock;
+      balance: number;
+      averageTradedPrice: number | null;
+    }[];
+  }) {
     const transactionQueries: PrismaPromise<unknown>[] = [];
-    const storedAssets = await this.prisma.holdingAsset.findMany({ where: { userId } });
+    const storedAssets = await this.prisma.holdingAsset.findMany({
+      where: { userId },
+    });
 
     if (assets.length > 0) {
       const valuesQueryString = assets
@@ -60,7 +67,9 @@ export class HoldingAssetModel {
       transactionQueries.push(deletingAssetsQuery);
     }
 
-    const upsetOrDeletedAssets = await this.prisma.$transaction(transactionQueries);
+    const upsetOrDeletedAssets = await this.prisma.$transaction(
+      transactionQueries
+    );
     return upsetOrDeletedAssets;
   }
 }

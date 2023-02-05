@@ -2,6 +2,7 @@ import { AlpacaApi, alpacaApi } from "../../lib/alpaca-api";
 import { PrismaClient, Stock } from "@prisma/client";
 
 import { compareDesc } from "date-fns";
+import { filterNonNullable } from './../../utils/index';
 import { prisma } from "../db";
 
 export class DailyStockPriceModel {
@@ -42,10 +43,11 @@ export class DailyStockPriceModel {
     const barsOfStocks = await this.alpacaApi.getMultiBars(stocks.map((stock) => stock.symbol));
     // TODO: 市場が開いているときに ClosePrice がどのような値となるかを検証する。
     await this.prisma.dailyStockPrice.createMany({
-      data: stocks.map((stock) => {
-        const latestBar = barsOfStocks[stock.symbol.toUpperCase()].sort((a, b) =>
+      data: filterNonNullable(stocks.map((stock) => {
+        const latestBar = barsOfStocks[stock.symbol.toUpperCase()]?.sort((a, b) =>
           compareDesc(new Date(a.Timestamp), new Date(b.Timestamp))
         )[0];
+        if (!latestBar) return;
         return {
           stockId: stock.id,
           date: new Date(latestBar.Timestamp),
@@ -56,7 +58,7 @@ export class DailyStockPriceModel {
           volume: latestBar.Volume,
           vwap: latestBar.VWAP,
         };
-      }),
+      })),
     });
   }
 }

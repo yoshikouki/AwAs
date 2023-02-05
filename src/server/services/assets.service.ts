@@ -1,7 +1,6 @@
 import type {
   DailyStockPrice,
-  HoldingAsset,
-  Stock,
+  HoldingAsset
 } from "@prisma/client";
 
 import BigNumber from "bignumber.js";
@@ -10,18 +9,14 @@ import { HoldingAssetModel } from "../models/holding-asset.model";
 import { StockModel } from "../models/stock.model";
 import { UserModel } from "../models/user.model";
 import { filterNonNullable } from './../../utils/index';
+import { upsertAssetsSchema } from "../api/routers/assets.route";
+import { z } from "zod";
 
 interface AssetPrices {
   marketPrice?: number;
   marketValue?: number;
   profitLoss?: number;
   profitLossPercentage?: number;
-}
-
-export interface AssetCreateInput {
-  symbol: string;
-  balance: number;
-  averageTradedPrice?: number;
 }
 
 export class AssetsService {
@@ -50,12 +45,12 @@ export class AssetsService {
     const dailyStockPrices =
       await this.dailyStockPriceModel.findOrCreateLatestPrices({ stocks });
     const all = assets.map((asset) => {
-      const stock: Stock = stocks.find((stock) => stock.id === asset.stockId);
+      const stock = stocks.find((stock) => stock.id === asset.stockId);
       const currentDailyStockPrice = dailyStockPrices.find(
         (dailyStockPrice) => dailyStockPrice.stockId === stock?.id
       );
       return {
-        symbol: stock?.symbol,
+        symbol: stock?.symbol || "",
         name: null,
         balance: Number(asset.balance),
         averageTradedPrice: asset.averageTradedPrice,
@@ -70,7 +65,7 @@ export class AssetsService {
     assets,
   }: {
     uid: string;
-    assets: AssetCreateInput[];
+    assets: z.infer<typeof upsertAssetsSchema>;
   }) {
     const user = await this.userModel.findOrCreateByUid({ uid });
     if (!user) {
