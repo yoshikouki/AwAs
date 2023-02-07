@@ -1,7 +1,7 @@
 import { authedProcedure, createTRPCRouter } from "../trpc";
 
 import { AssetsService } from "../../services/assets.service";
-import { upsertAssetsSchema } from "../../../schemas/assets";
+import { upsertAssetsSchema } from "../../../schemas/assets.schema";
 
 export const assetsRouter = createTRPCRouter({
   assets: authedProcedure.query(async ({ ctx }) => {
