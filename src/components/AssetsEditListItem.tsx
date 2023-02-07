@@ -10,9 +10,7 @@ type ArrayElement<ArrayType extends readonly unknown[]> =
 interface Props {
   asset: ArrayElement<RouterInputs["upsertAssets"]["assets"]>;
   index: number;
-  register: UseFormRegister<{
-    assets: RouterInputs["upsertAssets"] | undefined;
-  }>;
+  register: UseFormRegister<RouterInputs["upsertAssets"]>;
   removeAsset: (index: number) => void;
 }
 
@@ -71,11 +69,11 @@ const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
 
               <input
                 {...register(`assets.${index}.symbol`)}
-                id={`asset-${index}-0`}
-                className="input-bordered input w-full pl-10"
                 onKeyDown={handleEnterKeyDown}
                 onFocus={handleOnFocusInput}
                 onBlur={handleOnBlurInput}
+                id={`asset-${index}-0`}
+                className="input-bordered input w-full pl-10"
               />
             </div>
 
@@ -97,12 +95,16 @@ const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
                 数
               </div>
               <input
-                {...register(`assets.${index}.balance`)}
-                id={`asset-${index}-1`}
-                className="input-bordered input w-full pl-10"
+                {...register(`assets.${index}.balance`, {
+                  valueAsNumber: true,
+                })}
                 onKeyDown={handleEnterKeyDown}
                 onFocus={handleOnFocusInput}
                 onBlur={handleOnBlurInput}
+                id={`asset-${index}-1`}
+                className="input-bordered input w-full pl-10"
+                type="number"
+                step="any"
               />
             </div>
           </div>
@@ -117,12 +119,16 @@ const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
                   <FaDollarSign />
                 </div>
                 <input
-                  {...register(`assets.${index}.averageTradedPrice`)}
-                  id={`asset-${index}-2`}
-                  className="input-bordered input w-full pl-10"
+                  {...register(`assets.${index}.averageTradedPrice`, {
+                    valueAsNumber: true,
+                  })}
                   onKeyDown={handleEnterKeyDown}
                   onFocus={handleOnFocusInput}
                   onBlur={handleOnBlurInput}
+                  id={`asset-${index}-2`}
+                  className="input-bordered input w-full pl-10"
+                  type="number"
+                  step="any"
                 />
               </div>
               <label className="label">

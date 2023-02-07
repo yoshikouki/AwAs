@@ -1,9 +1,9 @@
 import { FaChevronLeft, FaCircleNotch, FaPlus } from "react-icons/fa";
-import { RouterInputs, api } from "../utils/api";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import AssetsEditListItem from "./AssetsEditListItem";
 import Link from "next/link";
+import { api } from "../utils/api";
 import { upsertAssetsSchema } from "../schemas/assets";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,11 +21,13 @@ const AssetsEdit = () => {
   const { handleSubmit, control, register } = useForm({
     resolver: zodResolver(upsertAssetsSchema),
     defaultValues: {
-      assets: storedAssets?.map((asset) => ({
-        symbol: asset.symbol,
-        balance: asset.balance,
-        averageTradedPrice: asset.averageTradedPrice,
-      })),
+      assets: storedAssets
+        ? storedAssets.map((asset) => ({
+            symbol: asset.symbol,
+            balance: asset.balance,
+            averageTradedPrice: asset.averageTradedPrice,
+          }))
+        : [assetDefaultValue],
     },
   });
   const { fields, append, remove } = useFieldArray({
@@ -36,18 +38,14 @@ const AssetsEdit = () => {
   const removeAsset = (index: number) => remove(index);
 
   const router = useRouter();
-  const onSubmit = ({
-    assets,
-  }: {
-    assets: RouterInputs["upsertAssets"] | undefined;
-  }) => {
-    mutation.mutate({ assets: assets || [] });
+  const onSubmit = handleSubmit(({ assets }) => {
+    mutation.mutate({ assets });
     router.push("/assets");
-  };
+  });
 
   return (
     <div className="prose w-full max-w-4xl sm:px-4">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         {fields.map((asset, i) => (
           <AssetsEditListItem
             register={register}
