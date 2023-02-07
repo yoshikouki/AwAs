@@ -18,7 +18,12 @@ const AssetsEdit = () => {
   const { data: storedAssets } = api.assets.useQuery();
   const mutation = api.upsertAssets.useMutation();
 
-  const { handleSubmit, control, register } = useForm({
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(upsertAssetsSchema),
     defaultValues: {
       assets: storedAssets
@@ -53,6 +58,7 @@ const AssetsEdit = () => {
             asset={asset}
             index={i}
             key={i}
+            error={errors.assets ? errors.assets[i] : undefined}
           />
         ))}
 

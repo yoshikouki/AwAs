@@ -1,8 +1,13 @@
 import { FaAt, FaDollarSign, FaTimes } from "react-icons/fa";
+import {
+  FieldError,
+  FieldErrorsImpl,
+  Merge,
+  UseFormRegister,
+} from "react-hook-form";
 import { FocusEventHandler, KeyboardEventHandler } from "react";
 
 import { RouterInputs } from "../utils/api";
-import { UseFormRegister } from "react-hook-form";
 
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
@@ -12,9 +17,21 @@ interface Props {
   index: number;
   register: UseFormRegister<RouterInputs["upsertAssets"]>;
   removeAsset: (index: number) => void;
+  error:
+    | Merge<
+        FieldError,
+        FieldErrorsImpl<ArrayElement<RouterInputs["upsertAssets"]["assets"]>>
+      >
+    | undefined;
 }
 
-const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
+const AssetsEditListItem = ({
+  asset,
+  index,
+  register,
+  removeAsset,
+  error,
+}: Props) => {
   const averageTradedPrice = asset.averageTradedPrice || 0;
   const balanceValue = (asset.balance * averageTradedPrice)
     .toFixed(2)
@@ -84,6 +101,11 @@ const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
                 <span className="label-text-alt">銘柄</span>
               </label>
             )} */}
+            {error?.symbol && (
+              <label className="label">
+                <span className="label-text-alt">{error.symbol.message}</span>
+              </label>
+            )}
           </div>
 
           <div
@@ -106,6 +128,14 @@ const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
                 type="number"
                 step="any"
               />
+
+              {error?.balance && (
+                <label className="label">
+                  <span className="label-text-alt">
+                    {error.balance.message}
+                  </span>
+                </label>
+              )}
             </div>
           </div>
 
@@ -132,7 +162,10 @@ const AssetsEditListItem = ({ asset, index, register, removeAsset }: Props) => {
                 />
               </div>
               <label className="label">
-                <span className="label-text-alt"></span>
+                <span className="label-text-alt">
+                  {error?.averageTradedPrice &&
+                    error.averageTradedPrice.message}
+                </span>
                 <span className="label-text-alt">{balanceValue}</span>
               </label>
             </div>
