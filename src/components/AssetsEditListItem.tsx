@@ -109,7 +109,7 @@ const AssetsEditListItem = ({
           </div>
 
           <div
-            className="tooltip tooltip-primary flex-1"
+            className="form-control tooltip tooltip-primary flex-1"
             data-tip="保有数（必須）"
           >
             <div className="relative">
@@ -128,47 +128,41 @@ const AssetsEditListItem = ({
                 type="number"
                 step="any"
               />
-
-              {error?.balance && (
-                <label className="label">
-                  <span className="label-text-alt">
-                    {error.balance.message}
-                  </span>
-                </label>
-              )}
             </div>
+            {error?.balance && (
+              <label className="label">
+                <span className="label-text-alt">{error.balance.message}</span>
+              </label>
+            )}
           </div>
 
           <div
-            className="tooltip tooltip-primary flex-1"
+            className="form-control tooltip tooltip-primary flex-1"
             data-tip="平均取得価格"
           >
-            <div className="form-control">
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center px-4 text-primary">
-                  <FaDollarSign />
-                </div>
-                <input
-                  {...register(`assets.${index}.averageTradedPrice`, {
-                    valueAsNumber: true,
-                  })}
-                  onKeyDown={handleEnterKeyDown}
-                  onFocus={handleOnFocusInput}
-                  onBlur={handleOnBlurInput}
-                  id={`asset-${index}-2`}
-                  className="input-bordered input w-full pl-10"
-                  type="number"
-                  step="any"
-                />
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center px-4 text-primary">
+                <FaDollarSign />
               </div>
-              <label className="label">
-                <span className="label-text-alt">
-                  {error?.averageTradedPrice &&
-                    error.averageTradedPrice.message}
-                </span>
-                <span className="label-text-alt">{balanceValue}</span>
-              </label>
+              <input
+                {...register(`assets.${index}.averageTradedPrice`, {
+                  valueAsNumber: true,
+                })}
+                onKeyDown={handleEnterKeyDown}
+                onFocus={handleOnFocusInput}
+                onBlur={handleOnBlurInput}
+                id={`asset-${index}-2`}
+                className="input-bordered input w-full pl-10"
+                type="number"
+                step="any"
+              />
             </div>
+            <label className="label">
+              <span className="label-text-alt">
+                {error?.averageTradedPrice && error.averageTradedPrice.message}
+              </span>
+              <span className="label-text-alt">{balanceValue}</span>
+            </label>
           </div>
         </div>
       </div>
