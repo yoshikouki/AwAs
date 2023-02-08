@@ -10,7 +10,7 @@ export class PricesService {
     this.dailyStockPriceModel = props?.dailyStockPriceModel || new DailyStockPriceModel();
   }
 
-  async getAllBySymbols(symbols: string[]) {
+  async getLatestAllBySymbols(symbols: string[]) {
     const stocks = await this.stockModel.findAllBySymbolsWithLatestDailyPrice(symbols);
     const result = stocks.map((stock) => {
       const currentDailyStockPrice = stock.dailyStockPrices[0]
