@@ -11,8 +11,8 @@ const client: Alpaca = new Alpaca({
 
 interface getMultiBarsProps {
   symbols: string[];
-  startDate: Date;
-  timeframe: "1Day";
+  startDate?: Date;
+  timeframe?: "1Day";
 }
 const getMultiBars = async ({
   symbols,
