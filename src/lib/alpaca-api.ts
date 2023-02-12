@@ -1,7 +1,7 @@
 import Alpaca from "@alpacahq/alpaca-trade-api";
 import { AlpacaBar } from "@alpacahq/alpaca-trade-api/dist/resources/datav2/entityv2";
-import { env } from "../env/server.mjs";
 import { subBusinessDays } from "date-fns";
+import { env } from "../env/server.mjs";
 
 const client: Alpaca = new Alpaca({
   keyId: env.ALPACA_API_KEY,
@@ -9,21 +9,20 @@ const client: Alpaca = new Alpaca({
   paper: true,
 });
 
-interface getMultiBarsProps {
-  symbols: string[];
-  startDate?: Date;
-  timeframe?: "1Day";
-}
 const getMultiBars = async ({
   symbols,
   startDate = subBusinessDays(new Date(), 4),
   timeframe = "1Day",
-}: getMultiBarsProps): Promise<Record<string, AlpacaBar[]>> => {
+}: {
+  symbols: string[];
+  startDate?: Date;
+  timeframe?: "1Day";
+}): Promise<Record<string, AlpacaBar[]>> => {
   const response = client.getMultiBarsAsyncV2(symbols, {
     timeframe,
     start: startDate.toISOString(),
   });
-  const got: Record<string, AlpacaBar[]> = Object.fromEntries(
+  const got: Record<string, { [K in keyof AlpacaBar]: AlpacaBar[K] }[]> = Object.fromEntries(
     symbols.map((symbol) => [symbol.toUpperCase(), []])
   );
   for await (const bar of response) {
