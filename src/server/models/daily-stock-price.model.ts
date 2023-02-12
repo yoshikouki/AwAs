@@ -1,13 +1,24 @@
-import { AlpacaApi, alpacaApi } from "../../lib/alpaca-api";
 import { PrismaClient, Stock } from "@prisma/client";
-
 import { compareDesc } from "date-fns";
-import { filterNonNullable } from './../../utils/index';
+import { alpacaApi } from "../../lib/alpaca-api";
 import { prisma } from "../db";
+import { filterNonNullable } from "./../../utils/index";
+
+interface PriceBySymbol {
+  symbol: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  timestamp: string;
+  vWap: number;
+  tradeCount: number;
+}
 
 export class DailyStockPriceModel {
   readonly prisma: PrismaClient;
-  readonly alpacaApi: AlpacaApi;
+  readonly alpacaApi: typeof alpacaApi;
 
   constructor(props?: Partial<DailyStockPriceModel>) {
     this.prisma = props?.prisma || prisma;
@@ -67,4 +78,40 @@ export class DailyStockPriceModel {
       ),
     });
   }
+
+  async fetchLatestDailyPriceBySymbols(symbols: string[]): Promise<{
+    [key: string]: PriceBySymbol[];
+  }> {
+    const fetchedLatestPrices = await alpacaApi.getMultiBars({ symbols });
+    const latestPrices: { [key: string]: PriceBySymbol[] } = Object.fromEntries(
+      Object.entries(fetchedLatestPrices).map(([symbol, alpacaBars]) => {
+        return [
+          symbol,
+          alpacaBars.map((alpacaBar) =>
+            Object.fromEntries(
+              Object.entries(alpacaBar).map(([key, value]) => {
+                return [
+                  this.alpacaKeysTableForLatestDailyPriceBySymbols[key],
+                  value,
+                ];
+              })
+            )
+          ),
+        ];
+      })
+    );
+    return latestPrices;
+  }
+
+  alpacaKeysTableForLatestDailyPriceBySymbols: { [K: string]: string } = {
+    Symbol: "symbol",
+    OpenPrice: "open",
+    HighPrice: "high",
+    LowPrice: "low",
+    ClosePrice: "close",
+    Volume: "volume",
+    Timestamp: "timestamp",
+    VWAP: "vWap",
+    TradeCount: "tradeCount",
+  };
 }
