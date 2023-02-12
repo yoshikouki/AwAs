@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import resolveConfig from "tailwindcss/resolveConfig";
 import { KeyValuePair } from "tailwindcss/types/config";
-import tailwindConfig from "../tailwind.config"; // Fix the path
+import tailwindConfig from "../../tailwind.config.cjs"; // Fix the path
 
 const config = resolveConfig(tailwindConfig);
 const screensConfig = config.theme?.screens as KeyValuePair;
@@ -17,14 +17,14 @@ const getBreakpoints = () => {
 };
 
 const getCurrentBreakpoint = (breakpoints = getBreakpoints()): string => {
-  let currentBreakpoint: BreakpointKey[] = [];
+  const currentBreakpoint: BreakpointKey[] = [];
   const ascendingBreakpoints = Object.entries(breakpoints);
   for (const [breakpoint, value] of ascendingBreakpoints) {
     if (globalThis.innerWidth <= value) {
       currentBreakpoint.push(breakpoint);
     }
   }
-  return currentBreakpoint[0];
+  return currentBreakpoint[0] || "sm";
 };
 
 export const useBreakpoint = () => {

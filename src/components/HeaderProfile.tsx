@@ -1,16 +1,11 @@
-import { FaCog, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
-
 import Link from "next/link";
-import { useProfile } from "../hooks/profile";
+import { FaCog, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 
 interface Props {
   logout: () => void;
 }
 
 const HeaderProfile = ({ logout }: Props) => {
-  const { profile, error, isLoading } = useProfile();
-  const displayName = error ? "Error" : (isLoading || !profile) ? "Loading" : profile.name;
-
   return (
     <>
       <div className="dropdown dropdown-hover dropdown-end">
@@ -24,9 +19,6 @@ const HeaderProfile = ({ logout }: Props) => {
           </Link>
         </label>
         <ul tabIndex={0} className="dropdown-content menu rounded w-40 shadow-md bg-base-100">
-          <li className="menu-title py-1">
-            <span>{displayName}</span>
-          </li>
           <li>
             <Link href="/settings">
               <FaCog className="h-4 w-4" />
