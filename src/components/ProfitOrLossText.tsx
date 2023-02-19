@@ -19,5 +19,5 @@ export const ProfitOrLossText = ({ text, value, referenceValue, digits = 2 }: Pr
       ? "text-red-400 dark:text-red-400"
       : "text-green-600 dark:text-green-400";
 
-  return <span className={`font-bold ${color}`}>{displayText}</span>;
+  return <span className={color}>{displayText}</span>;
 };
