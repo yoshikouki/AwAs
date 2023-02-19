@@ -1,4 +1,5 @@
 // @ts-check
+import { logger } from "../utils/logger";
 import { clientEnv, clientSchema } from "./schema.mjs";
 
 const _clientEnv = clientSchema.safeParse(clientEnv);
@@ -15,7 +16,7 @@ export const formatErrors = (
     .filter(Boolean);
 
 if (!_clientEnv.success) {
-  console.error(
+  logger.error(
     "❌ Invalid environment variables:\n",
     ...formatErrors(_clientEnv.error.format()),
   );
@@ -24,7 +25,7 @@ if (!_clientEnv.success) {
 
 for (let key of Object.keys(_clientEnv.data)) {
   if (!key.startsWith("NEXT_PUBLIC_")) {
-    console.warn(
+    logger.warn(
       `❌ Invalid public environment variable name: ${key}. It must begin with 'NEXT_PUBLIC_'`,
     );
 

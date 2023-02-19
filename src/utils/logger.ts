@@ -5,9 +5,14 @@ export const red = "\x1b[31m";
 export const green = "\x1b[32m";
 
 export const logger = {
-  log: (message: string) => console.log(resetColor + message),
-  info: (message: string) => console.info(blue + message + resetColor),
-  warn: (message: string) => console.warn(yellow + message + resetColor),
-  error: (message: string) => console.error(red + message + resetColor),
-  sql: (message: string) => console.log(green + message + resetColor),
+  log: (message: string, ...optionalParams: unknown[]) =>
+    console.log(resetColor + message, optionalParams),
+  info: (message: string, ...optionalParams: unknown[]) =>
+    console.info(blue + message + resetColor, optionalParams),
+  warn: (message: string, ...optionalParams: unknown[]) =>
+    console.warn(yellow + message + resetColor, optionalParams),
+  error: (message: string, ...optionalParams: unknown[]) =>
+    console.error(red + message + resetColor, optionalParams),
+  sql: (message: string, ...optionalParams: unknown[]) =>
+    console.log(green + message + resetColor, optionalParams),
 };
