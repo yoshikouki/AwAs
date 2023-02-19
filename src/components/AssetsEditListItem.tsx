@@ -37,6 +37,7 @@ const AssetsEditListItem = ({
     .toFixed(2)
     .toLocaleString();
   const handleEnterKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    e.preventDefault();
     let nextInput: HTMLInputElement | null;
     if (e.key === "Enter" && e.target instanceof HTMLInputElement) {
       const [prefix, assetIndex, formIndex] = e.target.id.split("-");
