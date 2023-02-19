@@ -1,7 +1,13 @@
-import { api } from "../utils/api";
+import { apiClient } from "../utils/api";
+import useSWR from "swr";
 
 const AssetsList = () => {
-  const { data: assets } = api.assets.useQuery();
+  const { data: assets } = useSWR("/assets", () => apiClient.assets.query());
+  const symbols = assets ? assets.map((asset) => asset.symbol) : [];
+  const { data: prices } = useSWR(
+    assets ? `/latestPrices/${symbols.join}` : null,
+    () => apiClient.getLatestPrices.query({ symbols })
+  );
 
   return (
     <div className="sm:px-4 overflow-x-auto">
