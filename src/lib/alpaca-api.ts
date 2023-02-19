@@ -1,7 +1,7 @@
 import Alpaca from "@alpacahq/alpaca-trade-api";
 import { AlpacaBar } from "@alpacahq/alpaca-trade-api/dist/resources/datav2/entityv2";
-import { subBusinessDays } from "date-fns";
 import { env } from "../env/server.mjs";
+import { subBusinessDays } from "date-fns";
 
 const client: Alpaca = new Alpaca({
   keyId: env.ALPACA_API_KEY,
