@@ -45,7 +45,7 @@ const AssetsListItem = ({ asset, latestDailyPrice }: Props) => {
             referenceValue={averageTradedPrice * asset.balance}
           />
         </div>
-        <div>{averageTradedPrice * asset.balance}</div>
+        <div>{(averageTradedPrice * asset.balance).toFixed(2)}</div>
       </td>
       {/* 利益 */}
       <td className="text-end">
