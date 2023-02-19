@@ -50,14 +50,14 @@ const AssetsListItem = ({ asset, latestDailyPrice }: Props) => {
       {/* 利益 */}
       <td className="text-end">
         <div className="font-bold">
+          <ProfitOrLossText value={profitLoss} referenceValue={0} />
+        </div>
+        <div className="font-bold">
           <ProfitOrLossText
             text={`${profitLossPercentage.toFixed(2)} %`}
             value={profitLossPercentage}
             referenceValue={0}
           />
-        </div>
-        <div className="font-bold">
-          <ProfitOrLossText value={profitLoss} referenceValue={0} />
         </div>
       </td>
     </tr>
