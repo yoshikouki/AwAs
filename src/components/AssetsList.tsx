@@ -1,3 +1,5 @@
+import AssetsListItem from "./AssetsListItem";
+import { ProfitOrLossText } from "./ProfitOrLossText";
 import { apiClient } from "../utils/api";
 import useSWR from "swr";
 
@@ -8,9 +10,8 @@ const AssetsList = () => {
     assets ? `/latestPrices/${symbols.join}` : null,
     () => apiClient.getLatestPrices.query({ symbols })
   );
-
   return (
-    <div className="sm:px-4 overflow-x-auto">
+    <div className="overflow-x-auto sm:px-4">
       <table className="table">
         <thead>
           <tr>
@@ -25,44 +26,16 @@ const AssetsList = () => {
           </tr>
         </thead>
         <tbody>
-          {assets?.map((asset, i) => (
-            <tr className="hover" key={i}>
-              {/* 銘柄 */}
-              <th className="pr-0 md:pr-auto">
-                <div>{asset.symbol}</div>
-                {asset.name && (
-                  <div className="text-ellipsis overflow-hidden w-20 md:w-auto">{asset.name}</div>
-                )}
-              </th>
-              {/* 保有数量 */}
-              <td className="text-end">{asset.balance}</td>
-              {/* 価格 */}
-              <td className="text-end">
-                {/* TODO: 価格を取得して表示する */}
-                {/* <div className="font-bold">
-                  <ProfitOrLossText
-                    text={asset.marketPrice || 0}
-                    referenceValue={asset.averageTradedPrice || 0}
-                  />
-                </div> */}
-                <div>{asset.averageTradedPrice}</div>
-              </td>
-              {/* 評価額 */}
-              {/* <td className="text-end">
-                <div className="font-bold">{asset.marketValue}</div>
-                <div>
-                  <ProfitOrLossText text={asset.profitLoss || 0} referenceValue={0} />
-                </div>
-              </td>
-              <td className="text-end">
-                <ProfitOrLossText
-                  text={`${asset.profitLossPercentage || 0} %`}
-                  value={asset.profitLossPercentage}
-                  referenceValue={0}
-                />
-              </td> */}
-            </tr>
-          ))}
+          {assets?.map((asset) => {
+            const latestDailyPrice = prices && prices[asset.symbol];
+            return (
+              <AssetsListItem
+                asset={asset}
+                latestDailyPrice={latestDailyPrice}
+                key={asset.id}
+              />
+            );
+          })}
         </tbody>
       </table>
     </div>
