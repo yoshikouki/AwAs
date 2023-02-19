@@ -1,5 +1,4 @@
 import AssetsListItem from "./AssetsListItem";
-import { ProfitOrLossText } from "./ProfitOrLossText";
 import { apiClient } from "../utils/api";
 import useSWR from "swr";
 
