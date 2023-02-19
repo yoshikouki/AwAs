@@ -1,8 +1,9 @@
 import { PrismaClient, Stock } from "@prisma/client";
-import { compareDesc } from "date-fns";
+import { compareDesc, parseJSON } from "date-fns";
+
 import { alpacaApi } from "../../lib/alpaca-api";
-import { prisma } from "../db";
 import { filterNonNullable } from "./../../utils/index";
+import { prisma } from "../db";
 
 interface PriceBySymbol {
   symbol: string;
@@ -80,22 +81,23 @@ export class DailyStockPriceModel {
   }
 
   async fetchLatestDailyPriceBySymbols(symbols: string[]): Promise<{
-    [key: string]: PriceBySymbol[];
+    [key: string]: PriceBySymbol | undefined;
   }> {
     const fetchedLatestPrices = await alpacaApi.getMultiBars({ symbols });
-    const latestPrices: { [key: string]: PriceBySymbol[] } = Object.fromEntries(
+    const latestPrices: { [key: string]: PriceBySymbol } = Object.fromEntries(
       Object.entries(fetchedLatestPrices).map(([symbol, alpacaBars]) => {
+        const latestDailyPrice = alpacaBars.sort((bar1, bar2) =>
+          compareDesc(parseJSON(bar1.Timestamp), parseJSON(bar2.Timestamp))
+        )[0];
         return [
           symbol,
-          alpacaBars.map((alpacaBar) =>
-            Object.fromEntries(
-              Object.entries(alpacaBar).map(([key, value]) => {
-                return [
-                  this.alpacaKeysTableForLatestDailyPriceBySymbols[key],
-                  value,
-                ];
-              })
-            )
+          latestDailyPrice && Object.fromEntries(
+            Object.entries(latestDailyPrice).map(([key, value]) => {
+              return [
+                this.alpacaKeysTableForLatestDailyPriceBySymbols[key],
+                value,
+              ];
+            })
           ),
         ];
       })
