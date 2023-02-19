@@ -3,10 +3,11 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 import AssetsEditListItem from "./AssetsEditListItem";
 import Link from "next/link";
-import { api } from "../utils/api";
+import { api, apiClient, RouterOutputs } from "../utils/api";
 import { upsertAssetsSchema } from "../schemas/assets.schema";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useSWR from "swr";
 
 const assetDefaultValue = {
   symbol: "",
@@ -14,8 +15,11 @@ const assetDefaultValue = {
   averageTradedPrice: 0.0,
 };
 
-const AssetsEdit = () => {
-  const { data: storedAssets } = api.assets.useQuery();
+interface Props {
+  storedAssets: RouterOutputs["assets"];
+}
+
+const AssetsEdit = ({ storedAssets }: Props) => {
   const mutation = api.upsertAssets.useMutation();
 
   const {
