@@ -4,8 +4,10 @@ import useSWR from "swr";
 import { apiClient } from "../../../utils/api";
 
 const AssetsEditPage: NextPage = () => {
-  const { data: storedAssets } = useSWR("/assets", () =>
-    apiClient.assets.query()
+  const { data: storedAssets } = useSWR(
+    "/assets",
+    () => apiClient.assets.query(),
+    { revalidateOnFocus: false },
   );
   return (
     <>
