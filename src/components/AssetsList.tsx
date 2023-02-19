@@ -20,8 +20,14 @@ const AssetsList = () => {
               <div>現在価格</div>
               <div>取得価格</div>
             </th>
-            <th className="text-end">評価額</th>
-            <th className="text-end">利益率</th>
+            <th className="text-end">
+              <div>現在評価額</div>
+              <div>取得評価額</div>
+            </th>
+            <th className="text-end">
+              <div>利益率</div>
+              <div>利益</div>
+            </th>
           </tr>
         </thead>
         <tbody>
