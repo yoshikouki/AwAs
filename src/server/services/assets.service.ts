@@ -39,6 +39,7 @@ export class AssetsService {
     const all = assets.map((asset) => {
       const stock = stocks.find((stock) => stock.id === asset.stockId);
       return {
+        id: asset.id,
         symbol: stock?.symbol || "",
         name: null,
         balance: Number(asset.balance),
