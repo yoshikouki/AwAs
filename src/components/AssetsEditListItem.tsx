@@ -56,6 +56,7 @@ const AssetsEditListItem = ({
   };
   const handleOnFocusInput: FocusEventHandler<HTMLInputElement> = (e) => {
     e.target.closest(".tooltip")?.classList.add("tooltip-open");
+    e.target.select();
   };
   const handleOnBlurInput: FocusEventHandler<HTMLInputElement> = (e) => {
     e.target.closest(".tooltip")?.classList.remove("tooltip-open");
