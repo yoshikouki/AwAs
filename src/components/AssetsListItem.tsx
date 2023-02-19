@@ -11,7 +11,7 @@ const AssetsListItem = ({ asset, latestDailyPrice }: Props) => {
   const averageTradedPrice = asset.averageTradedPrice || 0;
   const profitLossPerShare = averageTradedPrice
     ? close - averageTradedPrice
-    : close;
+    : 0;
   const profitLoss = profitLossPerShare * asset.balance;
   const profitLossPercentage = averageTradedPrice
     ? (profitLossPerShare / averageTradedPrice) * 100
