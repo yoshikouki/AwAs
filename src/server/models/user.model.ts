@@ -8,11 +8,14 @@ export class UserModel {
     this.prisma = props?.prisma || prisma;
   }
 
-  findOrCreateByUid({ uid }: { uid: string }) {
-    return this.prisma.user.upsert({
+  async findOrCreateByUid({ uid }: { uid: string }) {
+    const storedUser = await this.prisma.user.findUnique({
       where: { uid },
-      update: {},
-      create: { uid },
+    });
+    if (storedUser) return storedUser;
+
+    return await this.prisma.user.create({
+      data: { uid },
     });
   }
 
