@@ -5,12 +5,11 @@
  */
 import { serverSchema, serverEnv } from "./schema.mjs";
 import { env as clientEnv, formatErrors } from "./client.mjs";
-import { logger } from "../utils/logger";
 
 const _serverEnv = serverSchema.safeParse(serverEnv);
 
 if (!_serverEnv.success) {
-  logger.error(
+  console.error(
     "❌ Invalid environment variables:\n",
     ...formatErrors(_serverEnv.error.format()),
   );
@@ -19,7 +18,7 @@ if (!_serverEnv.success) {
 
 for (let key of Object.keys(_serverEnv.data)) {
   if (key.startsWith("NEXT_PUBLIC_")) {
-    logger.warn("❌ You are exposing a server-side env-variable:", key);
+    console.warn("❌ You are exposing a server-side env-variable:", key);
 
     throw new Error("You are exposing a server-side env-variable");
   }
