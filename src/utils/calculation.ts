@@ -43,3 +43,13 @@ export const mul = (
 export const sum = (integers: number[]): number => {
   return integers.reduce((acc, int) => add(acc, int));
 };
+
+export const percent = (
+  numerator: number | undefined,
+  denominator: number | undefined
+): number => {
+  if (numerator == undefined || denominator == undefined || denominator === 0) {
+    return 0;
+  }
+  return BigNumber(numerator).div(denominator).multipliedBy(100).toNumber();
+};
