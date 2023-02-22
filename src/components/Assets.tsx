@@ -14,11 +14,6 @@ const calculateValuationsOfAssets = (assets: RouterOutputs["assets"] | undefined
     const profitLossPerShare = averageTradedPrice
       ? sub(close, averageTradedPrice)
       : 0;
-    const profitLoss = mul(profitLossPerShare, asset.balance);
-    const profitLossPercentage = percent(
-      profitLossPerShare,
-      averageTradedPrice
-    );
     return {
       id: asset.id,
       symbol: asset.symbol,
@@ -28,8 +23,10 @@ const calculateValuationsOfAssets = (assets: RouterOutputs["assets"] | undefined
       latestPrice: close,
       close,
       profitLossPerShare,
-      profitLoss,
-      profitLossPercentage,
+      profitLoss: mul(profitLossPerShare, asset.balance),
+      profitLossPercentage: percent(profitLossPerShare, averageTradedPrice),
+      acquisitionValue: mul(asset.balance, averageTradedPrice),
+      marketValue: mul(asset.balance, close),
     };
   })
 }
