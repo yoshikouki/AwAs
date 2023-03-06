@@ -15,7 +15,7 @@
     "@alpacahq/alpaca-trade-api": "^2.16.1",
     "@hookform/resolvers": "^2.9.10",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.9.0",
+    "@prisma/client": "^4.11.0",
     "@tanstack/react-query": "^4.24.4",
     "@trpc/client": "^10.9.0",
     "@trpc/next": "^10.10.0",
