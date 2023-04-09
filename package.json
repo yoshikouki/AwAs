@@ -19,7 +19,7 @@
     "@nivo/sunburst": "^0.80.0",
     "@prisma/client": "^4.9.0",
     "@tanstack/react-query": "^4.24.4",
-    "@trpc/client": "^10.9.0",
+    "@trpc/client": "^10.19.1",
     "@trpc/next": "^10.10.0",
     "@trpc/react-query": "^10.10.0",
     "@trpc/server": "^10.9.0",
