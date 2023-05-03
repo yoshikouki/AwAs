@@ -83,6 +83,9 @@ export class DailyStockPriceModel {
   async fetchLatestDailyPriceBySymbols(symbols: string[]): Promise<{
     [key: string]: PriceBySymbol | undefined;
   }> {
+    if (symbols.length === 0) {
+      return {};
+    }
     const fetchedLatestPrices = await alpacaApi.getMultiBars({ symbols });
     const latestPrices: { [key: string]: PriceBySymbol } = Object.fromEntries(
       Object.entries(fetchedLatestPrices).map(([symbol, alpacaBars]) => {

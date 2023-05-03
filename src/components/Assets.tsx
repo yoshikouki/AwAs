@@ -1,10 +1,11 @@
-import Link from "next/link";
-import { FaPen } from "react-icons/fa";
-import useSWR from "swr";
-import { apiClient, RouterOutputs } from "../utils/api";
+import { RouterOutputs, apiClient } from "../utils/api";
 import { mul, percent, sub } from "../utils/calculation";
+
 import AssetsList from "./AssetsList";
 import AssetsSummary from "./AssetsSummary";
+import { FaPen } from "react-icons/fa";
+import Link from "next/link";
+import useSWR from "swr";
 
 const calculateValuationsOfAssets = (assets: RouterOutputs["assets"] | undefined, prices: RouterOutputs["getLatestPrices"] | undefined) => {
   return assets?.map((asset) => {
@@ -37,7 +38,7 @@ const Assets = () => {
   const { data: assets } = useSWR("/assets", () => apiClient.assets.query());
   const symbols = assets ? assets.map((asset) => asset.symbol) : [];
   const { data: prices } = useSWR(
-    symbols ? `/latestPrices/${symbols.join}` : null,
+    symbols.length > 0 ? `/latestPrices/${symbols.join}` : null,
     () => apiClient.getLatestPrices.query({ symbols })
   );
   const assetsWithValuations = calculateValuationsOfAssets(assets, prices)
