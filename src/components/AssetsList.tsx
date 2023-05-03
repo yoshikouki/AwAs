@@ -1,5 +1,5 @@
-import { RouterOutputs } from "../utils/api";
 import AssetsListItem from "./AssetsListItem";
+import { RouterOutputs } from "../utils/api";
 
 interface Props {
   assets: RouterOutputs["assets"] | undefined;
@@ -33,7 +33,7 @@ const AssetsList = ({ assets, prices }: Props) => {
           </thead>
           <tbody>
             {assets?.map((asset) => {
-              const latestDailyPrice = prices && prices[asset.symbol];
+              const latestDailyPrice = prices?.[asset.symbol];
               return (
                 <AssetsListItem
                   asset={asset}

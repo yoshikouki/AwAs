@@ -9,7 +9,7 @@ import useSWR from "swr";
 
 const calculateValuationsOfAssets = (assets: RouterOutputs["assets"] | undefined, prices: RouterOutputs["getLatestPrices"] | undefined) => {
   return assets?.map((asset) => {
-    const latestDailyPrice = prices && prices[asset.symbol];
+    const latestDailyPrice = prices?.[asset.symbol];
     const close = latestDailyPrice?.close || 0;
     const averageTradedPrice = asset.averageTradedPrice || 0;
     const profitLossPerShare = averageTradedPrice

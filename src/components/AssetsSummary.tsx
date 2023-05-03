@@ -1,4 +1,5 @@
-import { mul, percent, sub, sum } from "../utils/calculation";
+import { percent, sub, sum } from "../utils/calculation";
+
 import { AssetsWithValuations } from "./Assets";
 
 interface Props {
