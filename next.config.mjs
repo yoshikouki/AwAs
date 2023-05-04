@@ -14,5 +14,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  transpilePackages: ["@nivo"],
+  experimental: {
+    esmExternals: "loose",
+  }
 };
 export default config;
