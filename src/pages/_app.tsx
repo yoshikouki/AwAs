@@ -8,6 +8,7 @@ import "../styles/globals.css";
 import AuthProvider from "../components/AuthProvider";
 import DefaultLayout from "../components/DefaultLayout";
 import ThemeContextProvider from "../components/ThemeContextProvider";
+import { Analytics } from "@vercel/analytics/react";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -29,6 +30,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           </DefaultLayout>
         </AuthProvider>
       </ThemeContextProvider>
+      <Analytics />
     </>
   );
 };
