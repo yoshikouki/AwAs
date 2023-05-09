@@ -1,4 +1,3 @@
-import { ResponsiveBar } from "@nivo/bar";
 
 interface Props {
   totalAcquisitionValue: number;

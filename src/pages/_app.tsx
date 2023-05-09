@@ -14,12 +14,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  const pageTitle = "";
   const baseTitle = "AwAs - Awesome Assets";
   return (
     <>
       <Head>
-        <title>{pageTitle + baseTitle}</title>
+        <title>{baseTitle}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 

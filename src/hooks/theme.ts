@@ -8,7 +8,9 @@ export interface ThemeContextType {
 
 export const ThemeContext = createContext<ThemeContextType>({
   theme: "light",
-  changeTheme: (theme) => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  changeTheme: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleTheme: () => {},
 });
 

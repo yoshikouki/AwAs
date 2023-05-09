@@ -61,7 +61,7 @@ function useFetchApi<T>(path: string, withAuth = false, option?: RequestInit) {
         }
       }
     })();
-  }, [refreshIndex]);
+  }, [fetchApi, option, path, refreshIndex, state, withAuth]);
 
   return {
     ...state,

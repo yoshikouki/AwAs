@@ -1,7 +1,5 @@
 import { ResponsivePie } from "@nivo/pie";
 import { sum } from "../../utils/calculation";
-import classNames from "classnames";
-import { FaMinus, FaPlus } from "react-icons/fa";
 
 interface Props {
   assetsWithValuations: AssetsWithValuation[];
@@ -114,4 +112,4 @@ export default function AssetsPieChart({ assetsWithValuations }: Props) {
       )}
     />
   );
-};
+}
