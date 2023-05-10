@@ -4,6 +4,16 @@ volumes:
   db-data:
 
 services:
+  test:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_USER: johndoe
+      MYSQL_PASSWORD: randompassword
+      MYSQL_DATABASE: awas_dev
+    restart: always
   test-db:
     image: mysql:latest
     ports:
