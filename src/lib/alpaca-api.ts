@@ -22,9 +22,8 @@ const getMultiBars = async ({
     timeframe,
     start: startDate.toISOString(),
   });
-  const got: Record<string, { [K in keyof AlpacaBar]: AlpacaBar[K] }[]> = Object.fromEntries(
-    symbols.map((symbol) => [symbol.toUpperCase(), []])
-  );
+  const got: Record<string, { [K in keyof AlpacaBar]: AlpacaBar[K] }[]> =
+    Object.fromEntries(symbols.map((symbol) => [symbol.toUpperCase(), []]));
   for await (const bar of response) {
     got[bar.Symbol]?.push(bar);
   }

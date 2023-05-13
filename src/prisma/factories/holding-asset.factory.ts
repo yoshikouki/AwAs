@@ -10,7 +10,8 @@ const getAttributes = async (attrs?: Partial<CreateInputType>) => ({
   userId: attrs?.userId || (await UserFactory.create()).id,
   stockId: attrs?.stockId || (await StockFactory.create()).id,
   balance: attrs?.balance || faker.datatype.number(),
-  averageTradedPrice: attrs?.averageTradedPrice || faker.datatype.float({ min: 1 }),
+  averageTradedPrice:
+    attrs?.averageTradedPrice || faker.datatype.float({ min: 1 }),
 });
 
 export const HoldingAssetFactory = {

@@ -7,7 +7,7 @@ const AssetsEditPage: NextPage = () => {
   const { data: storedAssets } = useSWR(
     "/assets",
     () => apiClient.assets.query(),
-    { revalidateOnFocus: false },
+    { revalidateOnFocus: false }
   );
   return (
     <>

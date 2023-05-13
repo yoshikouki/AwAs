@@ -31,11 +31,11 @@ const Settings = () => {
                 </div>
 
                 <ul className="my-0 list-none pl-0">
-                  <li className="mt-0 mb-8 pl-0">
+                  <li className="mb-8 mt-0 pl-0">
                     <span>Name</span>
                     <div className="text-lg font-bold">{settings.name}</div>
                   </li>
-                  <li className="mt-0 mb-8 pl-0">
+                  <li className="mb-8 mt-0 pl-0">
                     <span>Email</span>
                     <div className="text-lg font-bold">{settings.email}</div>
                   </li>

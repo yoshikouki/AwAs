@@ -1,5 +1,5 @@
+import { FaMinus, FaPlus } from "react-icons/fa";
 import { percent, sub, sum } from "../utils/calculation";
-import { FaPlus, FaMinus } from "react-icons/fa";
 
 import AssetsSummaryProfitChart from "./nivo/AssetsSummaryProfitChart";
 import { AssetsWithValuations } from "./Assets";
@@ -31,11 +31,7 @@ const AssetsSummary = ({ assetsWithValuations }: Props) => {
             "text-error": totalPL < 0,
           })}
         >
-          {totalPL > 0 ? (
-            <FaPlus />
-            ) : (
-            <FaMinus />
-          )}
+          {totalPL > 0 ? <FaPlus /> : <FaMinus />}
         </span>
         {Math.abs(Math.round(totalPLPercentage * 10) / 10)}
         <span className="text-4xl ">%</span>

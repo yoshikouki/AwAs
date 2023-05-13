@@ -94,14 +94,15 @@ export class DailyStockPriceModel {
         )[0];
         return [
           symbol,
-          latestDailyPrice && Object.fromEntries(
-            Object.entries(latestDailyPrice).map(([key, value]) => {
-              return [
-                this.alpacaKeysTableForLatestDailyPriceBySymbols[key],
-                value,
-              ];
-            })
-          ),
+          latestDailyPrice &&
+            Object.fromEntries(
+              Object.entries(latestDailyPrice).map(([key, value]) => {
+                return [
+                  this.alpacaKeysTableForLatestDailyPriceBySymbols[key],
+                  value,
+                ];
+              })
+            ),
         ];
       })
     );

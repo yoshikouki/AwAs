@@ -2,7 +2,7 @@
 import { HoldingAssetModel } from "../models/holding-asset.model";
 import { StockModel } from "../models/stock.model";
 import { UserModel } from "../models/user.model";
-import { filterNonNullable } from './../../utils/index';
+import { filterNonNullable } from "./../../utils/index";
 import { upsertAssetsSchema } from "../../schemas/assets.schema";
 import { z } from "zod";
 
@@ -25,7 +25,7 @@ export class AssetsService {
       props?.holdingAssetModel || new HoldingAssetModel();
     this.stockModel = props?.stockModel || new StockModel();
     // this.dailyStockPriceModel =
-      // props?.dailyStockPriceModel || new DailyStockPriceModel();
+    // props?.dailyStockPriceModel || new DailyStockPriceModel();
   }
 
   async getAllByUser({ uid }: { uid: string }) {

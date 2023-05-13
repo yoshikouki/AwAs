@@ -1,5 +1,4 @@
 import AssetsPieChart from "./nivo/AssetsPieChart";
-import AssetsSunburst from "./nivo/AssetsSunburst";
 
 const assetsWithValuations = [
   {
@@ -285,7 +284,6 @@ const assetsWithValuations = [
 ];
 
 const Home = () => {
-
   return (
     <>
       <h2>Home</h2>

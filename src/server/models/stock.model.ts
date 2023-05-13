@@ -28,7 +28,9 @@ export class StockModel {
     });
   }
 
-  async findAllBySymbolsWithLatestDailyPrice(symbols: string[]): Promise<StockWithDailyStockPrice[]> {
+  async findAllBySymbolsWithLatestDailyPrice(
+    symbols: string[]
+  ): Promise<StockWithDailyStockPrice[]> {
     return await this.prisma.stock.findMany({
       where: {
         symbol: {

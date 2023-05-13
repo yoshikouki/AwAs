@@ -27,7 +27,7 @@ const SettingsProfileEdit = ({ settings, setProfileEdit }: Props) => {
       })
     ),
   });
-  const mutation = api.updateProfile.useMutation()
+  const mutation = api.updateProfile.useMutation();
   const onSubmit: SubmitHandler<RouterInputs["updateProfile"]> = async (
     data
   ) => {
@@ -39,7 +39,7 @@ const SettingsProfileEdit = ({ settings, setProfileEdit }: Props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="card-actions justify-end">
         <button
-          className="btn btn-ghost btn-sm"
+          className="btn-ghost btn-sm btn"
           onClick={() => setProfileEdit(false)}
           type="button"
         >
@@ -59,7 +59,7 @@ const SettingsProfileEdit = ({ settings, setProfileEdit }: Props) => {
               },
               value: settings.name,
             })}
-            className="input input-bordered"
+            className="input-bordered input"
           />
         </label>
         {errors.name && (
@@ -81,18 +81,24 @@ const SettingsProfileEdit = ({ settings, setProfileEdit }: Props) => {
               },
               value: settings.email,
             })}
-            className="input input-bordered"
+            className="input-bordered input"
           />
         </label>
         {errors.email && (
           <label className="label">
-            <span className="label-text text-error">{errors.email.message}</span>
+            <span className="label-text text-error">
+              {errors.email.message}
+            </span>
           </label>
         )}
       </div>
 
       <div className="card-actions justify-end">
-        <input className="btn btn-block btn-primary" type="submit" value="保存" />
+        <input
+          className="btn-primary btn-block btn"
+          type="submit"
+          value="保存"
+        />
       </div>
     </form>
   );

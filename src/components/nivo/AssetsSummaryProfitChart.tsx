@@ -1,4 +1,3 @@
-
 interface Props {
   totalAcquisitionValue: number;
   portfolioValue: number;

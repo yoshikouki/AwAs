@@ -28,7 +28,11 @@ const AssetProfitBarChart = (props: AssetsWithValuation) => {
         {props.profitLoss > 0 && (
           <div
             className="flex-none bg-success py-2"
-            style={{ width: `${100 - 100 / (100 + props.profitLossPercentage) * 100}%` }}
+            style={{
+              width: `${
+                100 - (100 / (100 + props.profitLossPercentage)) * 100
+              }%`,
+            }}
           />
         )}
       </div>
@@ -44,14 +48,17 @@ const AssetProfitBarChart = (props: AssetsWithValuation) => {
       </div>
     </div>
   );
-}
+};
 
 export default function AssetsPieChart({ assetsWithValuations }: Props) {
-  const totalMarketValues = sum(assetsWithValuations.map((asset) => asset.marketValue));
+  const totalMarketValues = sum(
+    assetsWithValuations.map((asset) => asset.marketValue)
+  );
   const data = assetsWithValuations.map((asset) => ({
     ...asset,
     label: asset.symbol,
-    totalPercentage: Math.round((1000 * asset.marketValue) / totalMarketValues) / 10,
+    totalPercentage:
+      Math.round((1000 * asset.marketValue) / totalMarketValues) / 10,
   }));
 
   return (

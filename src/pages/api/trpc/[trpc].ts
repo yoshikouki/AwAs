@@ -1,9 +1,8 @@
-import { logger } from './../../../utils/logger';
-import { createNextApiHandler } from "@trpc/server/adapters/next";
-
-import { env } from "../../../env/server.mjs";
-import { createTRPCContext } from "../../../server/api/trpc";
 import { appRouter } from "../../../server/api/root";
+import { createNextApiHandler } from "@trpc/server/adapters/next";
+import { createTRPCContext } from "../../../server/api/trpc";
+import { env } from "../../../env/server.mjs";
+import { logger } from "./../../../utils/logger";
 
 // export API handler
 export default createNextApiHandler({
@@ -13,7 +12,7 @@ export default createNextApiHandler({
     env.NODE_ENV === "development"
       ? ({ path, error }) => {
           logger.error(
-            `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
+            `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
           );
         }
       : undefined,

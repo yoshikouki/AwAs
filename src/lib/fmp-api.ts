@@ -13,7 +13,9 @@ export class FmpApi {
   }
 
   async fetchStockQuotes(symbols: string[]) {
-    return await this.get<StockQuotesResponse>(`/api/v3/quote/${symbols.join(",")}`);
+    return await this.get<StockQuotesResponse>(
+      `/api/v3/quote/${symbols.join(",")}`
+    );
   }
 
   async get<T>(path: string): Promise<T> {

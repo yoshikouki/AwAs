@@ -7,7 +7,10 @@ import { FaPen } from "react-icons/fa";
 import Link from "next/link";
 import useSWR from "swr";
 
-const calculateValuationsOfAssets = (assets: RouterOutputs["assets"] | undefined, prices: RouterOutputs["getLatestPrices"] | undefined) => {
+const calculateValuationsOfAssets = (
+  assets: RouterOutputs["assets"] | undefined,
+  prices: RouterOutputs["getLatestPrices"] | undefined
+) => {
   return assets?.map((asset) => {
     const latestDailyPrice = prices?.[asset.symbol];
     const close = latestDailyPrice?.close || 0;
@@ -29,10 +32,12 @@ const calculateValuationsOfAssets = (assets: RouterOutputs["assets"] | undefined
       acquisitionValue: mul(asset.balance, averageTradedPrice),
       marketValue: mul(asset.balance, close),
     };
-  })
-}
+  });
+};
 
-export type AssetsWithValuations = ReturnType<typeof calculateValuationsOfAssets>
+export type AssetsWithValuations = ReturnType<
+  typeof calculateValuationsOfAssets
+>;
 
 const Assets = () => {
   const { data: assets } = useSWR("/assets", () => apiClient.assets.query());
@@ -41,7 +46,7 @@ const Assets = () => {
     symbols.length > 0 ? `/latestPrices/${symbols.join}` : null,
     () => apiClient.getLatestPrices.query({ symbols })
   );
-  const assetsWithValuations = calculateValuationsOfAssets(assets, prices)
+  const assetsWithValuations = calculateValuationsOfAssets(assets, prices);
 
   return (
     <div className="prose w-full max-w-4xl">
@@ -53,7 +58,7 @@ const Assets = () => {
       <Link
         href="/assets/edit"
         prefetch={false}
-        className="btn-primary btn-circle btn-lg btn fixed right-0 bottom-0 z-50 mb-20 mr-4 ml-4"
+        className="btn-primary btn-circle btn-lg btn fixed bottom-0 right-0 z-50 mb-20 ml-4 mr-4"
       >
         <FaPen className="text-2xl" />
       </Link>

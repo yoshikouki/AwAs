@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { FaCog, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+
+import Link from "next/link";
 
 interface Props {
   logout: () => void;
@@ -8,8 +9,8 @@ interface Props {
 const HeaderProfile = ({ logout }: Props) => {
   return (
     <>
-      <div className="dropdown dropdown-hover dropdown-end">
-        <label tabIndex={0} className="btn btn-ghost">
+      <div className="dropdown dropdown-end dropdown-hover">
+        <label tabIndex={0} className="btn-ghost btn">
           <Link href="/settings">
             <div className="avatar">
               <div className="w-6">
@@ -18,7 +19,10 @@ const HeaderProfile = ({ logout }: Props) => {
             </div>
           </Link>
         </label>
-        <ul tabIndex={0} className="dropdown-content menu rounded w-40 shadow-md bg-base-100">
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu w-40 rounded bg-base-100 shadow-md"
+        >
           <li>
             <Link href="/settings">
               <FaCog className="h-4 w-4" />

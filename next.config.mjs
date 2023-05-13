@@ -17,6 +17,6 @@ const config = {
   transpilePackages: ["@nivo"],
   experimental: {
     esmExternals: "loose",
-  }
+  },
 };
 export default config;

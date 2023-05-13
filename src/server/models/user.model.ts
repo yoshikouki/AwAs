@@ -19,7 +19,15 @@ export class UserModel {
     });
   }
 
-  updateByUid({ uid, name, email }: { uid: string; name: string | null; email: string | null }) {
+  updateByUid({
+    uid,
+    name,
+    email,
+  }: {
+    uid: string;
+    name: string | null;
+    email: string | null;
+  }) {
     return this.prisma.user.upsert({
       where: { uid },
       update: { name, email },

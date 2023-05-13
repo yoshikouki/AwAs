@@ -5,7 +5,12 @@ interface Props {
   digits?: number;
 }
 
-export const ProfitOrLossText = ({ text, value, referenceValue, digits = 2 }: Props) => {
+export const ProfitOrLossText = ({
+  text,
+  value,
+  referenceValue,
+  digits = 2,
+}: Props) => {
   let displayText: string;
   if (text) {
     displayText = text.toString();

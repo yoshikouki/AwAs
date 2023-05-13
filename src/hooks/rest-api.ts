@@ -7,9 +7,13 @@ type FetchApiResponse<T> = {
 };
 
 export const useRestApi = () => {
-  const getAccessToken = () => ""
+  const getAccessToken = () => "";
 
-  const fetchApi = async <T>(path: string, withAuth = false, option?: RequestInit) => {
+  const fetchApi = async <T>(
+    path: string,
+    withAuth = false,
+    option?: RequestInit
+  ) => {
     let headersOption: HeadersInit = {};
     if (withAuth) {
       const accessToken = await getAccessToken();
@@ -69,5 +73,8 @@ function useFetchApi<T>(path: string, withAuth = false, option?: RequestInit) {
   };
 }
 
-export const useRestGet = <T>(path: string, withAuth = false, option?: RequestInit) =>
-  useFetchApi<T>(path, withAuth, { method: "GET", ...option });
+export const useRestGet = <T>(
+  path: string,
+  withAuth = false,
+  option?: RequestInit
+) => useFetchApi<T>(path, withAuth, { method: "GET", ...option });

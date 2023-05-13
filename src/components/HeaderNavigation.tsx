@@ -20,19 +20,23 @@ const HeaderNavigation = () => {
           </div>
           <div className="flex-none">
             {isLoading ? (
-              <div className="btn btn-disabled">Loading</div>
+              <div className="btn-disabled btn">Loading</div>
             ) : isAuthenticated ? (
               <HeaderProfile logout={logout} />
             ) : (
               <>
-                <button onClick={() => login()} className="btn btn-ghost" type="button">
+                <button
+                  onClick={() => login()}
+                  className="btn-ghost btn"
+                  type="button"
+                >
                   Login
                 </button>
               </>
             )}
             <button
               onClick={themeCtx.toggleTheme}
-              className="btn btn-square btn-ghost"
+              className="btn-ghost btn-square btn"
               type="button"
             >
               {themeCtx.theme === "light" ? (

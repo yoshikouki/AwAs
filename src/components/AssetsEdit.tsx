@@ -1,11 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useFieldArray, useForm } from "react-hook-form";
 import { FaChevronLeft, FaCircleNotch, FaPlus } from "react-icons/fa";
-import { upsertAssetsSchema } from "../schemas/assets.schema";
-import { api, RouterOutputs } from "../utils/api";
+import { RouterOutputs, api } from "../utils/api";
+import { useFieldArray, useForm } from "react-hook-form";
+
 import AssetsEditListItem from "./AssetsEditListItem";
+import Link from "next/link";
+import { upsertAssetsSchema } from "../schemas/assets.schema";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const assetDefaultValue = {
   symbol: "",

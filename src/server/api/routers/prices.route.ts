@@ -1,6 +1,6 @@
 import { authedProcedure, createTRPCRouter } from "../trpc";
 
-import { PricesService } from './../../services/prices.service';
+import { PricesService } from "./../../services/prices.service";
 import { getLatestPricesSchema } from "../../../schemas/prices.schema";
 
 export const pricesRouter = createTRPCRouter({
