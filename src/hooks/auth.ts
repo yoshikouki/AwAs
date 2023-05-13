@@ -5,6 +5,7 @@ export const useAuth = () => {
 
   return {
     session,
+    status,
     isAuthenticated: status === "authenticated",
     isLoading: status === "loading",
     login: () => signIn(),

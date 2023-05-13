@@ -1,15 +1,17 @@
+"use client";
+
 import { FaCog, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 
 import Link from "next/link";
+import { useAuth } from "../hooks/auth";
 
-interface Props {
-  logout: () => void;
-}
+const HeaderProfile = () => {
+  const { status, login, logout } = useAuth();
 
-const HeaderProfile = ({ logout }: Props) => {
-  return (
-    <>
-      <div className="dropdown dropdown-end dropdown-hover">
+  const componentByStatus = {
+    loading: <div className="btn-disabled btn">Loading</div>,
+    authenticated: (
+      <div className="dropdown-end dropdown-hover dropdown">
         <label tabIndex={0} className="btn-ghost btn">
           <Link href="/settings">
             <div className="avatar">
@@ -30,15 +32,22 @@ const HeaderProfile = ({ logout }: Props) => {
             </Link>
           </li>
           <li>
-            <a onClick={logout}>
+            <button onClick={logout}>
               <FaSignOutAlt className="h-4 w-4" />
               Logout
-            </a>
+            </button>
           </li>
         </ul>
       </div>
-    </>
-  );
+    ),
+    unauthenticated: (
+      <button onClick={() => login()} className="btn-ghost btn" type="button">
+        Login
+      </button>
+    ),
+  };
+
+  return componentByStatus[status];
 };
 
 export default HeaderProfile;

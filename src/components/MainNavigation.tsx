@@ -1,3 +1,5 @@
+"use client";
+
 import { BiCoinStack } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
 import Link from "next/link";
@@ -23,10 +25,10 @@ const MainNavigation = () => {
   return (
     <>
       <div className="btm-nav z-20 sm:hidden">
-        {navigationItems.map((item, i) => (
+        {navigationItems.map((item) => (
           <Link
             href={item.path}
-            key={i}
+            key={item.path}
             className={`${isCurrentPage(item.path) && "active"}`}
           >
             {item.icon}
@@ -36,8 +38,8 @@ const MainNavigation = () => {
 
       <div className="fixed z-20 hidden h-full overflow-y-auto sm:block lg:w-80">
         <ul className="menu mt-12 p-0 px-4 text-base-content lg:w-80">
-          {navigationItems.map((item, i) => (
-            <li key={i}>
+          {navigationItems.map((item) => (
+            <li key={item.path}>
               <Link
                 href={item.path}
                 className={`${isCurrentPage(item.path) && "active"}`}
