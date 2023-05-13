@@ -1,6 +1,8 @@
 import "../styles/globals.css";
 
 import { Analytics } from "@vercel/analytics/react";
+import AuthProvider from "../components/AuthProvider";
+import DefaultLayout from "../components/DefaultLayout";
 import { Metadata } from "next";
 import ThemeContextProvider from "../components/ThemeContextProvider";
 
@@ -13,7 +15,9 @@ export default function RootLayout({ children }: Props) {
     <html lang="ja">
       <body>
         <ThemeContextProvider>
-            {children}
+          <AuthProvider>
+            <DefaultLayout>{children}</DefaultLayout>
+          </AuthProvider>
         </ThemeContextProvider>
         <Analytics />
       </body>
