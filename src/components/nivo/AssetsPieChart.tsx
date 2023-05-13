@@ -1,3 +1,5 @@
+"use client";
+
 import { ResponsivePie } from "@nivo/pie";
 import { sum } from "../../utils/calculation";
 
